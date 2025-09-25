@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Spring Boot → Docker → Kubernetes (Minikube) + Angular | Steve Avisse</title>
+  <meta name="description" content="Chaîne complète locale : API Spring Boot packagée en Docker, déployée sur Kubernetes (Minikube), validation front avec Angular, et CI CircleCI exécutée en local.">
+  <meta name="keywords" content="Spring Boot, Docker, Kubernetes, Minikube, Angular, Maven, YAML, CI, CircleCI, DevOps, E2E local">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (squelette commun) -->
+  <style>
+    :root{ --accent:#f2559e; --accent2:#0a66ff; --ink:#0b1420; }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Automatisation Spring Boot → Docker → Kubernetes (Minikube) + Angular
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+              <!-- ⚠️ Garde EXACTEMENT ces noms de fichiers -->
+              <img src="assets/img/start.spring.jpg" class="img-fluid" alt="Spring Initializr">
+              <img src="assets/img/sucess hello world Spring Boot.jpg" class="img-fluid" alt="Hello World Spring Boot">
+              <img src="assets/img/resultat-build-projet-infoline.jpg" class="img-fluid" alt="Build backend Maven">
+              <img src="assets/img/helloangular.png" class="img-fluid" alt="Angular en local">
+              <img src="assets/img/creation hello angular.jpg" class="img-fluid" alt="Création Angular CLI">
+              <img src="assets/img/activité 5- tentative-execution-locale-circleci.jpg" class="img-fluid" alt="CircleCI local">
+            </div>
+          </div>
+
+          <!-- Colonne droite : résumé / tags / lien repo -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Chaîne Dev→Ops 100% locale</strong></h3>
+
+            <p class="lead-intro">
+              Mise en place d’une API <strong>Spring Boot</strong>, packagée en <strong>Docker</strong>,
+              déployée sur <strong>Kubernetes (Minikube)</strong>, et vérifiée via un mini front
+              <strong>Angular</strong>. Un job <strong>CircleCI</strong> est exécuté <em>en local</em> pour illustrer la CI.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Java 17</span>
+              <span class="tag">Spring Boot 3</span>
+              <span class="tag">Maven</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Kubernetes</span>
+              <span class="tag">Minikube</span>
+              <span class="tag">YAML</span>
+              <span class="tag">Angular / Node 20</span>
+              <span class="tag">CircleCI (local)</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : Dev / DevOps</li>
+              <li><strong>Contexte</strong> : VM Debian (VirtualBox), zéro cloud</li>
+              <li><strong>Livrables</strong> : code Java, <code>Dockerfile</code>, manifests K8s, projet Angular, CI</li>
+            </ul>
+
+            <a class="btn-ghost" href="https://github.com/avisse/activite-2" target="_blank" rel="noopener">
+              <i class="bx bxl-github"></i> Voir le repository GitHub
+            </a>
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- 1) Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a0', this)">
+                1) Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a0">
+                <p>
+                  Objectif pédagogique : démontrer une chaîne <strong>de bout en bout</strong> — développement,
+                  packaging, déploiement et exécution — en <strong>environnement local</strong>, <strong>reproductible</strong>
+                  et <strong>documenté</strong>. Contraintes : versions cohérentes (Java/Node), ressources Minikube,
+                  et CI locale utilisable sur n’importe quelle machine.
+                </p>
+              </div>
+            </div>
+
+            <!-- 2) Architecture & choix -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                2) Architecture & choix techniques
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+<pre><code>Backend : Spring Boot (endpoint /hello)
+Packaging : Docker (multi-stage → image finale légère)
+Orchestration : Kubernetes (Minikube) – Deployment + Service (NodePort)
+Frontend : Angular (Hello Angular) pour valider la couche UI
+CI : CircleCI exécutée en local (build Angular)</code></pre>
+              </div>
+            </div>
+
+            <!-- 3) Implémentation pas à pas -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                3) Implémentation — du code à Kubernetes
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+                <p><strong>3.1 Code Spring Boot (extrait)</strong></p>
+<pre><code class="language-java">@RestController
+public class HelloController {
+  @GetMapping("/hello")
+  public String hello() { return "Hello, World!"; }
+}</code></pre>
+
+                <p><strong>3.2 Build Maven</strong></p>
+<pre><code class="language-bash">mvn clean package -DskipTests</code></pre>
+
+                <p><strong>3.3 Image Docker multi-stage</strong></p>
+<pre><code class="language-docker">FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","app.jar"]</code></pre>
+
+<pre><code class="language-bash">docker build -t helloworld-app .
+docker run -p 8080:8080 helloworld-app
+# Test → http://localhost:8080/hello</code></pre>
+
+                <p><strong>3.4 Minikube</strong> (image locale)</p>
+<pre><code class="language-bash">minikube start --memory=4096mb
+minikube image load helloworld-app</code></pre>
+
+                <p><strong>3.5 Manifests K8s</strong></p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata: { name: helloworld-deployment }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: helloworld } }
+  template:
+    metadata: { labels: { app: helloworld } }
+    spec:
+      containers:
+        - name: helloworld
+          image: helloworld-app
+          imagePullPolicy: Never
+          ports: [{ containerPort: 8080 }]</code></pre>
+
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata: { name: helloworld-service }
+spec:
+  type: NodePort
+  selector: { app: helloworld }
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080</code></pre>
+
+<pre><code class="language-bash">kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+minikube service helloworld-service --url
+# Exemple : http://192.168.49.2:30080</code></pre>
+              </div>
+            </div>
+
+            <!-- 4) Automatisation -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                4) Automatisation — Build → Image → K8s
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -e
+mvn clean package -DskipTests
+docker build -t helloworld-app .
+minikube start --memory=4096mb
+minikube image load helloworld-app
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl wait --for=condition=ready pod -l app=helloworld --timeout=120s
+URL=$(minikube service helloworld-service --url)
+echo "App OK -> $URL"
+curl -s $URL/hello</code></pre>
+                <p class="soft">Une seule commande pour rejouer l’ensemble de la chaîne.</p>
+              </div>
+            </div>
+
+            <!-- 5) Angular -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                5) Hello Angular — validation de l’environnement Front
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+<pre><code class="language-bash"># Node 20+
+npx @angular/cli@latest new hello-angular
+cd hello-angular
+npm start
+# http://localhost:4200</code></pre>
+                <p>But : vérifier l’outillage UI (CLI, dépendances) et prouver la maîtrise de la couche Front.</p>
+              </div>
+            </div>
+
+            <!-- 6) CI locale -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                6) CI locale (CircleCI) — job exécuté en local
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+<pre><code class="language-yaml">version: 2.1
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/node:20.19.1
+    steps:
+      - checkout
+      - run: npm ci
+      - run: npm run build
+      - run: echo "Bonjour studi — Steve Avisse"
+workflows:
+  build:
+    jobs: [build-and-test]</code></pre>
+<pre><code class="language-bash"># Nouvelle syntaxe CLI locale
+circleci local execute build-and-test</code></pre>
+                <ul>
+                  <li>Alignement de version Node : <code>cimg/node:20.19.1</code>.</li>
+                  <li>VM agrandie (disque/RAM) pour les builds.</li>
+                  <li>Commande CLI mise à jour (plus de <code>--job</code>).</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 7) Nettoyage & REX -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a6', this)">
+                7) Nettoyage & retour d’expérience
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a6">
+<pre><code class="language-bash">kubectl delete -f service.yaml
+kubectl delete -f deployment.yaml
+minikube stop && minikube delete</code></pre>
+                <ul>
+                  <li>Résultat : image stable, pods Ready, service exposé, Angular OK, CI locale validée.</li>
+                  <li>REX : surveiller <code>JAVA_HOME</code>, droits Docker (groupe), cohérence des versions Node/Angular.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+
+        </div><!-- /row -->
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

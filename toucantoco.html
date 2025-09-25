@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Toucan Toco – Datavisualisation (MOA) | Steve Avisse</title>
+  <meta name="description" content="Projet DataViz en contexte préfecture : cadrage MOA, définition KPI métiers, mise en place d’un POC Toucan Toco, conduite du changement, résultats et impacts.">
+  <meta name="keywords" content="Toucan Toco, MOA, Dataviz, KPI, Innovation publique, Reporting, Data Storytelling">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (lisibilité + accent couleurs) -->
+  <style>
+    :root{
+      --accent:#f2559e;   /* rose doux */
+      --accent2:#007bff;  /* bleu charte */
+      --ink:#0b1420;
+    }
+    .lead-intro{
+      font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px;
+    }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+
+    /* blocs code lisibles */
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+
+    /* accordéons */
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);} 
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+
+    /* arrondi léger sur les images du carrousel */
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Toucan Toco – Datavisualisation (Projet MOA)
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+              <!-- Remplace/ajoute tes captures ici -->
+              <img src="assets/img/prefecture-toucan-1.png" class="img-fluid" alt="Dashboard Toucan Toco – aperçu">
+              <img src="assets/img/prefecture-toucan-2.png" class="img-fluid" alt="KPI RH – exemple">
+              <img src="assets/img/prefecture-toucan-3.png" class="img-fluid" alt="Storytelling – dataviz">
+            </div>
+          </div>        
+
+          <!-- Colonne droite : résumé / tags / lien outil -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>DataViz – Préfecture IDF</strong></h3>
+
+            <p class="lead-intro">
+              Mise en place d’un <span class="accent">POC de datavisualisation</span> avec 
+              <strong>Toucan Toco</strong> en contexte préfecture. Rôle <strong>MOA</strong> : cadrage des besoins, 
+              définition des <strong>KPI</strong>, coordination avec la MOE et conduite du changement.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">MOA</span>
+              <span class="tag">Toucan Toco</span>
+              <span class="tag">KPI</span>
+              <span class="tag">Innovation publique</span>
+              <span class="tag">Data storytelling</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : Data & Innovation publique</li>
+              <li><strong>Contexte</strong> : Préfecture IDF (2018–2019)</li>
+              <li><strong>Livrables</strong> : ateliers, mapping KPI, maquettes dashboards, démo CODIR</li>
+            </ul>
+
+            <a class="btn-repo" href="https://www.toucantoco.com/fr/" target="_blank" rel="noopener"><i class="bx bx-link-external"></i> Voir l’outil Toucan Toco</a>
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">
+                Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="cx">
+                <p>
+                  Les directions produisaient des reportings hétérogènes (Excel, exports outils). 
+                  Objectif : <strong>unifier la lecture des indicateurs</strong> et proposer un 
+                  <strong>dashboard commun</strong> aux décideurs via une solution légère et tournée utilisateurs.
+                </p>
+                <ul>
+                  <li>Choix d’un périmètre pilote (2–3 directions volontaires).</li>
+                  <li>Critères : lisibilité, rapidité de mise en œuvre, mobilité, narration.</li>
+                  <li>Choix de <strong>Toucan Toco</strong> pour son approche <em>data storytelling</em>.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Directions & KPI (exemples) -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('kpi', this)">
+                Directions & KPI (exemples crédibles)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="kpi">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h6 class="mt-2">Ressources Humaines</h6>
+                    <ul>
+                      <li><strong>Taux d’absentéisme</strong> (mensuel par service)</li>
+                      <li><strong>Délai moyen de recrutement</strong> (publication → prise de poste)</li>
+                      <li><strong>Agents formés</strong> / total (par thématique)</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="mt-2">Finances</h6>
+                    <ul>
+                      <li><strong>Exécution budgétaire</strong> (consommé vs voté)</li>
+                      <li><strong>Respect des délais de paiement</strong> (factures dans les délais)</li>
+                      <li><strong>Dépenses par poste</strong> (RH, fonctionnement, investissement)</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="mt-2">Services aux Usagers</h6>
+                    <ul>
+                      <li><strong>Délai moyen de traitement</strong> (par type de demande)</li>
+                      <li><strong>Taux de dossiers traités dans les délais</strong></li>
+                      <li><strong>Réclamations</strong> reçues / résolues</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <h6 class="mt-2">Sécurité & Prévention</h6>
+                    <ul>
+                      <li><strong>Opérations de contrôle</strong> (effectuées / prévues)</li>
+                      <li><strong>Taux de conformité</strong> des établissements contrôlés</li>
+                    </ul>
+                  </div>
+                </div>
+                <p class="soft mb-0"><em>NB</em> : indicateurs présentés à titre d’exemples plausibles, adaptés pour un POC sans données sensibles.</p>
+              </div>
+            </div>
+
+            <!-- Démarche MOA & étapes -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('moa', this)">
+                Démarche MOA & étapes projet
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="moa">
+                <ol>
+                  <li><strong>Ateliers de cadrage</strong> (recueil besoins, priorisation KPI)</li>
+                  <li><strong>Benchmark & choix outil</strong> (démos comparatives, arbitrage)</li>
+                  <li><strong>Paramétrage POC</strong> (maquettes, navigation, filtres)</li>
+                  <li><strong>Tests utilisateurs</strong> & ajustements de lisibilité</li>
+                  <li><strong>Démo CODIR</strong> & préparation de l’essaimage</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- Livrables & dashboards -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('livrables', this)">
+                Livrables & tableaux de bord
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="livrables">
+                <ul>
+                  <li>Cartographie des <strong>KPI</strong> par direction & définitions (glossaire).</li>
+                  <li>Maquettes de <strong>dashboards</strong> (tendances, top N, répartition).</li>
+                  <li>Navigation <strong>storytelling</strong> (pages synthèse → détail).</li>
+                  <li>Kit d’<strong>adoption</strong> : pas-à-pas utilisateur et note de présentation.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Résultats & adoption -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('impact', this)">
+                Résultats & adoption
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="impact">
+                <ul>
+                  <li><strong>Reporting unifié</strong> : fin des consolidations manuelles.</li>
+                  <li><strong>Lisibilité</strong> : lecture commune au CODIR, vision partagée.</li>
+                  <li><strong>Acculturation data</strong> : logique KPI adoptée par les référents.</li>
+                  <li><strong>Base pour essaimage</strong> vers d’autres directions/projets.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Gouvernance & sécurité -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('sec', this)">
+                Gouvernance & sécurité (RGPD – niveau POC)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="sec">
+                <ul>
+                  <li>Données <strong>non sensibles / agrégées</strong> pour le POC.</li>
+                  <li>Accès restreint aux <strong>référents métiers</strong> et à la direction.</li>
+                  <li>Traçabilité des <strong>définitions KPI</strong> (glossaire partagé).</li>
+                </ul>
+                <p class="soft mb-0">Pour une mise en production : homologation sécurité, revue RGPD complète, gestion des habilitations & audit.</p>
+              </div>
+            </div>
+
+            <!-- Suites -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('next', this)">
+                Limites & suites proposées
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="next">
+                <ul>
+                  <li><strong>Périmètre pilote</strong> volontairement restreint (preuve de valeur).</li>
+                  <li>Recommandation : <strong>industrialisation</strong> (gouvernance des données, alimentation automatique, SSO, REX trimestriel).</li>
+                </ul>
+                <p class="mt-2">
+                  <a class="btn-ghost" href="https://www.toucantoco.com/fr/" target="_blank" rel="noopener">
+                    En savoir plus sur Toucan Toco
+                  </a>
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

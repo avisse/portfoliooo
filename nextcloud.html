@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Nextcloud – Espace de collaboration (Docker) | Steve Avisse</title>
+  <meta name="description" content="Projet DevOps : déploiement de Nextcloud sous Docker (Apache) avec MariaDB et Redis. Persistance data/config/apps, optimisation APCu/Redis, sauvegardes et sécurisation.">
+  <meta name="keywords" content="Nextcloud, Docker, Docker Compose, MariaDB, Redis, APCu, Reverse Proxy, TLS, RGPD, Collaboration, Fichiers">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (lisibilité + accent couleurs) -->
+  <style>
+    :root{
+      --accent:#f2559e;   /* rose doux */
+      --accent2:#007bff;  /* bleu charte */
+      --ink:#0b1420;
+    }
+    .lead-intro{
+      font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px;
+    }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+
+    /* blocs code lisibles */
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+
+    /* accordéons */
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+
+    /* arrondi léger sur les images du carrousel */
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Nextcloud – Espace de collaboration (Docker)
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+              <!-- Remplace par tes captures -->
+              <img src="assets/img/nextcloud-1.png" class="img-fluid" alt="Nextcloud – accueil">
+              <img src="assets/img/nextcloud-2.png" class="img-fluid" alt="Nextcloud – fichiers & partages">
+              <img src="assets/img/nextcloud-3.png" class="img-fluid" alt="Nextcloud – apps intégrées">
+            </div>
+          </div>
+
+          <!-- Colonne droite : résumé / tags / lien repo -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Nextcloud : Collaboration & fichiers</strong></h3>
+
+            <p class="lead-intro">
+              Déploiement de <strong>Nextcloud</strong> sous <strong>Docker</strong> (Apache) avec
+              <strong>MariaDB</strong> et <strong>Redis</strong> pour offrir un espace de
+              <span class="accent">stockage, partage et collaboration</span> conforme RGPD. 
+              Persistance <em>data/config/apps</em>, optimisations <em>APCu/Redis</em>, sauvegardes et préparation à l’exposition via reverse proxy.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Docker Compose</span>
+              <span class="tag">Nextcloud (Apache)</span>
+              <span class="tag">MariaDB LTS</span>
+              <span class="tag">Redis / APCu</span>
+              <span class="tag">Reverse Proxy / TLS</span>
+              <span class="tag">RGPD</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : Collaboration / Fichiers</li>
+              <li><strong>Contexte</strong> : VM Debian 12 (pilote DSI)</li>
+              <li><strong>Livrables</strong> : compose, config persistance, scripts backup, doc</li>
+            </ul>
+
+            <a class="btn-repo" href="https://github.com/avisse/nextcloud-deploiement" target="_blank" rel="noopener">
+              <i class="bx bxl-github"></i> Voir le repository GitHub
+            </a>
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">
+                Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="cx">
+                <p>
+                  La collectivité souhaite <strong>centraliser</strong> stockage, partage et collaboration 
+                  (fichiers, calendriers, contacts) pour réduire les partages réseau hétérogènes et les e-mails lourds.
+                  Exigences : <em>auto-hébergé, RGPD, web/mobile, extensible</em>.
+                </p>
+                <ul>
+                  <li>Pilote pour <strong>30–50 comptes</strong> (1–2 directions)</li>
+                  <li>Stack <strong>simple &amp; reproductible</strong> (Docker Compose)</li>
+                  <li><strong>Persistance</strong> data/config/apps &amp; <strong>performances</strong> (APCu/Redis)</li>
+                  <li>Préparer la <strong>montée en charge</strong> (reverse proxy, sauvegardes, supervision)</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Architecture -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('archi', this)">
+                Architecture (Docker)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="archi">
+                <ul>
+                  <li><strong>app</strong> : <code>nextcloud:stable-apache</code> (Apache inclus)</li>
+                  <li><strong>db</strong> : <code>mariadb:lts</code></li>
+                  <li><strong>redis</strong> : <code>redis:alpine</code></li>
+                </ul>
+                <p><strong>Volumes persistants</strong> : <code>./data → /var/www/html/data</code>, <code>./config → /var/www/html/config</code>, <code>./custom_apps → /var/www/html/custom_apps</code>, <code>./db → /var/lib/mysql</code>.</p>
+              </div>
+            </div>
+
+            <!-- Compose -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('compose', this)">
+                Docker Compose (aligné déploiement)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="compose">
+<pre><code class="language-yaml">version: '3.8'
+
+services:
+  db:
+    image: mariadb:lts
+    container_name: nextcloud_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_PASSWORD: nextcloudpass
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+    volumes:
+      - ./db:/var/lib/mysql
+    networks: [nextcloud]
+
+  redis:
+    image: redis:alpine
+    container_name: nextcloud_redis
+    restart: always
+    networks: [nextcloud]
+
+  app:
+    image: nextcloud:stable-apache
+    container_name: nextcloud_app
+    restart: always
+    depends_on: [db, redis]
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: nextcloudpass
+      REDIS_HOST: redis
+      NEXTCLOUD_ADMIN_USER: admin
+      NEXTCLOUD_ADMIN_PASSWORD: adminpass
+      # Garder uniquement si un reverse proxy nommé "reverse_proxy" est présent
+      TRUSTED_PROXIES: reverse_proxy
+      OVERWRITEPROTOCOL: http
+    volumes:
+      - ./data:/var/www/html/data
+      - ./config:/var/www/html/config
+      - ./custom_apps:/var/www/html/custom_apps
+    ports:
+      - "8082:80"
+    networks: [nextcloud]
+
+networks:
+  nextcloud:</code></pre>
+                <p class="soft">🔎 Correction clé : monter <code>/var/www/html/data</code> (et non tout <code>/var/www/html</code>), sinon tu écrases le core Nextcloud.</p>
+              </div>
+            </div>
+
+            <!-- Mise en service -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('run', this)">
+                Mise en service (pas à pas)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="run">
+                <ol>
+                  <li><strong>Prérequis</strong> : VM Debian 12, Docker + Compose, DNS/FQDN interne si besoin.</li>
+                  <li><strong>Arbo Git</strong> : <code>docker-compose.yml</code>, <code>config/</code>, <code>custom_apps/</code>, <code>data/</code>, <code>db/</code>, <code>backups/</code>.</li>
+                  <li><strong>Lancement</strong> : <code>docker compose up -d</code> → accès <code>http://IP_VM:8082</code> (admin auto si variables définies).</li>
+                  <li><strong>Optimisations</strong> : APCu + Redis + cron.</li>
+                </ol>
+<pre><code class="language-php">// config/apcu.config.php
+&lt;?php
+$CONFIG['memcache.local'] = '\\OC\\Memcache\\APCu';</code></pre>
+<pre><code class="language-php">// config/redis.config.php
+&lt;?php
+$CONFIG['memcache.locking'] = '\\OC\\Memcache\\Redis';
+$CONFIG['redis'] = ['host' =&gt; 'redis', 'port' =&gt; 6379];</code></pre>
+<pre><code class="language-php">// config/config.php (extraits)
+&lt;?php
+$CONFIG = [
+  'trusted_domains' =&gt; ['localhost','10.0.0.10','cloud.collectivite.local'],
+  'overwrite.cli.url' =&gt; 'http://cloud.collectivite.local',
+  'default_phone_region' =&gt; 'FR',
+];</code></pre>
+<pre><code class="language-bash"># Cron Nextcloud (toutes les 5 min)
+*/5 * * * * docker compose exec -u www-data nextcloud_app php -f cron.php &gt;/dev/null 2&gt;&1</code></pre>
+              </div>
+            </div>
+
+            <!-- Sécurité -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('sec', this)">
+                Sécurisation (paliers)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="sec">
+                <ul>
+                  <li><strong>Pilote interne</strong> : accès LAN, secrets forts, sauvegardes basiques.</li>
+                  <li><strong>Pré-prod/Prod</strong> : reverse proxy (Traefik/NPM/Caddy) + <strong>TLS Let’s Encrypt</strong>, 
+                    <code>TRUSTED_PROXIES</code> (IP/CIDR) &amp; <code>OVERWRITEPROTOCOL=https</code>, headers de sécurité, fail2ban, 
+                    politique d’apps (liste blanche), quotas &amp; 2FA.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Sauvegardes -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('backup', this)">
+                Sauvegardes & restauration
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="backup">
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+STAMP=$(date +%F_%H%M)
+mkdir -p backups
+mysqldump -u nextcloud -pnextcloudpass -h 127.0.0.1 nextcloud &gt; backups/db_${STAMP}.sql
+tar -czf backups/config_${STAMP}.tar.gz config/
+tar -czf backups/data_${STAMP}.tar.gz data/
+find backups -type f -mtime +14 -delete
+echo "Backup OK -&gt; ${STAMP}"</code></pre>
+                <p class="soft"><strong>Restauration</strong> : <code>docker compose down</code> → restaurer <em>db SQL</em>, <em>config/</em>, <em>data/</em> → <code>docker compose up -d</code> → vérifier logs, <code>occ maintenance:mode --off</code> si nécessaire.</p>
+              </div>
+            </div>
+
+            <!-- Résultats & bilan -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('results', this)">
+                Résultats & bilan
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="results">
+                <ul>
+                  <li><strong>Plateforme unique</strong> de partage & collaboration</li>
+                  <li><strong>Moins d’e-mails lourds</strong>, liens sécurisés</li>
+                  <li><strong>Accès multi-devices</strong> (web/bureau/mobile)</li>
+                  <li>Base solide pour <strong>montée en charge</strong> et ouverture sécurisée</li>
+                </ul>
+                <h5 class="mt-3 mb-2">Bilan personnel</h5>
+                <ul>
+                  <li>Déploiement <strong>Nextcloud (Apache) + MariaDB LTS + Redis</strong> en Docker</li>
+                  <li>Persistances propres (<code>data/</code>, <code>config/</code>, <code>custom_apps/</code>, <code>db/</code>)</li>
+                  <li>Optimisations clés (<strong>APCu</strong>, <strong>Redis</strong>, <strong>cron</strong>) &amp; paliers de sécurité</li>
+                  <li>Projet <strong>industrializable</strong> et réutilisable pour d’autres services</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

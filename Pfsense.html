@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>pfSense – Pare-feu, segmentation & contrôle d’accès | Steve Avisse</title>
+  <meta name="description" content="Déploiement d’un pare-feu/routeur pfSense en environnement virtualisé : segmentation WAN/LAN, plan d’adressage, règles de blocage Internet et applicatives, NAT, tests avec logs, runbook d’exploitation.">
+  <meta name="keywords" content="pfSense, Firewall, NAT, LAN, WAN, VirtualBox, Segmentation, Sécurité réseau, GLPI, Heimdall, Runbook">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (identiques) -->
+  <style>
+    :root{
+      --accent:#f2559e; --accent2:#007bff; --ink:#0b1420;
+    }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2); }
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              pfSense — Pare-feu, segmentation & contrôle d’accès (lab VirtualBox)
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+  <img src="assets/img/pfsense5.png" class="img-fluid" alt="Tableau de bord / assistant d’installation pfSense">
+  <img src="assets/img/pfsense4.png" class="img-fluid" alt="VM pfSense avec 2 cartes réseau (WAN NAT + LAN intnet) dans VirtualBox">
+  <img src="assets/img/pfsense3.png" class="img-fluid" alt="Plan d’adressage et segments LAN/WAN">
+  <img src="assets/img/pfsense2.png" class="img-fluid" alt="Paramétrage VirtualBox pour pfSense et VMs clientes">
+  <img src="assets/img/pfsense6.png" class="img-fluid" alt="Cas de tests et résultats (journaux de blocage)">
+             
+            </div>
+          </div>
+
+          <!-- Colonne droite : résumé / tags -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Pare-feu pfSense – Sécuriser & segmenter</strong></h3>
+
+            <p class="lead-intro">
+              Mise en place d’un <span class="accent">pare-feu/routeur pfSense</span> comme point central de sécurité
+              : segmentation <strong>WAN/LAN</strong>, <strong>plan d’adressage</strong> documenté, blocage
+              <strong>Internet global</strong> et <strong>blocage applicatif ciblé</strong> (ex. Heimdall:8080),
+              <strong>NAT</strong> automatique et <strong>runbook</strong> d’exploitation.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">pfSense CE</span>
+              <span class="tag">VirtualBox</span>
+              <span class="tag">Firewall stateful</span>
+              <span class="tag">NAT IPv4</span>
+              <span class="tag">Segmentation LAN/WAN</span>
+              <span class="tag">Runbook</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Objectif</strong> : tout le trafic des VMs passe par pfSense (GW par défaut).</li>
+              <li><strong>Livrables</strong> : VM pfSense, règles, tests, logs & procédures Day-2.</li>
+              <li><strong>Évolutions</strong> : VLANs, VPN, HA CARP, IDS/IPS (hors périmètre du lab).</li>
+            </ul>
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- I. Synthèse -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('synth', this)">
+                I) Synthèse exécutive
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="synth">
+                <p><strong>Objectif</strong> : déployer pfSense comme pare-feu/routeur central afin de sécuriser le périmètre, segmenter le réseau interne et contrôler finement l’accès aux applis (GLPI, Heimdall…).</p>
+                <p><strong>Livrables</strong> : VM pfSense opérationnelle (WAN/LAN), plan d’adressage, règles (blocage Internet global + blocage applicatif), batteries de tests avec logs, <em>runbook</em> d’exploitation.</p>
+              </div>
+            </div>
+
+            <!-- II. Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('ctx', this)">
+                II) Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="ctx">
+                <h5>Contexte professionnel</h5>
+                <ul>
+                  <li>Renforcer la sécurité périmétrique et la conformité réglementaire.</li>
+                  <li>Centraliser l’administration des règles via une interface Web unique.</li>
+                  <li>S’intégrer naturellement à un environnement virtualisé (lab VirtualBox, extensible à Proxmox/VMware).</li>
+                </ul>
+                <h5>Objectifs mesurables</h5>
+                <ul>
+                  <li>Toutes les VMs du LAN utilisent pfSense comme <strong>passerelle par défaut</strong>.</li>
+                  <li>Règles LAN démontrées : <strong>blocage Internet</strong> global + <strong>blocage applicatif</strong> (Heimdall:8080).</li>
+                  <li><strong>Traçabilité</strong> : journaux de firewall cohérents durant les tests.</li>
+                  <li><strong>Exploitation</strong> : doc & procédures Day-2 (sauvegarde, MAJ, ajout de règles).</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- III. Périmètre -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('scope', this)">
+                III) Périmètre du projet
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="scope">
+                <p><strong>Inclus</strong> : VM pfSense (WAN+LAN), VMs clientes (dont Heimdall), règles firewall, tests, journalisation, doc & runbook.</p>
+                <p><strong>Hors-scope</strong> (prévu en évolutions) : VLANs, VPN site-à-site/nomade, HA CARP, portail captif, IDS/IPS avancé.</p>
+              </div>
+            </div>
+
+            <!-- IV. Architecture cible -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('archi', this)">
+                IV) Architecture cible
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="archi">
+<pre><code class="language-text">                      Internet
+                         │
+                 (VirtualBox NAT)
+                         │  (WAN DHCP)
+                  ┌──────▼────────┐
+                  │   pfSense     │
+                  │  WAN: 10.0.2.x│
+                  │  LAN: 192.168.1.1/24
+                  └──────┬────────┘
+                         │  (LAN - réseau interne "intnet")
+        ┌────────────────┼─────────────────┐
+        │                │                 │
+   VM Client A      VM Heimdall       VM GLPI ...
+  192.168.1.10      192.168.1.20      192.168.1.30
+  GW 192.168.1.1    GW 192.168.1.1    GW 192.168.1.1
+</code></pre>
+                <p><strong>Plan d’adressage</strong> : WAN en DHCP (10.0.2.0/24, VirtualBox NAT), LAN 192.168.1.0/24 (pfSense = 192.168.1.1). Clients : 192.168.1.10..200. Heimdall 192.168.1.20:8080, GLPI 192.168.1.30:80.</p>
+                <p class="soft">Point clé : la <strong>passerelle</strong> de toutes les VMs LAN = <code>192.168.1.1</code> (pfSense), sinon les règles ne s’appliquent pas.</p>
+              </div>
+            </div>
+
+            <!-- V. Environnement -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('env', this)">
+                V) Environnement & prérequis
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="env">
+                <ul>
+                  <li>Hyperviseur : <strong>VirtualBox</strong> (lab).</li>
+                  <li>Image : <strong>pfSense CE amd64</strong> (ISO officielle).</li>
+                  <li>Hôte : accès Internet (pour la VM pfSense via NAT).</li>
+                  <li>Connaissances : bases <em>TCP/IP, routage, NAT, firewall stateful</em>.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- VI. Mise en œuvre -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('deploy', this)">
+                VI) Mise en œuvre détaillée (A → Z)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="deploy">
+                <h5>1) Création de la VM pfSense (VirtualBox)</h5>
+                <ul>
+                  <li>VM <code>pfSense.home.arpa</code> — FreeBSD 64-bit, 2 vCPU, 2 Go RAM, disque 20 Go.</li>
+                  <li><strong>Cartes réseau</strong> : Adapter 1 = <em>WAN: NAT</em> ; Adapter 2 = <em>LAN: Réseau interne</em> (ex. <code>intnet</code>).</li>
+                  <li>Installation : boot sur ISO, partitionnement auto, redémarrage.</li>
+                </ul>
+                <h5>2) Affectation interfaces & config initiale</h5>
+                <ul>
+                  <li>Console : <code>em0 → WAN</code> ; <code>em1 → LAN</code> (par défaut LAN = <code>192.168.1.1/24</code>).</li>
+                  <li>Depuis une VM LAN : IP <code>192.168.1.10/24</code>, GW <code>192.168.1.1</code> → accéder à <code>https://192.168.1.1</code> (certificat autosigné).</li>
+                  <li>Login admin/pfsense → changement de mot de passe, timezone Europe/Paris, WAN en DHCP, DNS Resolver actif.</li>
+                </ul>
+                <h5>3) Aliases (lisibilité & maintenance)</h5>
+<pre><code class="language-text">Firewall → Aliases
+- HEIMDALL_HOST = 192.168.1.20
+- HEIMDALL_PORT = 8080
+</code></pre>
+                <h5>4) Règles Firewall (interface LAN)</h5>
+                <p>pfSense évalue les règles <strong>de haut en bas</strong> (première correspondante = appliquée).</p>
+                <ol>
+                  <li>(auto) <em>Anti-lockout</em> (HTTP/HTTPS vers pfSense) — toujours en tête.</li>
+                  <li><strong>Blocage Internet global</strong> : Interface=LAN ; Action=Block ; Source=LAN net ; Destination=any ; Proto=any ; Position=<em>juste après</em> l’anti-lockout ; Description=<em>Block all LAN → Internet</em>.</li>
+                  <li><strong>Blocage applicatif Heimdall</strong> : Interface=LAN ; Action=Block ; Source=LAN net ; Destination=<em>HEIMDALL_HOST</em> ; Proto=TCP ; Port dest=<em>HEIMDALL_PORT</em> ; Position=<em>au-dessus</em> des règles permissives ; Description=<em>Block LAN → Heimdall:8080</em>.</li>
+                  <li>(Optionnel) Autoriser LAN→LAN pour services internes (GLPI, DB…).</li>
+                </ol>
+                <h5>5) NAT & routage</h5>
+                <ul>
+                  <li>NAT IPv4 <strong>automatique</strong> sur le WAN (par défaut pfSense).</li>
+                  <li>Vérifier que toutes les VMs LAN ont <code>192.168.1.1</code> en passerelle.</li>
+                  <li>Attention aux VMs multi-NIC : risque de <em>bypass</em> dpfSense.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- VII. Tests & validation -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('tests', this)">
+                VII) Tests & validation (avec journaux)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="tests">
+                <h5>Pré-conditions</h5>
+                <ul>
+                  <li>Client LAN : <code>192.168.1.10/24</code> ; GW <code>192.168.1.1</code>.</li>
+                  <li>Règles en bon ordre (blocages au-dessus des passes).</li>
+                </ul>
+                <h5>Cas de tests</h5>
+                <ol>
+                  <li><strong>Accès GUI pfSense</strong> — <code>https://192.168.1.1</code> → OK.</li>
+                  <li><strong>Blocage Internet global</strong> — Navigateur vers google.com/amazon.fr → bloqué. <code>ping 8.8.8.8</code> → bloqué (sauf règle ICMP spécifique).</li>
+                  <li><strong>Blocage Heimdall</strong> — <code>http://192.168.1.20:8080</code> → bloqué.</li>
+                  <li><strong>Accès interne autorisé</strong> — GLPI <code>http://192.168.1.30:80</code> → OK (si règle prévue).</li>
+                </ol>
+                <h5>Traçabilité (preuves)</h5>
+                <ul>
+                  <li><strong>Status → System Logs → Firewall</strong> : entrées <em>Blocked</em> pour B et C (source, destination, proto/port, règle appliquée).</li>
+                  <li>(Optionnel) <strong>Diagnostics → Packet Capture</strong> : génération de PCAP et vérification sous Wireshark.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- VIII. Runbook -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('runbook', this)">
+                VIII) Sécurité & exploitation (runbook)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="runbook">
+                <h5>Comptes & accès</h5>
+                <ul>
+                  <li>Changer le mot de passe <em>admin</em>, limiter l’accès GUI au LAN (ne jamais exposer sur WAN).</li>
+                  <li>Désactiver SSH si inutile ou restreindre par clés/règles.</li>
+                </ul>
+                <h5>Sauvegarde / restauration</h5>
+                <ul>
+                  <li><strong>Diagnostics → Backup/Restore</strong> : exporter <code>config.xml</code> (contient des secrets).</li>
+                  <li>Ne jamais publier <code>config.xml</code>.</li>
+                </ul>
+                <h5>Mises à jour</h5>
+                <ul>
+                  <li><strong>System → Update</strong> : politique de patching, créneau de maintenance.</li>
+                </ul>
+                <h5>Gestion de règles (Day-2)</h5>
+                <ul>
+                  <li>Créer/éditer les <strong>Aliases</strong> (hosts/ports) pour lisibilité.</li>
+                  <li><strong>Firewall → Rules</strong> (interface) : ajouter/modifier, positionner, sauvegarder et <em>Apply Changes</em>.</li>
+                  <li>Tester, lire les logs, valider.</li>
+                </ul>
+                <h5>Journalisation & supervision</h5>
+                <ul>
+                  <li><strong>System Logs → Firewall</strong> pour l’audit.</li>
+                  <li>Intégrations possibles : syslog distant, Zabbix/Prometheus (évolution).</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- IX. Difficultés & remédiations -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('issues', this)">
+                IX) Difficultés rencontrées & remédiations
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="issues">
+                <ul>
+                  <li><strong>Règle de blocage inopérante</strong> — La VM ne passait pas par pfSense (gateway erronée, autre NIC prioritaire). <em>Fix</em> : forcer GW = 192.168.1.1 ; désactiver la seconde NIC ou ajuster la métrique.</li>
+                  <li><strong>Ordre des règles</strong> — Une règle permissive au-dessus court-circuitait le blocage. <em>Fix</em> : remonter les règles de blocage au-dessus.</li>
+                  <li><strong>Multi-NIC & routage</strong> — Bypass via une autre sortie. <em>Fix</em> : simplifier la connectique, vérifier <code>ip route</code>/<code>route print</code>, corriger les routes.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+
+        </div><!-- /row -->
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

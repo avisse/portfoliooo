@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Grafana – Pilotage Maarch (PostgreSQL) | Steve Avisse</title>
+  <meta name="description" content="Mise en place de Grafana en Docker pour piloter Maarch Courrier en lecture seule (PostgreSQL). Provisioning automatisé de la datasource et des dashboards JSON, persistance, sécurité, et runbook complet.">
+  <meta name="keywords" content="Grafana, Docker, Docker Compose, PostgreSQL, Maarch Courrier, Dashboards, Provisioning, Read-only, Debian 12, VirtualBox">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (identiques) -->
+  <style>
+    :root{ --accent:#f2559e; --accent2:#007bff; --ink:#0b1420; }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{ background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25); padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600; }
+    .btn-ghost{ display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600; border:2px solid var(--accent2); color:var(--accent2); text-decoration:none; }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Grafana – Pilotage visuel de Maarch (PostgreSQL en lecture seule)
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+             
+              <img src="assets/img/grafana11.jpg" class="img-fluid" alt="Provisioning Grafana"> 
+               <img src="assets/img/grafana9.jpg" class="img-fluid" alt="Page de login Grafana"> 
+               <img src="assets/img/graphana5.png" class="img-fluid" alt="Datasource PostgreSQL OK"> 
+              <img src="assets/img/graphana6.png" class="img-fluid" alt="Dashboard Overview"> 
+               <img src="assets/img/grafana10.jpg" class="img-fluid" alt="Dashboard Workload">
+            </div>
+          </div>
+
+          <!-- Colonne droite : résumé / tags / lien repo -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Docker : Grafana ↔ PostgreSQL (Maarch)</strong></h3>
+
+            <p class="lead-intro">
+              Mise en place d’un <span class="accent">pilotage visuel</span> pour <strong>Maarch Courrier</strong>
+              sans modifier l’application : <strong>Grafana</strong> en <strong>Docker</strong>, datasource
+              <strong>PostgreSQL (lecture seule)</strong>, <strong>provisioning</strong> (datasource + dashboards JSON)
+              pour rejouer l’environnement en une commande.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Docker Compose</span>
+              <span class="tag">Grafana OSS</span>
+              <span class="tag">PostgreSQL 16</span>
+              <span class="tag">Provisioning</span>
+              <span class="tag">Read-only</span>
+              <span class="tag">Debian 12</span>
+              <span class="tag">VirtualBox</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : BI / Observabilité</li>
+              <li><strong>Contexte</strong> : VM Linux + BDD Maarch existante</li>
+              <li><strong>Livrables</strong> : compose.yml, .env, provisioning, dashboards JSON, SQL views</li>
+            </ul>
+
+            <a class="btn-repo" href="https://github.com/avisse/grafana-maarch" target="_blank" rel="noopener">
+              <i class="bx bxl-github"></i> Voir le repository GitHub
+            </a>
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- 1) Cadrage -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a0', this)">
+                1) Cadrage du projet
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a0">
+                <p>
+                  <strong>Objectif</strong> : donner au métier un <em>pilotage visuel</em> (volumétrie, délais,
+                  charge par entité, SLA…) sans toucher à Maarch.
+                </p>
+                <p>
+                  <strong>Contraintes</strong> : aller vite, reproductible, ré-utilisable, sécurisé (<em>lecture seule</em>).
+                </p>
+                <p>
+                  <strong>Choix</strong> : Grafana en Docker, datasource PostgreSQL (<em>read-only</em>),
+                  <strong>provisioning</strong> (datasource + dashboards) pour reconstruire en 1 commande.
+                </p>
+              </div>
+            </div>
+
+            <!-- 2) Architecture -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                2) Architecture cible
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+                <ul>
+                  <li><strong>VM Linux</strong> (ou hôte Docker).</li>
+                  <li><strong>PostgreSQL Maarch</strong> : existant. Création d’un compte <em>lecture seule</em> dédié.</li>
+                  <li><strong>Grafana</strong> en conteneur exposé sur <code>:3000</code>.</li>
+                  <li><strong>Persistance</strong> : volume Docker &rarr; <code>/var/lib/grafana</code>.</li>
+                  <li><strong>Provisioning</strong> : monté &rarr; <code>/etc/grafana/provisioning</code>.</li>
+                  <li>Dashboards <strong>JSON</strong> versionnés dans Git.</li>
+                </ul>
+<pre><code class="language-text">grafana-maarch/
+├─ compose.yml
+├─ .env
+├─ provisioning/
+│  ├─ datasources/datasource.yml
+│  └─ dashboards/provider.yml
+├─ dashboards/
+│  ├─ 01_overview.json
+│  ├─ 02_performance.json
+│  └─ 03_workload.json
+└─ sql/
+   ├─ views.sql
+   └─ sample_queries.md
+</code></pre>
+              </div>
+            </div>
+
+            <!-- 3) Pré-requis BDD -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                3) Pré-requis BDD : compte “lecture seule”
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+<pre><code class="language-sql">-- User RO pour Grafana
+CREATE USER grafana_ro WITH PASSWORD 'ChangeMoi!';
+GRANT CONNECT ON DATABASE maarch_courrier TO grafana_ro;
+
+-- Selon le schéma (souvent "public")
+GRANT USAGE ON SCHEMA public TO grafana_ro;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO grafana_ro;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT SELECT ON TABLES TO grafana_ro;
+</code></pre>
+                <p class="soft">
+                  Si Grafana est sur une autre machine/réseau, autoriser l’accès dans <code>pg_hba.conf</code>
+                  et ouvrir le port <code>5432</code>.
+                </p>
+              </div>
+            </div>
+
+            <!-- 4) Compose -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                4) Déploiement Docker Compose
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+                <p><strong>.env</strong> :</p>
+<pre><code class="language-ini">GRAFANA_PORT=3000
+GRAFANA_ADMIN_USER=admin
+GRAFANA_ADMIN_PASSWORD=Admin-Strong-2025!
+
+PG_HOST=host.docker.internal   # ou "db-mc" si la BDD est en conteneur
+PG_PORT=5432
+PG_DB=maarch_courrier
+PG_USER=grafana_ro
+PG_PASSWORD=ChangeMoi!
+PG_VERSION=16
+</code></pre>
+                <p><strong>compose.yml</strong> :</p>
+<pre><code class="language-yaml">version: "3.8"
+services:
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "${GRAFANA_PORT}:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: "${GRAFANA_ADMIN_USER}"
+      GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_ADMIN_PASSWORD}"
+      PG_HOST: "${PG_HOST}"
+      PG_PORT: "${PG_PORT}"
+      PG_DB:   "${PG_DB}"
+      PG_USER: "${PG_USER}"
+      PG_PASSWORD: "${PG_PASSWORD}"
+      PG_VERSION: "${PG_VERSION}"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./dashboards:/var/lib/grafana/dashboards
+volumes:
+  grafana_data:
+</code></pre>
+              </div>
+            </div>
+
+            <!-- 5) Provisioning -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                5) Provisioning (automatiser sans clic)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+                <p><code>provisioning/datasources/datasource.yml</code> :</p>
+<pre><code class="language-yaml">apiVersion: 1
+datasources:
+  - name: Maarch Postgres
+    uid: maarch_postgres
+    type: postgres
+    access: proxy
+    isDefault: true
+    url: ${PG_HOST}:${PG_PORT}
+    database: ${PG_DB}
+    user: ${PG_USER}
+    jsonData:
+      sslmode: disable
+      postgresVersion: ${PG_VERSION}
+      timescaledb: false
+    secureJsonData:
+      password: ${PG_PASSWORD}
+</code></pre>
+                <p><code>provisioning/dashboards/provider.yml</code> :</p>
+<pre><code class="language-yaml">apiVersion: 1
+providers:
+  - name: "Maarch Dashboards"
+    orgId: 1
+    folder: "Maarch"
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards
+      # Tous les *.json dans /dashboards seront importés
+</code></pre>
+                <p><strong>Résultat</strong> : au premier démarrage, Grafana crée la datasource et importe
+                  automatiquement les dashboards.</p>
+              </div>
+            </div>
+
+            <!-- 6) Modèle de données & SQL -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                6) Modèle de données & requêtes SQL (les graphes)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+                <p>
+                  Adapte les noms de tables/colonnes à mon schéma Maarch
+                  (ex. <code>courrier</code>, <code>mail_type</code>, <code>received_at</code>, <code>closed_at</code>, <code>entity</code>).
+                </p>
+                <p><em>Variables Grafana</em> : <code>$__timeFilter(colonne)</code>, <code>$entity</code>…</p>
+<pre><code class="language-sql">-- 1) Volumétrie quotidienne (Entrants / Sortants)
+SELECT
+  date_trunc('day', received_at) AS "time",
+  SUM(CASE WHEN mail_type='in'  THEN 1 ELSE 0 END) AS in_count,
+  SUM(CASE WHEN mail_type='out' THEN 1 ELSE 0 END) AS out_count
+FROM courrier
+WHERE $__timeFilter(received_at)
+  AND (${entity:regex} IS NULL OR entity ~* ${entity:regex})
+GROUP BY 1
+ORDER BY 1;
+
+-- 2) Délai moyen de traitement (jours)
+SELECT
+  date_trunc('day', closed_at) AS "time",
+  AVG(EXTRACT(EPOCH FROM (closed_at - received_at)))/86400 AS avg_days
+FROM courrier
+WHERE closed_at IS NOT NULL
+  AND $__timeFilter(closed_at)
+  AND (${entity:regex} IS NULL OR entity ~* ${entity:regex})
+GROUP BY 1
+ORDER BY 1;
+
+-- 3) SLA en dépassement (> 10 jours)
+SELECT
+  date_trunc('day', closed_at) AS "time",
+  SUM(CASE WHEN (closed_at - received_at) > interval '10 days' THEN 1 ELSE 0 END) AS breaches
+FROM courrier
+WHERE closed_at IS NOT NULL
+  AND $__timeFilter(closed_at)
+GROUP BY 1
+ORDER BY 1;
+
+-- 4) Charge par entité (Top 10)
+SELECT
+  entity,
+  COUNT(*) AS nb
+FROM courrier
+WHERE $__timeFilter(received_at)
+GROUP BY entity
+ORDER BY nb DESC
+LIMIT 10;
+</code></pre>
+                <p class="soft">Astuce : crée des <strong>views SQL</strong> (dossier <code>sql/views.sql</code>) pour stabiliser les requêtes des panels.</p>
+              </div>
+            </div>
+
+            <!-- 7) Dashboards livrés -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a6', this)">
+                7) Création des dashboards 
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a6">
+                <p></p>
+                <ul>
+                  <li><strong>01_overview.json</strong> : tuiles Totaux entrants/sortants, variation %, séries temporelles journalières, répartition par entité.</li>
+                  <li><strong>02_performance.json</strong> : courbe <em>délai moyen</em>, histogramme <em>SLA dépassés</em>, table <em>top dossiers les plus longs</em>.</li>
+                  <li><strong>03_workload.json</strong> : bar chart <em>Volume par entité (Top 10)</em>, filtres entité/statut, heatmap <em>charge par jour/heure</em>.</li>
+                </ul>
+                <p>Tous utilisent des variables (période, entité regex, statut) et se provisionnent automatiquement.</p>
+              </div>
+            </div>
+
+            <!-- 8) Runbook -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a7', this)">
+                8) Mise en route (Runbook)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a7">
+<pre><code class="language-bash"># 1) Cloner
+git clone https://github.com/avisse/grafana-maarch
+cd grafana-maarch
+
+# 2) Remplir .env (hôte/port BDD, user RO, mdp)
+
+# 3) Lancer
+docker compose up -d
+
+# 4) Ouvrir Grafana
+# → http://&lt;hote&gt;:3000  (admin / mot de passe .env)
+
+# 5) Vérifier
+# Folder "Maarch" → 3 dashboards importés automatiquement
+# Configuration → Data sources → "Save & Test" OK
+</code></pre>
+              </div>
+            </div>
+
+            <!-- 9) Sécurité & MEP -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a8', this)">
+                9) Sécurité, sauvegarde, MEP
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a8">
+                <ul>
+                  <li><strong>RO strict</strong> sur PostgreSQL (pas de DDL/DML).</li>
+                  <li><strong>Exposition</strong> : éviter l’accès public ; sinon reverse proxy + HTTPS.</li>
+                  <li><strong>Sauvegardes</strong> : snapshot du volume <code>grafana_data</code> + dashboards JSON dans Git.</li>
+                  <li><strong>Upgrade</strong> : <code>docker compose pull</code> puis <code>up -d</code>.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 10) Recette -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a9', this)">
+                10) Recette & preuves de bon fonctionnement
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a9">
+                <ul>
+                  <li>Datasource : <em>Save &amp; Test</em> → <strong>OK</strong>.</li>
+                  <li>Dashboards : courbes non vides sur période avec données.</li>
+                  <li>Filtres : entité / temps opérationnels.</li>
+                  <li>Rejouabilité : autre VM → clone + <code>compose up -d</code> → mêmes résultats (provisioning).</li>
+                  <li>Sécurité : l’utilisateur <code>grafana_ro</code> ne fait que <code>SELECT</code>.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+
+        </div><!-- /row -->
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

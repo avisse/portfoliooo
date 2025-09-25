@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Zabbix – Supervision multi-OS (Debian 12) | Steve Avisse</title>
+  <meta name="description" content="Déploiement de Zabbix 6.x sur Debian 12 (MariaDB, Apache/PHP), supervision Linux & Windows via agents, templates (Apache), réseau VirtualBox NAT + intnet, troubleshooting.">
+  <meta name="keywords" content="Zabbix, Debian 12, MariaDB, Apache, PHP, zabbix-agent, Windows 10, Templates, Supervision, Monitoring, VirtualBox, intnet">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux -->
+  <style>
+    :root{ --accent:#f2559e; --accent2:#007bff; --ink:#0b1420; }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{ background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600; }
+    .btn-ghost{ display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none; }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+  <main id="main">
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+           <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Zabbix – Supervision Debian 12 (Linux + Windows)
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+              <!-- Place tes fichiers dans assets/img/zabbix/ avec ces noms (ou adapte les src) -->
+   <img src="assets/img/interface graphique decoute vm hote windows.jpg" class="img-fluid" alt="Interface Zabbix - vue d'écoute hôte Windows">
+  <img src="assets/img/zabbix paramétrage hot linux.jpg" class="img-fluid" alt="Paramétrage hôte Linux dans Zabbix">
+  <img src="assets/img/telechargement template apache.jpg" class="img-fluid" alt="Téléchargement du template Apache">
+  <img src="assets/img/test ping entre les deux vm .jpg" class="img-fluid" alt="Ping entre les deux VMs">
+  <img src="assets/img/paramétrage fichier conf windows.jpg" class="img-fluid" alt="Configuration zabbix_agentd.conf sous Windows">
+  <img src="assets/img/changement ip serveur windows.jpg" class="img-fluid" alt="Configuration IP statique Windows (NIC intnet)">
+  <img src="assets/img/config agent sur vm avec adresse ip.jpg" class="img-fluid" alt="Agent configuré avec l’adresse IP du serveur">
+  <img src="assets/img/configuration nat et reseau privé.jpg" class="img-fluid" alt="VirtualBox : NAT + réseau interne">
+  <img src="assets/img/succes ecoute vm test-entretient.jpg" class="img-fluid" alt="Succès : écoute de l’hôte test-entretien">
+          </div>
+</div>
+
+          <!-- Colonne droite -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Zabbix sur Debian 12 – supervision hétérogène</strong></h3>
+
+            <p class="lead-intro">
+              Mise en place d’une plateforme <span class="accent">Zabbix</span> complète : <strong>MariaDB</strong>,
+              <strong>zabbix-server</strong>, <strong>frontend Apache/PHP</strong>, et agents
+              <strong>Linux</strong> & <strong>Windows</strong>. Réseau VirtualBox séparé
+              (<em>NAT + intnet</em>) et activation de <strong>templates</strong> (dont Apache).
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Debian 12</span><span class="tag">Zabbix 6.x</span><span class="tag">MariaDB</span>
+              <span class="tag">Apache/PHP</span><span class="tag">VirtualBox</span><span class="tag">Templates</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Réseau</strong> : NIC1 NAT / NIC2 intnet</li>
+              <li><strong>Hôtes</strong> : Linux (192.168.100.20), Windows (192.168.100.15)</li>
+              <li><strong>Frontend</strong> : <code>http://192.168.100.10/zabbix</code></li>
+            </ul>
+ <a class="btn-repo" href="https://github.com/avisse/Zabbix.git" target="_blank">
+              <i class="bx bxl-github"></i> Voir le repository GitHub
+            </a>
+          </div>
+
+          <!-- Accordéons -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">
+                Objectif, périmètre & architecture
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="cx">
+                <p>
+                  Déployer Zabbix sur <strong>Debian 12</strong> avec base <strong>MariaDB</strong>, frontend
+                  <strong>Apache/PHP</strong>, et superviser 2 hôtes (Linux & Windows).
+                  Topologie : NAT (internet) + <strong>intnet</strong> (supervision) avec IPs fixes.<br>
+                  Agents en <em>passive checks</em> (10050/TCP) et <em>active checks</em> (10051/TCP).
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                Installation serveur (Debian 12)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+<pre><code class="language-bash"># Pré-requis LAMP
+sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo apt install -y apache2 mariadb-server php php-mysql php-gd php-xml php-mbstring \
+  libapache2-mod-php unzip wget
+
+# Paquets Zabbix
+sudo apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf \
+  zabbix-sql-scripts zabbix-agent
+
+# Base MariaDB
+sudo mysql -u root &lt;&lt;'SQL'
+CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+CREATE USER "zabbix"@"localhost" IDENTIFIED BY "motdepasse_solide";
+GRANT ALL PRIVILEGES ON zabbix.* TO "zabbix"@"localhost";
+FLUSH PRIVILEGES;
+SQL
+
+zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql -u zabbix -p zabbix
+
+# /etc/zabbix/zabbix_server.conf
+# DBName=zabbix ; DBUser=zabbix ; DBPassword=motdepasse_solide
+
+sudo systemctl restart zabbix-server zabbix-agent apache2
+sudo systemctl enable  zabbix-server zabbix-agent apache2
+</code></pre>
+                <p class="soft">Accès : <code>http://[IP_SERVER]/zabbix</code> → wizard, timezone Europe/Paris, puis login <em>Admin/zabbix</em> (à changer).</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                Supervision d’un hôte Linux (192.168.100.20)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+<pre><code class="language-bash">sudo apt install -y zabbix-agent
+sudo sed -i 's/^Server=.*/Server=192.168.100.10/' /etc/zabbix/zabbix_agentd.conf
+sudo sed -i 's/^ServerActive=.*/ServerActive=192.168.100.10/' /etc/zabbix/zabbix_agentd.conf
+echo "Hostname=test-entretien" | sudo tee -a /etc/zabbix/zabbix_agentd.conf
+sudo systemctl restart zabbix-agent &amp;&amp; sudo systemctl enable zabbix-agent
+
+# Contrôles rapides depuis le serveur
+sudo apt -y install zabbix-get
+zabbix_get -s 192.168.100.20 -k agent.ping     # → 1
+zabbix_get -s 192.168.100.20 -k system.hostname
+</code></pre>
+                <p>Frontend → <em>Configuration → Hôtes → Créer</em> : IP 192.168.100.20:10050, groupe <em>Linux servers</em>, modèle <em>Linux by Zabbix agent</em>. L’icône doit passer au vert (ZBX).</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                Supervision Windows 10 (192.168.100.15)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+<pre><code class="language-bash"># Côté Windows (Invite admin)
+# Installer l'agent, éditer C:\Program Files\Zabbix Agent\zabbix_agentd.conf :
+Server=192.168.100.10
+ServerActive=192.168.100.10
+Hostname=WIN10-DIGDASH
+
+# Pare-feu
+netsh advfirewall firewall add rule name="Zabbix Agent" dir=in action=allow protocol=TCP localport=10050
+
+# Service
+sc start "Zabbix Agent"
+</code></pre>
+                <p>VirtualBox : <strong>2 NIC</strong> (NAT + <em>intnet</em>), IP statique 192.168.100.15/24 sur la NIC <em>intnet</em>. Déclarer l’hôte dans Zabbix comme pour Linux.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                Templates & données collectées
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+                <ul>
+                  <li>Import d’un modèle officiel : <strong>Template App Apache by Zabbix agent</strong> (droits Super Admin requis) puis liaison à l’hôte.</li>
+                  <li>Métriques vues : CPU, RAM, Swap, Process, Disques (espace & I/O), réseau, et stats Apache (requêtes, workers, latence…).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                Problèmes rencontrés & résolutions
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+                <p></p>
+                <ul>
+                  <li><strong>ZBX grisé</strong> : mauvaise IP/port ou agent arrêté → corriger <code>zabbix_agentd.conf</code>, <code>systemctl status</code>, tester <code>zabbix_get</code>.</li>
+                  <li><strong>zabbix-server KO</strong> : mot de passe DB incohérent → réaligner <code>/etc/zabbix/zabbix_server.conf</code> et l’utilisateur MariaDB, redémarrer.</li>
+                  <li><strong>Windows non joignable</strong> : NIC <em>intnet</em> absente → ajouter 2ème NIC + IP statique 192.168.100.15/24.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a6', this)">
+                Exploitation, sécurité & mémo commandes
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a6">
+<pre><code class="language-bash"># Services
+systemctl status zabbix-server zabbix-agent apache2 mariadb
+systemctl restart zabbix-server zabbix-agent apache2 mariadb
+systemctl enable  zabbix-server zabbix-agent apache2
+
+# Sauvegarde DB
+mysqldump -u root -p zabbix &gt; /root/backup_zabbix_$(date +%F).sql
+
+# Logs
+/var/log/zabbix/zabbix_server.log
+/var/log/zabbix/zabbix_agentd.log
+/var/log/apache2/
+
+# Réseau & tests
+ping 192.168.100.20
+nc -zv 192.168.100.20 10050
+zabbix_get -s 192.168.100.20 -k agent.ping
+</code></pre>
+                <p class="soft">Bonnes pratiques : changer immédiatement <em>Admin/zabbix</em>, mots de passe DB forts, limiter <code>Server=</code> sur les agents, NTP actif.</p>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+        </div><!-- /row -->
+        <!-- Résultats & enseignements -->
+<div class="faq-item">
+  <div class="question" onclick="toggleAnswer('zx-results', this)">
+    Résultats & enseignements
+    <span class="arrow-icon">▼</span>
+  </div>
+  <div class="answer" id="zx-results">
+    <p></p>
+    <h5 class="mb-2">Résultats obtenus</h5>
+
+    <ul>
+      <li><strong>Plateforme opérationnelle</strong> : Zabbix 6.x sur Debian 12 (MariaDB + Apache/PHP), accès web fonctionnel et agents Linux/Windows joignables.</li>
+      <li><strong>Couverture multi-OS</strong> : collecte CPU/RAM/disques/process, tests <code>zabbix_get</code> validés, templates appliqués (<em>Linux by Zabbix agent</em>, <em>Template App Apache</em>).</li>
+      <li><strong>Topologie maîtrisée</strong> : réseau VirtualBox <em>NAT + intnet</em>, IP statiques, ports 10050/10051 opérationnels (checks passifs/actifs).</li>
+      <li><strong>Runbook & scripts</strong> : installation serveur automatisée, script agent Linux, mémo commandes (services, DB, logs, réseau).</li>
+      <li><strong>Dépannage documenté</strong> : cas réels (ZBX grisé, auth DB, NIC manquante) et résolutions pas-à-pas → reproductibilité des fixes.</li>
+    </ul>
+
+    <h5 class="mt-3 mb-2">Plus-values (techniques & métier)</h5>
+    <ul>
+      <li><strong>Industrialisation</strong> : déploiement standardisé + configuration idempotente → environnements de démo/formation rapides.</li>
+      <li><strong>Observabilité de base</strong> : visibilité immédiate sur la santé des hôtes et du service Apache → détection précoce des dérives.</li>
+      <li><strong>Sécurité pragmatique</strong> : séparation de réseau, durcissement des comptes, alignement des secrets DB → surface d’attaque réduite.</li>
+      <li><strong>Transférable en prod</strong> : architecture simple à étendre (reverse proxy, TLS, alerting mail/Teams/Slack, auto-discovery).</li>
+      <li><strong>Gain d’exploitation</strong> : procédures claires (install, ajout d’hôtes, troubleshooting) → moins de temps perdu lors des incidents.</li>
+    </ul>
+
+    <h5 class="mt-3 mb-2">Ce que le projet m’a appris</h5>
+    <ul>
+      <li><strong>Conduire une supervision hétérogène</strong> de bout en bout (serveur, agents, modèles, réseau, sécurité).</li>
+      <li><strong>Relier technique et usage</strong> : partir d’un besoin d’observabilité et livrer un socle exploitable par l’équipe.</li>
+      <li><strong>Documenter pour la pérennité</strong> : scripts, runbook et dépannage capitalisés pour accélérer les futures mises en place.</li>
+    </ul>
+  </div>
+</div>
+
+      </div><!-- /container -->
+    </section>
+  </main>
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){ answer.style.maxHeight = null; }
+      else { answer.style.maxHeight = answer.scrollHeight + "px"; }
+    }
+  </script>
+</body>
+</html>

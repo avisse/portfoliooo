@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Steve Avisse</title>
-  <meta content="" name="descriptison">
-  <meta content="" name="keywords">
+  <title>MOA — Synchronisation Cart@DS ↔ PLAT’AU | Steve Avisse</title>
+  <meta name="description" content="Projet MOA : cadrage, mapping des statuts, contrôles des pièces, idempotence, rejeu et supervision pour synchroniser Cart@DS avec PLAT’AU.">
+  <meta name="keywords" content="MOA, Urbanisme, Cart@DS, PLAT'AU, intégration, synchronisation, idempotence, rejeu, supervision, RGPD, Mairie de Montrouge">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -26,283 +26,288 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (squelette commun) -->
   <style>
-        .faq-item {
-            border-bottom: 1px solid #ddd;
-            padding: 10px;
-        }
-
-        .question {
-            cursor: pointer;
-            font-weight: bold;
-            margin-bottom: 10px;
-            position: relative;
-        }
-
-        .answer {
-            max-height: 0;
-            overflow: hidden;
-            margin-bottom: 20px;
-            transition: max-height 0.3s ease-in-out;
-        }
-
-        .arrow-icon {
-            position: absolute;
-            top: 0;
-            right: 0;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .answer-visible .arrow-icon {
-            transform: rotate(180deg);
-        }
-    </style>
-
-  <!-- =======================================================
-  * Template Name: MyResume - v2.1.0
-  * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    :root{
+      --accent:#f2559e;
+      --accent2:#007bff;
+      --ink:#0b1420;
+    }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+    table.klean{ width:100%; border-collapse:separate; border-spacing:0; }
+    .klean th,.klean td{ padding:10px 12px; border-bottom:1px solid #eef2f7; vertical-align:top; }
+    .klean th{ color:#1f2937; font-weight:700; }
+    .muted{ color:#6b7280; }
+  </style>
 </head>
 
 <body>
 
   <main id="main">
-
     <!-- ======= Portfolio Details ======= -->
     <section id="portfolio-details" class="portfolio-details">
       <div class="container" data-aos="fade-up">
 
         <div class="row">
 
+          <!-- Colonne gauche : carrousel -->
           <div class="col-lg-8">
-            <h2 class="portfolio-title">Urbanisme Connecté : L'Harmonie Cart@DS & PLAT'AU à la Mairie de Montrouge</h2>
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Synchronisation <span class="accent">Cart@DS</span> ↔ <span class="accent">PLAT’AU</span> — Mairie de Montrouge
+            </h2>
+
             <div class="owl-carousel portfolio-details-carousel">
-              <img src="assets/img/cartds.png" class="img-fluid" alt="">
+             
+<!--<img src="assets/img/cartds.png" class="img-fluid" alt="">-->
               <img src="assets/img/cartds2.png" class="img-fluid" alt="">
               <img src="assets/img/cartds3.png" class="img-fluid" alt="">
-
-                      
             </div>
           </div>
 
+          <!-- Colonne droite : résumé / tags -->
           <div class="col-lg-4 portfolio-info">
-            <h3>Cart@DS & PLAT'AU <h3>
-            <ul>
-              <li><strong>Categorie</strong>: Quand Deux Mondes Numériques Fusionnent pour Réinventer l'Autorisation d'Urbanisme</li>
-              <li><strong>Pour: </strong>: Mairie de montrouge </li>
-              <li><strong>Projet URL</strong>: <a href="#">https://https://logiciels-secteurpublic.inetum.com/sp/wp-content/uploads/2019/12/Plaquette-cartads.pdf</a></li>
+            <h3 style="text-align:center"><strong>Contexte & enjeux</strong></h3>
+
+            <p class="lead-intro">
+              La Ville voulait <strong>fluidifier</strong> et <strong>fiabiliser</strong> le traitement des autorisations
+              d’urbanisme en synchronisant <em>Cart@DS</em> (outil local) avec <em>PLAT’AU</em> (État), tout en
+              <strong>réduisant les ressaisies</strong>, les erreurs de pièces et en <strong>améliorant la traçabilité</strong>.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">MOA</span><span class="tag">Urbanisme</span><span class="tag">Intégration</span>
+              <span class="tag">Idempotence</span><span class="tag">Rejeu</span><span class="tag">Supervision</span>
+              <span class="tag">RGPD</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Rôle</strong> : MOA / Chef de projet (cadrage, pilotage, recette, RUN)</li>
+              <li><strong>Objectifs</strong> : synchro statuts/méta, contrôle pièces, traçabilité & rejeu sans doublon</li>
+              <li><strong>Livrables</strong> : mapping statuts, specs fonctionnelles, plan de tests, runbook</li>
             </ul>
-            <p><h2>Introduction</h2>
-
-    <p>Bienvenue dans le cœur numérique de la Mairie de Montrouge, où l'<strong>innovation</strong> et l'<strong>efficacité</strong> se rencontrent pour faciliter la gestion des autorisations d'urbanisme. Notre projet phare a été la fusion stratégique entre deux puissants logiciels, <strong>Cart@DS</strong> et <strong>PLAT'AU</strong>, une initiative conçue pour transformer la manière dont nous traitons et gérons les demandes au sein de notre municipalité.</p>
-
-    </div>
-
-          <div class="col-lg-13 portfolio-info">
-             <h2>Cart@DS : L'Architecte Numérique de l'Urbanisme</h2>
-
-    <p><strong>Cart@DS</strong> est bien plus qu'un simple logiciel d'urbanisme. C'est notre architecte numérique dédié à la gestion des autorisations d'urbanisme. Grâce à ses fonctionnalités avancées, il offre une interface intuitive pour les usagers et simplifie le processus de dépôt des demandes en ligne. Mais pourquoi s'arrêter là ?</p>
-
-    <h2>PLAT'AU : La Synchronisation au Service de l'Efficacité</h2>
-
-    <p>Nous avons repoussé les limites en greffant le plateau de <strong>PLAT'AU</strong> à <strong>Cart@DS</strong>. <strong>PLAT'AU</strong>, la plateforme de consultation des services de l'État, est devenue le maillon essentiel pour synchroniser nos services métiers. Cette synchronisation, méticuleusement mise en œuvre, a été la clé de voûte de notre initiative.</p>
-
-    <h2>La Synchronisation : Un Pont entre Deux Mondes Numériques</h2>
-
-    <p>En unissant <strong>Cart@DS</strong> et <strong>PLAT'AU</strong>, nous avons établi un pont numérique entre les demandeurs et les services de l'État. Cette synchronisation a ouvert des canaux fluides d'échanges d'informations, permettant une gestion plus transparente et rapide des autorisations d'urbanisme. Mais quels sont les avantages concrets ?</p>
-
-    <h2>Les Bénéfices Concrets pour Nos Services Métiers</h2>
-
-    <p>Cette synchronisation a permis une coordination sans faille entre les services de la Mairie de Montrouge et les instances gouvernementales. L'élimination des étapes de ressaisie, source potentielle d'erreurs, a grandement amélioré la qualité des dossiers transmis aux services instructeurs. La traçabilité accrue, la coordination facilitée entre les différents services, et la réduction des tâches à faible valeur ajoutée ont libéré nos équipes pour se concentrer sur des missions d'animation, d'ingénierie et de conseil.</p>
-
-    <h2>Grandes Lignes du Projet : De la Vision à la Réalité</h2>
-
-    <p>Dans les lignes qui suivent, nous explorerons les étapes cruciales de la mise en œuvre de ce projet révolutionnaire à la Mairie de Montrouge. Découvrez comment nous avons conçu, déployé et optimisé cette synchronisation pour redéfinir les normes de l'urbanisme numérique au service de notre communauté.</p>
           </div>
 
-</div>
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
 
- <div class="col-lg-13 portfolio-info">
-  <h2 style="color: #007bff; font-weight: bold;">Voici comment j'ai orchestré la mise en place de ce projet, détaillé en plusieurs étapes :</h2>
+            <!-- 1) Contexte & rôle -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                1) Contexte & rôle (MOA)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+                <p><strong>Enjeux :</strong> ressaisies, erreurs de pièces, suivi morcelé, traçabilité faible.</p>
+                <ul>
+                  <li><strong>Cadrage fonctionnel :</strong> besoin, périmètre, règles de gestion.</li>
+                  <li><strong>Pilotage :</strong> ateliers Urbanisme/SI/éditeur, planning, risques.</li>
+                  <li><strong>Qualité :</strong> plan de tests, jeux d’essai, UAT, go/no-go.</li>
+                  <li><strong>Déploiement & change :</strong> com agents, accompagnement, passage en RUN.</li>
+                </ul>
+              </div>
+            </div>
 
-  </div>
+            <!-- 2) Objectifs & périmètre livré -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                2) Objectifs & périmètre livré
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+                <ul>
+                  <li><strong>Synchroniser</strong> statuts & métadonnées Cart@DS ↔ PLAT’AU.</li>
+                  <li><strong>Transmettre</strong> les pièces avec contrôles (formats/tailles) + messages utiles.</li>
+                  <li><strong>Assurer</strong> traçabilité complète & <em>rejeu idempotent</em> (sans doublon).</li>
+                </ul>
+                <p class="soft">Livré : échanges <strong>bidirectionnels</strong> sur le cycle de vie (dépôt → décision), journal d’échanges exploitable, procédures d’exploitation (supervision, retry/rejeu, escalade N1→N2→éditeur).</p>
+              </div>
+            </div>
 
-<!-- Étape 1 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step1', this)">
-        Identification des Besoins :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step1">
-        <li>Analyse approfondie des besoins du service informatique et des utilisateurs finaux.</li>
-        <li>Évaluation des lacunes dans le processus existant.</li>
-    </div>
-</div>
+            <!-- 3) Architecture (vue simple) -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                3) Architecture (vue simple)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+<pre><code>Cart@DS  →  Adaptateur d’échanges  →  PLAT’AU
+              └─ normalisation
+              └─ contrôles (formats/poids)
+              └─ idempotence (anti-doublon)
+              └─ file + retry + rejeu
+              └─ journalisation (horodatage, statut, motif)</code></pre>
+                <p class="soft">L’<strong>adaptateur</strong> centralise logique de contrôle, mapping et reprise, tout en laissant Cart@DS et PLAT’AU découplés.</p>
+              </div>
+            </div>
 
-<!-- Étape 2 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step2', this)">
-        Définition des Objectifs :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step2">
-        <li>Établissement d'objectifs clairs et mesurables pour le projet.</li>
-        <li>Alignement des objectifs sur les priorités et les attentes de la Ville de Montrouge.</li>
-    </div>
-</div>
+            <!-- 4) Démarche & étapes -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                4) Démarche & étapes clés
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+                <p class="muted"><strong>Cadrage</strong></p>
+                <ul>
+                  <li>Ateliers “parcours dossier” (qui/quoi/quand, événements déclencheurs).</li>
+                  <li>Mapping des <strong>statuts</strong> validé avec le métier (aller-retours sur cas limites).</li>
+                  <li>Périmètre pilote → <strong>généralisation</strong> par vagues.</li>
+                </ul>
 
-<!-- Étape 3 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step3', this)">
-        Étude de Faisabilité :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step3">
-        <li>Évaluation de la faisabilité technique du projet.</li>
-        <li>Identification des ressources nécessaires, y compris le personnel et les technologies.</li>
-    </div>
-</div>
+                <p class="muted"><strong>Spécifications fonctionnelles</strong></p>
+                <ul>
+                  <li><strong>Data-mapping</strong> : identifiants, adresses, typologies de pièces, métadonnées.</li>
+                  <li><strong>Règles d’erreur</strong> claires (motifs d’incomplet, formats refusés) → <em>messages agents</em>.</li>
+                  <li><strong>Idempotence</strong> : mêmes identifiants fonctionnels ⇒ pas de doublon en rejeu.</li>
+                </ul>
 
+                <p class="muted"><strong>Pré-intégration technique (extraits représentatifs)</strong></p>
+<pre><code>Statuts (exemples) :
+Cart@DS = Déposé            ↔ PLAT’AU = Dépôt reçu
+Cart@DS = Dossier incomplet  ↔ PLAT’AU = Incomplet (motifs normalisés)
+Cart@DS = Décision notifiée  ↔ PLAT’AU = Décision communiquée
 
-<!-- Étape 4 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step4', this)">
-        Choix des Technologies :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step4">
-        <li>Sélection des technologies appropriées pour le développement du projet.</li>
-        <li>Intégration des solutions existantes, y compris Cart@DS et le projet Plat'au.</li>
-    </div>
-</div>
+Pièces jointes :
+- Contrôles format/poids ; rejet explicite + message opérable pour l’agent.
 
-<!-- Étape 5 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step5', this)">
-        Conception du Système :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step5">
-        <li>Création d'une conception détaillée du système, en mettant l'accent sur l'architecture logicielle et les flux de données.</li>
-        <li>Définition des interactions entre Cart@DS et le projet Plat'au.</li>
-    </div>
-</div>
+Indisponibilité PLAT’AU :
+- Mise en file + retry automatique ; information métier ; rejeu une fois rétabli.</code></pre>
+              </div>
+            </div>
 
-<!-- Étape 6 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step6', this)">
-        Développement du Projet Plat'au :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step6">
-        <li>Implémentation des fonctionnalités requises dans le projet Plat'au.</li>
-        <li>Tests unitaires réguliers pour assurer la stabilité et la performance.</li>
-    </div>
-</div>
+            <!-- 5) UAT (recette métier) -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                5) Recette métier (UAT) — cas joués & critères d’acceptation
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+                <p class="muted"><strong>Cas nominaux</strong></p>
+                <ul>
+                  <li>Dépôt complet → statuts alignés jusqu’à la décision ; pièces OK.</li>
+                </ul>
+                <p class="muted"><strong>Cas non-nominaux</strong></p>
+                <ul>
+                  <li>Dossier incomplet (motifs), pièce non conforme, indisponibilité PLAT’AU (retry + rejeu).</li>
+                </ul>
+                <p class="muted"><strong>Acceptation</strong></p>
+                <ul>
+                  <li>Statuts <strong>cohérents</strong> Cart@DS ↔ PLAT’AU, <strong>messages utiles</strong> aux agents, <strong>rejeu sans doublon</strong>, <strong>trace exploitable</strong>.</li>
+                </ul>
+              </div>
+            </div>
 
-<!-- Étape 7 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step7', this)">
-        Développement de la Synchronisation avec Cart@DS :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step7">
-        <li>Mise en place des mécanismes de synchronisation entre le projet Plat'au et Cart@DS.</li>
-        <li>Validation de la communication bidirectionnelle entre les deux systèmes.</li>
-    </div>
-</div>
+            <!-- 6) Déploiement & conduite du changement -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a6', this)">
+                6) Déploiement & conduite du changement
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a6">
+                <ul>
+                  <li><strong>Pilote</strong> sur périmètre restreint (types de dossiers + agents volontaires).</li>
+                  <li><strong>Montée en charge</strong> par vagues avec REX.</li>
+                  <li><strong>Kit agents</strong> : pas-à-pas, FAQ, trames de réponse usagers.</li>
+                  <li><strong>Plan de retour arrière</strong> documenté (points de coupure, purge de file, rollback).</li>
+                </ul>
+              </div>
+            </div>
 
-<!-- Étape 8 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step8', this)">
-        Tests Intégrés :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step8">
-        <li>Intégration du projet Plat'au avec Cart@DS pour former un système cohérent.</li>
-        <li>Exécution de tests exhaustifs pour identifier et corriger les éventuels problèmes d'interopérabilité.</li>
-    </div>
-</div>
+            <!-- 7) RUN & supervision -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a7', this)">
+                7) RUN & supervision (exploitation)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a7">
+                <ul>
+                  <li>Suivi des échanges <strong>OK/KO</strong>, délais, <strong>files d’attente</strong>.</li>
+                  <li><strong>Escalade</strong> : N1 (qualification) → N2 (analyse payload/journal) → N3 (éditeur).</li>
+                  <li><strong>RGPD</strong> : journaux utiles, minimisation des données, rétention maîtrisée.</li>
+                </ul>
+              </div>
+            </div>
 
-<!-- Étape 9 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step9', this)">
-        Formation des Utilisateurs :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step9">
-        <li>Organisation de sessions de formation pour les utilisateurs finaux et les membres du service informatique.</li>
-        <li>Documentation détaillée des nouvelles fonctionnalités et des changements apportés.</li>
-    </div>
-</div>
+            <!-- 8) Difficultés & solutions -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a8', this)">
+                8) Principales difficultés & solutions apportées
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a8">
+                <ul>
+                  <li><strong>Divergences de statuts/champs</strong> → ateliers de mapping + exemples réels.</li>
+                  <li><strong>Erreurs de pièces</strong> → contrôles <em>en amont</em> + messages explicites pour agents.</li>
+                  <li><strong>Pics d’indisponibilité PLAT’AU</strong> → file d’attente, <em>retry</em>, <em>rejeu</em> au rétablissement.</li>
+                  <li><strong>Logs vs confidentialité</strong> → traçabilité suffisante <em>sans</em> données sensibles.</li>
+                </ul>
+              </div>
+            </div>
 
-<!-- Étape 10 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step10', this)">
-        Déploiement :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step10">
-        <li>Planification et exécution du déploiement du projet sur l'ensemble de l'infrastructure.</li>
-        <li>Surveillance attentive pendant la phase initiale pour résoudre rapidement tout problème émergent.</li>
-    </div>
-</div>
+            <!-- 9) Résultats -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a9', this)">
+                9) Résultats (qualitatifs observés)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a9">
+                <ul>
+                  <li>Moins de manipulations manuelles ; <strong>cohérence</strong> accrue des statuts entre Ville & État.</li>
+                  <li><strong>Traçabilité</strong> claire des échanges & reprise <strong>simple</strong> en incident.</li>
+                  <li><strong>Agents rassurés</strong> : messages compréhensibles, rejeu guidé, support outillé.</li>
+                </ul>
+              </div>
+            </div>
 
-<!-- Étape 11 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step11', this)">
-        Gestion du Changement :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step11">
-        <li>Communication efficace avec les parties prenantes tout au long du processus.</li>
-        <li>Mise en œuvre de stratégies de gestion du changement pour faciliter l'adoption du nouveau système.</li>
-    </div>
-</div>
+            <!-- 10) Livrables clés -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('b0', this)">
+                10) Livrables clés remis/validés
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="b0">
+                <ul>
+                  <li>Note de cadrage & périmètre.</li>
+                  <li>Spécifications fonctionnelles (règles, mapping, messages).</li>
+                  <li>Plan de tests / jeux d’essai & PV de recette.</li>
+                  <li>Mode opératoire de déploiement & <strong>kit agents</strong>.</li>
+                  <li>Procédures RUN (supervision, retry/rejeu, escalade, rétention logs).</li>
+                </ul>
+              </div>
+            </div>
 
-<!-- Étape 12 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('step12', this)">
-        Suivi et Optimisation Continue :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="step12">
-        <li>Mise en place de mécanismes de suivi des performances du système.</li>
-        <li>Recueil des commentaires des utilisateurs pour apporter des améliorations continues.</li>
-    </div>
-</div>
+          </div><!-- /col-12 -->
 
-
-
-
-     <!-- ======= etapes suivantes ======= -->
-
-
-        
-
-      </div>
+        </div><!-- /row -->
+      </div><!-- /container -->
     </section><!-- End Portfolio Details -->
-
   </main><!-- End #main -->
 
   <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
-   <script>
-        function toggleAnswer(answerId, question) {
-            var answer = document.getElementById(answerId);
-            answer.classList.toggle("answer-visible");
-            question.classList.toggle("answer-visible");
-            if (answer.style.maxHeight) {
-                answer.style.maxHeight = null;
-            } else {
-                answer.style.maxHeight = answer.scrollHeight + "px";
-            }
-        }
-    </script>
   <script src="assets/vendor/jquery/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
@@ -318,6 +323,21 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
 </body>
-
 </html>
+
+
+

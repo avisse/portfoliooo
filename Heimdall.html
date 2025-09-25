@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Heimdall – Portail centralisé (Docker) | Steve Avisse</title>
+  <meta name="description" content="Projet DevOps : déploiement de Heimdall sous Docker pour centraliser l’accès aux applications d’une DSI (GLPI, Nextcloud, Grafana, Uptime Kuma, Portainer…).">
+  <meta name="keywords" content="Heimdall, Docker, Docker Compose, Portail, DevOps, Reverse Proxy, SSL, DSI, GLPI, Nextcloud, Grafana, Uptime Kuma, Portainer">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (lisibilité + accent couleurs) -->
+  <style>
+    :root{
+      --accent:#f2559e;   /* rose doux */
+      --accent2:#007bff;  /* bleu charte */
+      --ink:#0b1420;
+    }
+    .lead-intro{
+      font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px;
+    }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+
+    /* blocs code lisibles */
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+
+    /* accordéons */
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+
+    /* arrondi léger sur les images du carrousel */
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Heimdall – Portail centralisé (Docker) pour la DSI
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+  <img src="assets/img/heimdall2.png" class="img-fluid" alt="Heimdall – vue d’ensemble">
+  <img src="assets/img/heimdall3.png" class="img-fluid" alt="Heimdall – tuiles et catégories">
+  <img src="assets/img/heimdall4.png" class="img-fluid" alt="Heimdall – intégrations DSI">
+  <img src="assets/img/heimdall5.png" class="img-fluid" alt="Heimdall – exemples GLPI / Grafana / Portainer">
+  <img src="assets/img/heimdall6.png" class="img-fluid" alt="Heimdall – vue supplémentaire">
+</div>
+</div>
+
+          <!-- Colonne droite : résumé / tags / lien repo -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Heimdall : Portail Apps DSI</strong></h3>
+
+            <p class="lead-intro">
+              Déploiement de <strong>Heimdall</strong> sous <strong>Docker</strong> pour
+              <span class="accent">centraliser l’accès</span> aux outils d’administration et de supervision
+              (GLPI, Nextcloud, Rocket.Chat, Grafana, Uptime Kuma, Portainer…). Objectif : <em>un point d’entrée unique</em>
+              pour la DSI, simple et rapide.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Docker Compose</span>
+              <span class="tag">LinuxServer.io</span>
+              <span class="tag">Reverse Proxy / SSL</span>
+              <span class="tag">Admin & Supervision</span>
+              <span class="tag">Portainer</span>
+              <span class="tag">Grafana / Uptime Kuma</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : Portail / Administration</li>
+              <li><strong>Contexte</strong> : VM Debian 12 (local)</li>
+              <li><strong>Livrables</strong> : compose, config persistante, doc, backup config</li>
+            </ul>
+
+          
+           <a class="btn-repo" href="https://github.com/avisse/heimdall.git" target="_blank" rel="noopener"><i class="bx bxl-github"></i> Voir le repository GitHub</a> 
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">
+                Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="cx">
+                <p>
+                  Dans une collectivité, la DSI administre de nombreuses applications (GLPI, Nextcloud, Rocket.Chat,
+                  Grafana, Uptime Kuma, Portainer, phpMyAdmin…). Les techniciens perdaient du temps à gérer des URLs
+                  différentes et des ports multiples.
+                </p>
+                <p>
+                  <strong>Objectif</strong> : mettre en place un <strong>portail centralisé</strong> simple et intuitif,
+                  accessible via un navigateur, pour retrouver tous les outils <em>au même endroit</em>.
+                  Solution retenue : <strong>Heimdall</strong>.
+                </p>
+              </div>
+            </div>
+
+            <!-- Étapes de mise en place -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('steps', this)">
+                Étapes de mise en place
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="steps">
+                <ol>
+                  <li><strong>Création du projet</strong> sur VM Debian 12 : installation Docker & Docker Compose, dossier
+                    <code>/home/vboxuser/projet-ecf/heimdall/</code>, init Git.</li>
+                  <li><strong>Rédaction du compose</strong> (volumes persistants, ports 8080/8443, timezone).</li>
+                  <li><strong>Lancement</strong> : <code>docker compose up -d</code> puis accès à <code>http://IP_VM:8080</code>.</li>
+                  <li><strong>Configuration</strong> : tuiles par application, catégories (Support, Collaboration, Supervision, Admin), fond d’écran & logos.</li>
+                  <li><strong>Sécurisation</strong> : SSL (auto-signé pour démo), redirection HTTP→HTTPS, restriction pare-feu.</li>
+                  <li><strong>Documentation & sauvegarde</strong> : README, script de backup du volume <code>config/</code>.</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- Docker Compose -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('compose', this)">
+                Docker Compose (extrait)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="compose">
+<pre><code class="language-yaml">version: "3.9"
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+    volumes:
+      - ./config:/config
+      - ./ssl:/config/nginx/ssl:ro
+    ports:
+      - "8080:80"
+      - "8443:443"
+    restart: unless-stopped
+</code></pre>
+                <p class="soft">Les volumes <code>config/</code> et <code>ssl/</code> assurent la persistance et la sécurisation (HTTPS).</p>
+              </div>
+            </div>
+
+            <!-- Configuration & personnalisation -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('custom', this)">
+                Configuration & personnalisation
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="custom">
+                <ul>
+                  <li>Création des <strong>tuiles</strong> (GLPI, Nextcloud, Rocket.Chat, Grafana, Portainer, Uptime Kuma…)</li>
+                  <li>Organisation par <strong>catégories</strong> : Support / Collaboration / Supervision / Admin</li>
+                  <li>Personnalisation visuelle : fonds, icônes, descriptions</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Sécurisation -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('security', this)">
+                Sécurisation (niveau démo)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="security">
+                <ul>
+                  <li>Certificat <strong>SSL</strong> monté dans <code>./ssl</code> et redirection HTTP→HTTPS</li>
+                  <li>Accès restreint au réseau interne (pare-feu / VLAN / VPN)</li>
+                  <li>Option production : reverse proxy (Traefik / NPM) et authentification en amont</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Sauvegarde & doc -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('backup', this)">
+                Documentation & sauvegarde
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="backup">
+                <ul>
+                  <li><strong>README</strong> de runbook (architecture, déploiement, maintenance)</li>
+                  <li>Script de <strong>backup</strong> du volume <code>config/</code> (cron → archive <code>/backups</code>)</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Résultats & bilan -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('results', this)">
+                Résultats & bilan
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="results">
+                <ul>
+                  <li><strong>Centralisation</strong> : un portail unique pour tous les outils critiques</li>
+                  <li><strong>Gain de temps</strong> : plus besoin de retenir URLs/ports, un clic suffit</li>
+                  <li><strong>Adoption</strong> : onboarding simplifié pour les nouveaux techniciens</li>
+                  <li><strong>Robustesse</strong> : configuration persistante, SSL et bonnes pratiques de base</li>
+                </ul>
+                <h5 class="mt-3 mb-2">Bilan personnel</h5>
+                <ul>
+                  <li>Déploiement <strong>Heimdall sous Docker</strong> (industrialisation & persistance)</li>
+                  <li>Mise en pratique <strong>SSL / firewall / reverse proxy</strong></li>
+                  <li>Focalisation sur la <strong>valeur métier</strong> (simplicité pour la DSI)</li>
+                  <li>Livrable <strong>clé en main</strong> réutilisable dans d’autres contextes</li>
+                </ul>
+                <!-- Bouton optionnel -->
+                <!-- <p class="mt-3"><a class="btn-ghost" href="https://github.com/avisse/heimdall-deploiement" target="_blank" rel="noopener">Voir le repository</a></p> -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

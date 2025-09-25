@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Supervision des services – Elastic + Kibana (Minikube) | Steve Avisse</title>
+  <meta name="description" content="Activité 3 : Supervision des services sur Kubernetes (Minikube) avec Elasticsearch & Kibana. Déploiement, accès, injection de logs et recherche KQL.">
+  <meta name="keywords" content="Kubernetes, Minikube, Elasticsearch, Kibana, Logs, Supervision, DevOps, NodePort, KQL">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (lisibilité + accent couleurs) -->
+  <style>
+    :root{
+      --accent:#f2559e;   /* rose doux */
+      --accent2:#007bff;  /* bleu charte */
+      --ink:#0b1420;
+    }
+    .lead-intro{
+      font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px;
+    }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+
+    /* blocs code lisibles */
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+
+    /* accordéons */
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+
+    /* arrondi léger sur les images du carrousel */
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Supervision des services — Elasticsearch & Kibana (Minikube)
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+              <!-- Tes captures (garde exactement ces noms dans assets/img/) -->
+              <img src="assets/img/kubrctl-get-pods-monitorring.jpg" class="img-fluid" alt="kubectl get pods -n monitoring">
+              <img src="assets/img/minikube service kibana -n monitoring.jpg" class="img-fluid" alt="Accès Kibana via NodePort Minikube">
+              <img src="assets/img/code interface-web-kibana-enrollment-token (1).jpg" class="img-fluid" alt="Commande token d'enrollement / vérification">
+              <img src="assets/img/interface-web-kibana-enrollment-token (1).jpg" class="img-fluid" alt="Interface web Kibana - enrollment / vérification">
+              <img src="assets/img/kibana-discover-filter-info (1).jpg" class="img-fluid" alt="Kibana Discover - filtres KQL sur les logs">
+              <img src="assets/img/553eb6d8-684e-4498-bfb9-8068a7e0319e.png" class="img-fluid" alt="Workflow global déploiement/accès/logs">
+            </div>
+          </div>        
+
+          <!-- Colonne droite : résumé / tags -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Objectif : Collecter & visualiser des logs applicatifs</strong></h3>
+
+            <p class="lead-intro">
+              Dans le cadre de l’<strong>activité type 3 (ECF DevOps)</strong>, j’ai mis en place une supervision locale :
+              <span class="accent">Elasticsearch</span> (collecte/stockage) + <span class="accent">Kibana</span> (visualisation),
+              le tout sur <strong>Minikube</strong>. Résultat : un pipeline complet pour <em>déployer, accéder, injecter des logs JSON et les filtrer</em>.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Kubernetes</span>
+              <span class="tag">Minikube</span>
+              <span class="tag">Elasticsearch 7.17</span>
+              <span class="tag">Kibana 7.17</span>
+              <span class="tag">NodePort</span>
+              <span class="tag">Namespace: monitoring</span>
+              <span class="tag">JSON / cURL</span>
+              <span class="tag">KQL</span>
+              <span class="tag">Debian 12</span>
+              <span class="tag">VirtualBox</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : DevOps / Observabilité</li>
+              <li><strong>Contexte</strong> : VM Debian 12 (VirtualBox), cluster local Minikube</li>
+              <li><strong>Livrables</strong> : <code>elasticsearch.yaml</code>, <code>kibana.yaml</code>, exemple de log <code>test-log.json</code></li>
+              <p>
+
+              </p>
+              <a class="btn-repo" href="https://github.com/avisse/activite-3" target="_blank" rel="noopener"><i class="bx bxl-github"></i> Voir le repository GitHub</a>
+            </ul>
+
+           
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">
+                Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="cx">
+                <p>
+                  L’objectif était de bâtir une <strong>chaîne de supervision locale, reproductible</strong> qui prouve la capacité
+                  à <em>déployer un moteur de recherche de logs</em> (Elasticsearch), à <em>exposer une interface de consultation</em> (Kibana)
+                  et à <em>manipuler de vrais événements JSON</em> (injection & recherche).
+                </p>
+                <ul>
+                  <li><b>Sans cloud :</b> tout tourne en local (Minikube) pour éviter les coûts et rester maître de l’environnement.</li>
+                  <li><b>Simple & pédagogique :</b> un namespace dédié <code>monitoring</code>, deux manifests, et des commandes minimales.</li>
+                  <li><b>Traçabilité :</b> chaque étape (deploy, accès, injection, filtre) est testée et capturée.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Architecture & Manifests -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                Architecture & Manifests Kubernetes
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+                <p><strong>1) Elasticsearch</strong> — déployé en mode <em>single-node</em>, stockage éphémère (démonstration) :</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+      - name: elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.16
+        ports:
+        - containerPort: 9200
+        env:
+        - name: discovery.type
+          value: single-node
+        - name: ES_JAVA_OPTS
+          value: "-Xms512m -Xmx512m"
+        volumeMounts:
+        - name: esdata
+          mountPath: /usr/share/elasticsearch/data
+      volumes:
+      - name: esdata
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: monitoring
+spec:
+  selector:
+    app: elasticsearch
+  ports:
+  - port: 9200
+    targetPort: 9200
+    protocol: TCP
+  type: ClusterIP
+</code></pre>
+
+                <p><strong>2) Kibana</strong> — connecté au service DNS d’Elasticsearch dans le même namespace :</p>
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: docker.elastic.co/kibana/kibana:7.17.16
+        ports:
+        - containerPort: 5601
+        env:
+        - name: ELASTICSEARCH_HOSTS
+          value: "http://elasticsearch.monitoring.svc.cluster.local:9200"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  namespace: monitoring
+spec:
+  selector:
+    app: kibana
+  ports:
+  - protocol: TCP
+    port: 5601
+    targetPort: 5601
+  type: NodePort
+</code></pre>
+              </div>
+            </div>
+
+            <!-- Déploiement & accès -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                Déploiement & accès (Minikube)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+                <p>Namespace & déploiements :</p>
+<pre><code class="language-bash">kubectl create ns monitoring
+kubectl apply -f elasticsearch.yaml
+kubectl apply -f kibana.yaml
+kubectl get pods -n monitoring
+kubectl get svc  -n monitoring
+</code></pre>
+
+                <p>Ouvrir Kibana (service NodePort) :</p>
+<pre><code class="language-bash">minikube service kibana -n monitoring
+# OU : kubectl port-forward svc/kibana -n monitoring 5601:5601
+# Puis : http://localhost:5601
+</code></pre>
+
+                <p class="soft">Selon la version, Kibana peut demander un <em>token de vérification/enrollement</em> au premier accès.
+                Les captures montrent l’obtention/usage de ce code, le temps de l’initialisation.</p>
+              </div>
+            </div>
+
+            <!-- Injection & recherche de logs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                Injection des logs & recherche dans Kibana
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+                <p><b>document JSON</b> (fichier <code>test-log.json</code>) :</p>
+<pre><code class="language-json">{
+  "timestamp": "2025-06-09T22:05:00",
+  "level": "info",
+  "message": "Ceci est un log pour valider l'exercice",
+  "service": "api-node",
+  "host": "minikube"
+}
+</code></pre>
+
+                <p><b>Injection dans Elasticsearch</b> (index de test) :</p>
+<pre><code class="language-bash">curl -X POST "http://&lt;IP_MINIKUBE&gt;:&lt;PORT_NODEPORT_ELASTICSEARCH&gt;/logs-test/_doc" \
+  -H "Content-Type: application/json" \
+  -d @test-log.json
+</code></pre>
+
+                <p><b>Découverte dans Kibana</b> :</p>
+                <ul>
+                  <li>Créer un <em>index pattern</em> : <code>logs-test*</code> (sans champ temporel si le <code>timestamp</code> n’est pas reconnu).</li>
+                  <li>Requêtes testées dans Discover (KQL) : <code>level: "info"</code>, <code>message: "valider"</code>, <code>service: "api-node"</code>, <code>*</code>.</li>
+                </ul>
+                <p class="soft">Astuce : pour exploiter les graphiques temporels, définir <code>timestamp</code> comme champ de type “Date”
+                (mapping d’index ou via un pipeline d’ingestion).</p>
+              </div>
+            </div>
+
+            <!-- Problèmes & solutions -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                Problèmes rencontrés & solutions
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+                <ul>
+                  <li><b>Timestamp non reconnu :</b> création d’un index pattern sans champ temporel pour afficher les documents bruts.</li>
+                  <li><b>Accès navigateur :</b> exposition via <code>NodePort</code> et <code>minikube service</code> pour ouvrir Kibana en local.</li>
+                  <li><b>Ressources limitées :</b> JVM d’Elastic bridée à <code>-Xms512m -Xmx512m</code> pour la VM.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Résultats & enseignements -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                Résultats, nettoyage & enseignements
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+                <p></p>
+                <ul>
+                  <li><b>Pipeline opérationnel :</b> Elasticsearch reçoit les événements ; Kibana les filtre et les affiche.</li>
+                  <li><b>Compétences démontrées :</b> manifests K8s, exposition de services, KQL, diagnostic & itérations.</li>
+                </ul>
+                <p><b>Nettoyage :</b></p>
+<pre><code class="language-bash">kubectl delete -f kibana.yaml
+kubectl delete -f elasticsearch.yaml
+kubectl delete ns monitoring
+</code></pre>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+
+        </div><!-- /row -->
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

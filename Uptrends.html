@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Steve Avisse</title>
-  <meta content="" name="descriptison">
-  <meta content="" name="keywords">
+  <title>UX Monitoring — Synthetic & Availability | Steve Avisse</title>
+  <meta name="description" content="Projet d'optimisation numérique : mise en place d'une surveillance 'de bout en bout' de l'expérience utilisateur (synthetic monitoring) avec Uptrends. Rôle MOA : cadrage, sélection du prestataire, conception des parcours, KPIs, recette, gouvernance.">
+  <meta name="keywords" content="synthetic monitoring, disponibilité, SLA, SLO, p95, Uptrends, MOA, Ministères sociaux, UX, KPIs, tableaux de bord, alerting">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -26,202 +26,331 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux -->
   <style>
-        .faq-item {
-            border-bottom: 1px solid #ddd;
-            padding: 10px;
-        }
-
-        .question {
-            cursor: pointer;
-            font-weight: bold;
-            margin-bottom: 10px;
-            position: relative;
-        }
-
-        .answer {
-            max-height: 0;
-            overflow: hidden;
-            margin-bottom: 20px;
-            transition: max-height 0.3s ease-in-out;
-        }
-
-        .arrow-icon {
-            position: absolute;
-            top: 0;
-            right: 0;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .answer-visible .arrow-icon {
-            transform: rotate(180deg);
-        }
-    </style>
-
-  <!-- =======================================================
-  * Template Name: MyResume - v2.1.0
-  * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    :root{ --accent:#f2559e; --accent2:#007bff; --ink:#0b1420; }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{ background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25); padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;}
+    .btn-ghost{ display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600; border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;}
+    .btn-ghost:hover{ background:var(--accent2); color:#fff;}
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto;}
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem;}
+    .soft{ color:#94a3b8;}
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0;}
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease;}
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
 </head>
 
 <body>
 
   <main id="main">
-
     <!-- ======= Portfolio Details ======= -->
     <section id="portfolio-details" class="portfolio-details">
       <div class="container" data-aos="fade-up">
 
         <div class="row">
 
+          <!-- Colonne gauche : carrousel -->
           <div class="col-lg-8">
-            <h2 class="portfolio-title">Optimisation Numérique : Élever la Performance et la Fiabilité par une Surveillance Appliquée</h2>
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              UX Monitoring — Synthetic & Availability (Uptrends)
+            </h2>
+
             <div class="owl-carousel portfolio-details-carousel">
-              <img src="assets/img/uptrends04.png" class="img-fluid" alt="">
+             <img src="assets/img/uptrends04.png" class="img-fluid" alt="">
               <img src="assets/img/uptrends02.png" class="img-fluid" alt="">
               <img src="assets/img/uptrends03.png" class="img-fluid" alt="">
             </div>
           </div>
 
+          <!-- Colonne droite : résumé / tags / lien -->
           <div class="col-lg-4 portfolio-info">
-            <h3>Uptrends</h3>
-            <ul>
-              <li><strong>Categorie</strong>: Monitoring</li>
-              <li><strong>Pour: </strong>: Ministère sociaux </li>
-              <li><strong>Projet URL</strong>: <a href="#">https://www.uptrends.com/</a></li>
+            <h3 style="text-align:center"><strong>Surveillance “de bout en bout” — MOA</strong></h3>
+
+            <p class="lead-intro">
+              Pour les <span class="accent">Ministères sociaux</span>, j’ai piloté la mise en place d’une
+              <strong>surveillance synthétique</strong> de l’expérience utilisateur avec <strong>Uptrends</strong> :
+              parcours navigateurs, moniteurs HTTP/API, <em>alerting</em> corrélé et <strong>dashboards</strong> exécutifs.
+              Objectif : <strong>objectiver la qualité perçue</strong> (SLA/SLO, p95) et réduire le temps de détection.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">MOA</span>
+              <span class="tag">Synthetic</span>
+              <span class="tag">HTTP/API</span>
+              <span class="tag">Browser Journeys</span>
+              <span class="tag">KPIs SLA/SLO</span>
+              <span class="tag">Alerting</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Contexte</strong> : Ministères sociaux</li>
+              <li><strong>Rôle</strong> : Cadrage, sélection, pilotage, recette, gouvernance</li>
+              <li><strong>Livrables</strong> : Parcours, moniteurs, dashboards, processus d’alerte, PV</li>
             </ul>
-            <p>Diverses études ont été conduites dans ce domaine pour approfondir notre compréhension de la supervision applicative, des tests de performances et de la surveillance applicative. Cela découle des besoins du département numérique des ministères sociaux, visant à surpasser les services offerts par les solutions de supervision traditionnelles pour objectiver l'expérience utilisateur en matière de disponibilité et de temps de réponse.
 
-La problématique principale consiste à reproduire de manière fidèle le parcours représentatif de l'utilisateur en le simulant. Chaque interaction de l'utilisateur doit fonctionner de manière optimale et répondre aux attentes en termes de temps de réponse.</p> </div>
-
-          <div class="col-lg-13 portfolio-info">
-            <p>Pour le projet Uptrend, nous avons entrepris plusieurs étapes afin de garantir une expérience utilisateur rapide et sans erreur dans une approche de boîte noire. Voici le détail des étapes réalisées :</p>
+            <!-- Lien éventuel vers doc publique -->
+            <!-- <a class="btn-repo" href="#" target="_blank" rel="noopener">
+              <i class="bx bx-link-external"></i> Voir la documentation projet
+            </a> -->
           </div>
-</div>
-          <div class="faq-item">
-        <div class="question" onclick="toggleAnswer('answer1', this)">
-            Étude des Solutions Existantes :
-            <span class="arrow-icon">▼</span>
-        </div>
-        <div class="answer" id="answer1"> 
 
-          <li>Analyse approfondie des différentes solutions disponibles en matière de supervision technique, applicative, et de tests de performance.</li>
-</div> 
-</div>
-  <!-- ======= etapes suivantes ======= -->
- <div class="faq-item">
-        <div class="question" onclick="toggleAnswer('answer2', this)">
-            Tests sur Deux Solutions Identifiées :
-            <span class="arrow-icon">▼</span>
-        </div>
-        <div class="answer" id="answer2">
-        <li>Sélection de deux solutions potentielles après l'étude.</li>
-        <li>Réalisation de tests pour évaluer leur performance et leur adéquation à nos besoins.</li>
+          <!-- ======= Accordéons détaillés ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
 
-        </div>
-    </div>
-     <!-- ======= etapes suivantes ======= -->
+            <!-- 0) Résumé exécutif -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('ex', this)">
+                0) Résumé exécutif (8 lignes)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="ex">
+                <ul>
+                  <li>Besoin : mesurer l’<strong>expérience utilisateur</strong> (disponibilité, temps de réponse, parcours) au-delà des métriques infra.</li>
+                  <li>Approche : <strong>synthetic monitoring</strong> “boîte noire” via <em>Uptrends</em> sur plusieurs points de mesure.</li>
+                  <li>Rôle MOA : cadrage/KPIs, benchmark, sélection prestataire, <strong>pilotage</strong>, priorisation, <strong>validation</strong> et <strong>recette</strong>.</li>
+                  <li>Périmètre pilote : applis représentatives (auth, front public, API) — moniteurs HTTP/API + parcours navigateurs.</li>
+                  <li>KPIs : <strong>SLA/SLO</strong> dispo & p95 des étapes clés, <strong>MTTD/MTTA</strong> maîtrisés, <strong>qualité du signal</strong>.</li>
+                  <li>Réalisation : cadrage → bench → choix → conception parcours → moniteurs → <strong>dashboards</strong> → <strong>processus d’alerte</strong>.</li>
+                  <li>MOE (prestataire) : paramétrage technique, scripting, intégrations d’alertes, dashboards.</li>
+                  <li>Résultat : visibilité factuelle, alertes actionnables, socle prêt à être <strong>industrialisé</strong>.</li>
+                </ul>
+              </div>
+            </div>
 
+            <!-- 1) Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                1) Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+                <p>
+                  Malgré une infra “verte”, des usagers subissaient ponctuellement des <strong>lenteurs/erreurs</strong>.
+                  L’objectif a été d’<strong>objectiver</strong> ce que vit réellement l’utilisateur, <em>détecter tôt</em>,
+                  et <strong>alerter utilement</strong> les équipes.
+                </p>
+                <ul>
+                  <li>SLA/SLO dispo ≥ 99,7% (hors maintenance).</li>
+                  <li>p95 étapes clés ≤ 2–3 s selon contexte.</li>
+                  <li>MTTD de quelques minutes, <em>peu de faux positifs</em>.</li>
+                  <li>Tableaux de bord lisibles (équipes & exécutif).</li>
+                </ul>
+              </div>
+            </div>
 
-<div class="faq-item">
-        <div class="question" onclick="toggleAnswer('answer3', this)">
-            Validation et Atelier de Présentation des Tests :
-            <span class="arrow-icon">▼</span>
-        </div>
-        <div class="answer" id="answer3">
-        <li>Validation des résultats des tests effectués.</li>
-        <li>Organisation d'un atelier de présentation pour partager les conclusions et discuter des avantages de chaque solution.</li>
+            <!-- 2) Gouvernance & rôles -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                2) Gouvernance & rôles
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+                <ul>
+                  <li><strong>MOA (moi)</strong> : recueil besoins, cadrage, KPIs, choix prestataire, pilotage, validation, recette, conduite du changement.</li>
+                  <li><strong>Prestataire (Uptrends)</strong> : outillage, scripting, moniteurs HTTP/API, intégrations d’alerte, dashboards, support.</li>
+                  <li><strong>Exploitants/Produit</strong> : enrichissement cas, traitement alertes, REX.</li>
+                </ul>
+              </div>
+            </div>
 
-        </div>
-    </div>
-     <!-- ======= etapes suivantes ======= -->
+            <!-- 3) Démarche projet -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                3) Démarche projet (A → Z)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+                <h5>3.1 Cadrage (MOA)</h5>
+                <ul>
+                  <li>Ateliers besoins : parcours critiques, irritants, maintenance.</li>
+                  <li>Cahier des charges : types de moniteurs, fréquence, points de mesure, alerting, KPIs et astreintes.</li>
+                </ul>
+                <h5>3.2 Étude & sélection (MOA)</h5>
+                <p>Benchmark court (dont Uptrends) : variété moniteurs, stabilité, simplicité, intégrations, coût → <strong>sélection actée</strong>.</p>
+                <h5>3.3 Conception (MOA + prestataire)</h5>
+                <ul>
+                  <li>Parcours navigateur : <em>Auth</em>, <em>Front public</em>, <em>API</em> avec assertions robustes.</li>
+                  <li>Règles d’alerte : seuils, multi-probe + re-test, escalade (mail/Teams/ITSM).</li>
+                  <li>Dashboards : par app (technique) + <strong>exécutif</strong>.</li>
+                </ul>
+                <h5>3.4 Mise en œuvre (prestataire, pilotée MOA)</h5>
+                <ul>
+                  <li>Moniteurs HTTP/API (codes, SSL, latence, assertions JSON).</li>
+                  <li>Scripts navigateurs (clics, sélecteurs stables, screenshots à l’échec).</li>
+                  <li>Intégrations alertes & tableaux de bord.</li>
+                </ul>
+                <h5>3.5 Recette (MOA)</h5>
+                <ul>
+                  <li>Tests nominaux + pannes simulées (auth KO, 5xx, certifs).</li>
+                  <li>PV de recette : moniteurs, alertes, dashboards, <strong>qualité du signal</strong>.</li>
+                </ul>
+                <h5>3.6 Conduite du changement</h5>
+                <ul>
+                  <li>Guides courts : lire un dashboard, traiter une alerte, enrichir un parcours.</li>
+                  <li>Revues hebdo : ajustement seuils & stabilisation.</li>
+                </ul>
+              </div>
+            </div>
 
+            <!-- 4) Périmètre -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                4) Périmètre réalisé vs options (phase 2)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+                <ul>
+                  <li><strong>Réalisé</strong> : moniteurs HTTP/API + parcours navigateurs, alerting corrélé, dashboards (app + exécutif), processus d’incident & maintenance, KPIs.</li>
+                  <li><strong>Options</strong> : RUM, APM, tests de charge, onboarding as-code (API), templates par type d’app, industrialisation portefeuille.</li>
+                </ul>
+              </div>
+            </div>
 
-<div class="faq-item">
-        <div class="question" onclick="toggleAnswer('answer4', this)">
-            Identification des Applications Pilotes Éligibles :
-            <span class="arrow-icon">▼</span>
-        </div>
-        <div class="answer" id="answer4">
-        <li>Sélection des applications qui serviront de pilotes pour le projet.</li>
-        <li>Éligibilité basée sur leur représentativité en termes de diversité et de volume d'utilisation.</li>
+            <!-- 5) KPIs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                5) KPIs & lecture des résultats
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+                <ul>
+                  <li><strong>Disponibilité</strong> (hors maintenance) par app/période.</li>
+                  <li><strong>p95/p99</strong> par étape (auth, page clé, API).</li>
+                  <li><strong>MTTD/MTTA</strong> & qualité d’alerte (faux positifs minimisés).</li>
+                  <li>Cartes de latence par point de mesure (explication géographique des écarts).</li>
+                </ul>
+                <p class="soft">Seuils stabilisés sur 2–3 semaines puis <em>baseline</em> figée par application.</p>
+              </div>
+            </div>
 
-        </div>
-    </div>
-     <!-- ======= etapes suivantes ======= -->
+            <!-- 6) Sécurité & conformité -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a6', this)">
+                6) Sécurité & conformité (cadrage MOA)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a6">
+                <ul>
+                  <li>Comptes techniques à <strong>privilèges minimaux</strong>, rotation de secrets.</li>
+                  <li>Whitelisting IP des sondes, restrictions d’accès.</li>
+                  <li>Pas de données perso dans scripts/rapports, <strong>RGPD</strong>, nettoyage des captures.</li>
+                </ul>
+              </div>
+            </div>
 
+            <!-- 7) Livrables -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a7', this)">
+                7) Livrables validés (MOA)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a7">
+                <ul>
+                  <li>Cahier des charges & critères de succès.</li>
+                  <li>Plan de parcours (étapes, assertions) & paramétrage moniteurs.</li>
+                  <li>Dashboards (app & exécutif) et <strong>processus d’alerte</strong>.</li>
+                  <li>Procédure d’exploitation & <strong>PV de recette</strong>.</li>
+                  <li>Plan d’industrialisation (templates, priorités).</li>
+                </ul>
+              </div>
+            </div>
 
-<div class="faq-item">
-        <div class="question" onclick="toggleAnswer('answer5', this)">
-    Lancement du Dispositif :
-            <span class="arrow-icon">▼</span>
-        </div>
-        <div class="answer" id="answer5">
-        <li>Déploiement du dispositif de mesure de disponibilité et de temps de réponse sur les applications pilotes.</li>
-        </div>
-    </div>
-     <!-- ======= etapes suivantes ======= -->
+            <!-- 8) Risques & parades -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a8', this)">
+                8) Risques & parades (REX)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a8">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead><tr><th>Risque</th><th>Effet</th><th>Parade</th></tr></thead>
+                    <tbody>
+                      <tr><td>Faux positifs</td><td>Alertes inutiles</td><td>Multi-probe + re-test, seuils adaptés</td></tr>
+                      <tr><td>Parcours qui casse</td><td>“Rouge” injustifié</td><td>Sélecteurs stables, revue post-release</td></tr>
+                      <tr><td>Authent SSO intermittente</td><td>Échecs sporadiques</td><td>Comptes techniques dédiés, retries</td></tr>
+                      <tr><td>Confusion perf “tech”/“perçue”</td><td>Mauvaise décision</td><td>Dashboards pédagogiques (p95, par étape)</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
 
-<div class="faq-item">
-        <div class="question" onclick="toggleAnswer('answer6', this)">
-            Objectif du Pilote :
-            <span class="arrow-icon">▼</span>
-        </div>
-        <div class="answer" id="answer6">
-        <li>Mesurer la disponibilité et les temps de réponse conformément aux exigences des applications.</li>
-        <li>Concevoir et mettre en place des tableaux de bord spécifiques à chaque application et un tableau global pour la Direction du Numérique (DNUM) et au-delà.</li>
-        </div>
-    </div>
-     <!-- ======= etapes suivantes ======= -->
+            <!-- 9) Éléments de langage -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a9', this)">
+                9) “Éléments de langage” (pitch court)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a9">
+                <ul>
+                  <li>“On a mesuré l’expérience de bout en bout, pas juste l’infra.”</li>
+                  <li>“J’ai cadré les besoins & KPIs, piloté le prestataire, validé moniteurs/alertes/dashboards.”</li>
+                  <li>“Le pilote prouve la valeur : on voit quand, où et pourquoi ça rame/casse, et qui agit.”</li>
+                  <li>“Socle prêt à être industrialisé sur d’autres applications.”</li>
+                </ul>
+              </div>
+            </div>
 
-<div class="faq-item">
-        <div class="question" onclick="toggleAnswer('answer7', this)">
-            Conception et Mise en Place des Processus et de l'Organisation des Signalements d'Incidents :
-            <span class="arrow-icon">▼</span>
-        </div>
-        <div class="answer" id="answer7">
-        <li>Élaboration des processus et de l'organisation pour signaler les incidents, en mettant l'accent sur la communication avec l'équipe projet et les exploitants.</li>
-        </div>
-    </div>
-     <!-- ======= etapes suivantes ======= -->
-     <div class="faq-item">
-        <div class="question" onclick="toggleAnswer('answer8', this)">
-            Préparation à l'Industrialisation :
-            <span class="arrow-icon">▼</span>
-        </div>
-        <div class="answer" id="answer8">
-        <li>Élaboration des processus et de l'organisation pour signaler les incidents, en mettant l'accent sur la communication avec l'équipe projet et les exploitants.</li>
-        </div>
-    </div>
+            <!-- 10) Passage à l’échelle -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a10', this)">
+                10) Passage à l’échelle (roadmap)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a10">
+                <ul>
+                  <li>Templates par type d’app (public, SSO, API) & <strong>API d’automatisation</strong>.</li>
+                  <li>Nommage/tags standard (service, criticité, équipe).</li>
+                  <li>Intégration ITSM : auto-ticket, SLA, post-mortem type.</li>
+                  <li>Communication & formations “flash” pour les équipes.</li>
+                </ul>
+              </div>
+            </div>
 
-     <!-- ======= etapes suivantes ======= -->
+            <!-- Exemple d'objets techniques (facultatif) -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('tech', this)">
+                (Annexe) Exemples d’objets techniques (pseudo-config)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="tech">
+<pre><code class="language-json">{
+  "monitor": {
+    "type": "http",
+    "name": "Front public - Page d'accueil",
+    "frequencySec": 60,
+    "locations": ["FR-Paris","EU-Frankfurt","EU-Amsterdam"],
+    "assertions": [
+      {"type":"statusCode","op":"eq","value":200},
+      {"type":"content","op":"contains","value":"Accueil"}
+    ],
+    "alerting": {"retest":2,"threshold":"3/5","channels":["mail","teams"]}
+  }
+}
+</code></pre>
+                <p class="soft">Illustratif : le prestataire a livré la configuration finale côté Uptrends.</p>
+              </div>
+            </div>
 
-
-        
-
-      </div>
+          </div><!-- /col-12 -->
+        </div><!-- /row -->
+      </div><!-- /container -->
     </section><!-- End Portfolio Details -->
-
   </main><!-- End #main -->
 
   <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
-   <script>
-        function toggleAnswer(answerId, question) {
-            var answer = document.getElementById(answerId);
-            answer.classList.toggle("answer-visible");
-            question.classList.toggle("answer-visible");
-            if (answer.style.maxHeight) {
-                answer.style.maxHeight = null;
-            } else {
-                answer.style.maxHeight = answer.scrollHeight + "px";
-            }
-        }
-    </script>
   <script src="assets/vendor/jquery/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
@@ -237,6 +366,18 @@ La problématique principale consiste à reproduire de manière fidèle le parco
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
 </body>
-
 </html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Rocket.Chat – Sauvegardes & Restauration (Docker) | Steve Avisse</title>
+  <meta name="description" content="Sauvegarde automatisée des volumes Docker de Rocket.Chat (MongoDB) : script Bash, cron, rotation, restauration testée.">
+  <meta name="keywords" content="Rocket.Chat, Docker, MongoDB, Sauvegarde, Backup, Cron, Busybox, Restauration, PRA">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux -->
+  <style>
+    :root{
+      --accent:#f2559e;   /* rose doux */
+      --accent2:#007bff;  /* bleu charte */
+      --ink:#0b1420;
+    }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Rocket.Chat – Sauvegardes Docker automatisées (MongoDB) & Restauration
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+
+<img src="assets/img/backupp.jpg">
+<img src="assets/img/back up dossier vide avant cron.jpg">
+<img src="assets/img/back up reussie.jpg">
+<img src="assets/img/backupok.jpg">
+            </div>
+          </div>
+
+          <!-- Colonne droite : résumé / tags / lien repo -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Docker : Sauvegardes Rocket.Chat (MongoDB)</strong></h3>
+
+            <p class="lead-intro">
+              Dans une VM <strong>Debian 12</strong>, j’ai mis en place une stratégie de
+              <span class="accent">sauvegarde automatisée</span> des volumes Docker de Rocket.Chat
+              (base <strong>MongoDB</strong>) avec un <strong>script Bash</strong>, une planification
+              <strong>cron</strong> et une <strong>rotation</strong> des archives. Procédure de
+              restauration validée.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Docker Compose</span>
+              <span class="tag">Rocket.Chat</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">Bash</span>
+              <span class="tag">Cron</span>
+              <span class="tag">BusyBox</span>
+              <span class="tag">PRA</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : Infrastructure & Exploitation</li>
+              <li><strong>Contexte</strong> : VM Debian 12 (local)</li>
+              <li><strong>Livrables</strong> : Script de backup + restauration, logs, rotation 7 jours</li>
+            </ul>
+
+            <p class="mt-2">
+              <a class="btn-ghost" href="https://github.com/avisse/backup-restore-sauvegardes-restauration..git" target="_blank" rel="noopener">
+                <i class="bx bxl-github"></i> Voir le repository GitHub
+              </a>
+            </p>
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">
+                Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="cx">
+                <p>
+                  Dans le cadre d’une collectivité, plusieurs applications sont conteneurisées (Rocket.Chat, Nextcloud, GLPI).
+                  Pour assurer la <strong>continuité d’activité</strong> et la <strong>sécurité des données</strong>, j’ai
+                  industrialisé la sauvegarde des volumes Docker en prenant <strong>Rocket.Chat</strong> comme cas d’usage
+                  reproductible (stack simple, volume bien identifié).
+                </p>
+                <ul>
+                  <li>Automatiser la <strong>protection des données</strong> (script Bash + cron).</li>
+                  <li>Mettre en place une <strong>rétention</strong> et des <strong>logs</strong>.</li>
+                  <li>Valider une <strong>restauration</strong> rapide (procédure PRA).</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Architecture & Docker -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                Architecture & volumes Docker (Rocket.Chat)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+                <p>
+                  Les données Rocket.Chat sont portées par MongoDB via un volume dédié. Extrait simplifié
+                  du <code>docker-compose.yml</code> :
+                </p>
+<pre><code class="language-yaml">services:
+  mongodb:
+    image: bitnami/mongodb:latest
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+  rocketchat:
+    image: rocket.chat:latest
+    depends_on: [mongodb]
+
+volumes:
+  mongodb_data: {}
+</code></pre>
+                <p class="soft">
+                  👉 Toute la persistance est dans <code>mongodb_data</code> : c’est ce volume qu’on sauvegarde/restaure.
+                </p>
+              </div>
+            </div>
+
+            <!-- Sauvegarde & cron -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                Sauvegarde automatisée (script Bash + cron)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+                <p><strong>Arborescence</strong> :</p>
+<pre><code class="language-text">/home/vboxuser/projet-ecf/rocketchat/
+  ├── docker-compose.yml
+  ├── backup.sh
+  └── backups/   # archives .tar.gz horodatées
+</code></pre>
+
+                <p><strong>Script</strong> <code>backup.sh</code> :</p>
+<pre><code class="language-bash">#!/bin/bash
+set -euo pipefail
+
+DATE=$(date +'%Y-%m-%d_%H-%M-%S')
+BACKUP_DIR="/home/vboxuser/projet-ecf/rocketchat/backups"
+VOLUME_NAME="mongodb_data"
+ARCHIVE_NAME="rocketchat_mongodb_${DATE}.tar.gz"
+KEEP_DAYS=7
+
+mkdir -p "$BACKUP_DIR"
+
+# 1) Stop pour cohérence MongoDB (recommandé)
+docker compose down
+
+# 2) Sauvegarde du volume via BusyBox
+docker run --rm -v ${VOLUME_NAME}:/data -v "$BACKUP_DIR":/backup busybox \
+  tar czvf "/backup/${ARCHIVE_NAME}" /data
+
+# 3) Redémarrage de la stack
+docker compose up -d
+
+# 4) Rotation 7 jours
+find "$BACKUP_DIR" -type f -name "*.tar.gz" -mtime +$KEEP_DAYS -delete
+</code></pre>
+
+                <p><strong>Planification cron</strong> (tous les jours à 2h) :</p>
+<pre><code class="language-bash">crontab -e
+0 2 * * * /home/vboxuser/projet-ecf/rocketchat/backup.sh &gt;&gt; /home/vboxuser/projet-ecf/rocketchat/backup.log 2&gt;&amp;1
+</code></pre>
+
+                <p><strong>Test minute</strong> pour valider immédiatement :</p>
+<pre><code class="language-bash">* * * * * /home/vboxuser/projet-ecf/rocketchat/backup.sh &gt;&gt; /home/vboxuser/projet-ecf/rocketchat/backup.log 2&gt;&amp;1
+# Attendre 2-3 minutes → plusieurs .tar.gz apparaissent
+</code></pre>
+              </div>
+            </div>
+
+            <!-- Restauration -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                Restauration d’une sauvegarde (PRA)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+                <p><strong>Étapes</strong> :</p>
+<pre><code class="language-bash"># 1) Stopper la stack
+cd ~/projet-ecf/rocketchat
+docker compose down
+
+# 2) Choisir l’archive
+ls backups/
+# ex: rocketchat_mongodb_2025-07-31_12-45-00.tar.gz
+
+# 3) Restaurer dans le volume
+docker run --rm -v mongodb_data:/data \
+  -v ~/projet-ecf/rocketchat/backups:/backup busybox \
+  tar xzvf /backup/rocketchat_mongodb_2025-07-31_12-45-00.tar.gz -C /
+
+# 4) Redémarrer
+docker compose up -d
+</code></pre>
+                <p class="soft">
+                  Résultat : Rocket.Chat redémarre avec l’état exact sauvegardé.
+                </p>
+              </div>
+            </div>
+
+            <!-- Sécurité / Observabilité -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                Sécurité & observabilité minimales
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+                <ul>
+                  <li>Secrets externalisés (<code>.env</code>), pas d’identifiants en clair.</li>
+                  <li>Logs de sauvegarde : <code>backup.log</code> pour audit et diagnostic.</li>
+                  <li>Rétention configurable (<code>KEEP_DAYS</code>).</li>
+                  <li>Volumes dédiés → relance idempotente (<code>docker compose up -d</code>).</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Résultats & enseignements -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                Résultats & enseignements
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+                <ul>
+                  <li><strong>Sauvegardes automatisées</strong> et tournantes (archives horodatées).</li>
+                  <li><strong>Procédure PRA</strong> documentée et testée (restauration fonctionnelle).</li>
+                  <li><strong>Solution réutilisable</strong> pour d’autres services Docker (Nextcloud, GLPI…).</li>
+                  <li>Culture <strong>exploitation</strong> : scripts, logs, rétention, vérification par cron.</li>
+                </ul>
+
+                <p class="mt-3">
+                  <a class="btn-ghost" href="https://github.com/avisse/backup-restore-sauvegardes-restauration..git" target="_blank" rel="noopener">
+                    Ouvrir le repo (scripts &amp; doc)
+                  </a>
+                </p>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+        </div><!-- /row -->
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

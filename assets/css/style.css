@@ -57,6 +57,110 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*--------------------------------------------------------------
+# photo profil
+--------------------------------------------------------------*/
+.profile-pic{
+  width: 350px;
+  height: 350px;
+  object-fit: cover;
+  object-position: 50% 20%;   /* re-centre proprement */
+  border-radius: 50%;
+  background: #fff;
+  padding: 6px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.18);
+
+  /* >>> dézoom + descente de la tête dans le cadre <<< */
+  transform: translateY(8%) scale(.88);
+  transform-origin: center;
+}
+
+/* Mobile */
+@media (max-width: 991.98px){
+  .profile-pic{
+    width: 240px; height: 240px;
+    transform: translateY(6%) scale(.90);
+  }
+}
+
+/* Centrer et respirer la colonne image */
+.about .col-lg-4{
+  display: flex;
+  justify-content: center;
+}
+/* Header compact */
+.about-header{ margin: 0 0 1.5rem; }
+.about-kicker{
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 700;
+  font-size: .9rem;
+  opacity: .6;
+}
+.about-title{
+  font-weight: 800;
+  font-size: 28px;
+  color: #3b4a5a;
+  margin: .2rem 0 .6rem;
+}
+.about-lead{
+  max-width: 900px;
+  margin: 0 auto 1.2rem;
+  color: #6b7280;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Header compact */
+.about-header{ margin: 0 0 1.5rem; }
+.about-kicker{
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 700;
+  font-size: .9rem;
+  opacity: .6;
+}
+.about-title{
+  font-weight: 800;
+  font-size: 28px;
+  color: #3b4a5a;
+  margin: .2rem 0 .6rem;
+}
+.about-lead{
+  max-width: 900px;
+  margin: 0 auto 1.2rem;
+  color: #6b7280;
+  font-style: italic;
+  line-height: 1.6;
+}
+/* Contacts alignés */
+.contact-list{ list-style: none; padding: 0; margin: 0; }
+.contact-list li{
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  margin-bottom: .45rem;
+  line-height: 1.4;
+}
+.contact-list i{ color:#1e73be; margin-top: .2rem; }
+.contact-list .label{
+  min-width: 120px; /* ajuste à 130/140 si tu veux plus large */
+  font-weight: 700;
+  white-space: nowrap;
+}
+.contact-list .value a{
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 991.98px){
+  .about-title{ font-size: 24px; }
+  .profile-pic{ width: 220px; height: 220px; padding: 4px; }
+  .contact-list li{ flex-wrap: wrap; }
+  .contact-list .label{ min-width: 110px; }
+}
+/*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
 #preloader {
@@ -1168,4 +1272,20 @@ section {
 
 #footer .credits {
   font-size: 13px;
+}
+
+/*Bouton git */
+.btn-repo {
+  display:inline-block;
+  padding:10px 18px;
+  border-radius:8px;
+  font-weight:600;
+  background:#007bff;
+  color:#fff;
+  text-decoration:none;
+  transition:all .3s ease;
+}
+.btn-repo:hover {
+  background:#0056b3;
+  color:#fff;
 }

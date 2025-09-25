@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>TestLink – Gestion de campagnes de test | Steve Avisse</title>
+  <meta name="description" content="Installation et utilisation de TestLink 1.9.20 sur Debian 12 (LAMP), création d’un projet de test, campagne, cas de test, assignation et exécution réussie.">
+  <meta name="keywords" content="TestLink, Debian 12, LAMP, Apache, MySQL, PHP 7.4, Gestion de tests, QA, DevOps">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Raleway:400,500,700|Poppins:400,500,600" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux -->
+  <style>
+    :root {
+      --accent:#f2559e;
+      --accent2:#007bff;
+      --ink:#0b1420;
+    }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{ background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600; }
+    .btn-ghost{ display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none; }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+  <main id="main">
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <!-- Colonne gauche -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              TestLink – Installation & gestion de tests (v1.9.20)
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+              <img src="assets/img/lecran d’installation de TestLink.jpg" class="img-fluid" alt="Installation TestLink">
+              <img src="assets/img/consol login  TestLink.jpg" class="img-fluid" alt="Login TestLink">
+              <img src="assets/img/campagne de test.jpg" class="img-fluid" alt="Campagne de test">
+              <img src="assets/img/assigniation test à ma campagne.jpg" class="img-fluid" alt="Assignation test">
+              <img src="assets/img/TestLink execution.jpg" class="img-fluid" alt="Exécution test">
+              <img src="assets/img/succes test.jpg" class="img-fluid" alt="Résultat réussi">
+            </div>
+          </div>
+
+          <!-- Colonne droite -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>TestLink – Gestion de campagnes de test</strong></h3>
+            <p class="lead-intro">
+              Mise en place de <span class="accent">TestLink</span> sur une <strong>VM Debian 12</strong> 
+              via un environnement <strong>LAMP</strong>. Installation de la version <strong>1.9.20</strong>, 
+              résolution des incompatibilités PHP 8.x et configuration d’un projet de test complet.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Debian 12</span>
+              <span class="tag">Apache</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">PHP 7.4</span>
+              <span class="tag">TestLink 1.9.20</span>
+              <span class="tag">QA</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : QA / Gestion de tests</li>
+              <li><strong>Contexte</strong> : VM Debian locale (LAMP)</li>
+              <li><strong>Livrables</strong> : Installation, campagne de test, exécution et reporting</li>
+            </ul>
+
+            <a class="btn-repo" href="https://github.com/avisse/Testlink.git" target="_blank">
+              <i class="bx bxl-github"></i> Voir le repository GitHub
+            </a>
+          </div>
+
+          <!-- Accordéons -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+            
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">Contexte & objectifs <span class="arrow-icon">▼</span></div>
+              <div class="answer" id="cx">
+                <p><strong>TestLink</strong> est un outil web open source de gestion de tests manuels. 
+                Objectif : déployer TestLink sur <strong>Debian 12</strong> avec un environnement LAMP 
+                et créer une campagne de test pour valider l’ajout d’un utilisateur.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('inst', this)">Installation & problème critique PHP <span class="arrow-icon">▼</span></div>
+              <div class="answer" id="inst">
+                <p>Problème rencontré : <strong>TestLink 1.9.20 n’est pas compatible PHP 8.2</strong>.</p>
+                <ul>
+                  <li>Désinstallation de PHP 8.2</li>
+                  <li>Installation de PHP 7.4 avec modules requis : 
+                    <code>apt install php7.4 php7.4-mysql php7.4-xml php7.4-mbstring libapache2-mod-php7.4</code></li>
+                  <li>Redémarrage d’Apache + ajustement php.ini</li>
+                  <li>Installation réussie ensuite via <code>http://127.0.0.1/testlink/install/</code></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('proj', this)">Création projet & campagne <span class="arrow-icon">▼</span></div>
+              <div class="answer" id="proj">
+                <ul>
+                  <li>Projet : <strong>Projet de démonstration</strong></li>
+                  <li>Campagne : <strong>Campagne démo</strong></li>
+                  <li>Fiche de test : <em>Test création utilisateur</em> (5 étapes détaillées + résultats attendus)</li>
+                  <li>Versions créées : <strong>1 et 2</strong></li>
+                  <li>Assignation : user <em>admin</em> sur version 1</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('diff', this)">Difficultés rencontrées <span class="arrow-icon">▼</span></div>
+              <div class="answer" id="diff">
+                <ul>
+                  <li>Interface complexe et peu intuitive</li>
+                  <li>Pas d’exécution possible si test non assigné à un utilisateur/version active</li>
+                  <li>Mauvaise compréhension initiale des notions <em>build / version / campagne</em></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('sol', this)">Solutions mises en place <span class="arrow-icon">▼</span></div>
+              <div class="answer" id="sol">
+                <ul>
+                  <li>Relecture doc + autoformation vidéo</li>
+                  <li>Création d’une campagne et d’une version produit propres</li>
+                  <li>Assignation correcte du test au user admin</li>
+                  <li>Exécution manuelle des 5 étapes → résultats renseignés</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('res', this)">Résultats & enseignements <span class="arrow-icon">▼</span></div>
+              <div class="answer" id="res">
+                <ul>
+                  <li>Tableau de bord final : <strong>100 % tests réussis</strong></li>
+                  <li>Historique d’exécution complet et traçable</li>
+                  <li>Compréhension des concepts clés de gestion de tests manuels</li>
+                  <li>Expérience d’installation/dépannage PHP utile pour d’autres projets</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer=document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if(answer.style.maxHeight){answer.style.maxHeight=null;}
+      else{answer.style.maxHeight=answer.scrollHeight+"px";}
+    }
+  </script>
+</body>
+</html>

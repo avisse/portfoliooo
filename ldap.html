@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion LDAP – Maarch Courrier (AD/LDAP & OpenLDAP)</title>
+  <meta name="description" content="POC Connexion LDAP pour Maarch Courrier : authentification AD/LDAP, synchronisation des utilisateurs & entités, mapping, filtres et mise en production."/>
+  <style>
+    :root{
+      --bg:#0f1220;
+      --panel:#151935;
+      --muted:#8fa1b3;
+      --text:#e8ecf1;
+      --brand:#60a5fa;
+      --brand2:#34d399;
+      --amber:#f59e0b;
+      --border:rgba(255,255,255,.08);
+      --codebg:#0b0e1a;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f6f7fb; --panel:#ffffff; --text:#101424; --muted:#455266;
+        --border:rgba(16,20,36,.08); --codebg:#f5f7fb; --shadow:0 10px 24px rgba(16,20,36,.08);
+      }
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+      font:16px/1.55 system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{opacity:.9}
+
+    .wrap{max-width:1100px;margin:auto;padding:32px 20px 64px}
+
+    header.hero{
+      background:linear-gradient(140deg, rgba(96,165,250,.14), rgba(52,211,153,.12));
+      border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);
+      padding:28px 28px 18px;margin-bottom:28px
+    }
+    .hero h1{margin:0 0 6px;font-size:28px}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .badge{padding:6px 10px;border-radius:999px;border:1px solid var(--border);color:var(--muted);background:rgba(255,255,255,.03)}
+
+    section{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin:18px 0}
+    section h2{margin:0 0 12px;font-size:20px}
+    .grid{display:grid;gap:16px}
+    @media(min-width:920px){ .grid.cols-2{grid-template-columns:1fr 1fr} }
+
+    .cards{display:grid;gap:12px}
+    @media(min-width:920px){.cards{grid-template-columns:repeat(4,1fr)}}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent);
+          border:1px solid var(--border);border-radius:14px;padding:14px}
+    .stat{font-size:22px;font-weight:700}
+    .muted{color:var(--muted)}
+    .callout{border-left:4px solid var(--brand2);background:linear-gradient(90deg, rgba(52,211,153,.10), transparent);
+             border-radius:10px;padding:12px 14px;margin:10px 0}
+    .callout.warn{border-left-color:var(--amber);background:linear-gradient(90deg, rgba(245,158,11,.14), transparent)}
+
+    code,.code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--codebg);border:1px solid var(--border);padding:2px 6px;border-radius:8px}
+    pre{background:var(--codebg);border:1px solid var(--border);padding:14px;border-radius:12px;overflow:auto;position:relative}
+    pre>code{background:transparent;border:none;padding:0}
+    .copy{position:absolute;right:10px;top:10px;background:rgba(255,255,255,.08);border:1px solid var(--border);color:var(--text);
+          padding:6px 10px;border-radius:8px;cursor:pointer;font-size:.8rem}
+
+    /* Gallery + Lightbox */
+    .gallery{display:grid;gap:12px}
+    @media(min-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}}
+    figure{margin:0}
+    .shot{width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:0 10px 20px rgba(0,0,0,.25);cursor:zoom-in;display:block}
+    figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:24px;z-index:9999}
+    .lightbox img{max-width:95vw;max-height:90vh;border-radius:10px}
+    .lightbox.show{display:flex}
+    .close{position:absolute;top:12px;right:16px;background:#fff;border:0;border-radius:999px;width:34px;height:34px;font-weight:700;cursor:pointer}
+
+    footer{color:var(--muted);text-align:center;margin-top:28px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border);border-radius:999px}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--brand2)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- HERO -->
+    <header class="hero">
+      <h1>Connexion LDAP – Maarch Courrier</h1>
+      <div class="muted">Authentification AD/LDAP, synchronisation utilisateurs & entités, mapping & filtres.</div>
+      <div class="badges">
+        <span class="badge">Active Directory / OpenLDAP</span>
+        <span class="badge">Maarch Courrier</span>
+        <span class="badge">Auth LDAP</span>
+        <span class="badge">Synchro planifiée</span>
+      </div>
+    </header>
+
+    <!-- KPIs -->
+    <section>
+      <div class="cards">
+        <div class="card"><div class="stat">2</div><div class="muted">Modes : Auth & Synchro</div></div>
+        <div class="card"><div class="stat">1</div><div class="muted">Script CRON (synchro)</div></div>
+        <div class="card"><div class="stat">AD</div><div class="muted">OU Utilisateurs & Services</div></div>
+        <div class="card"><div class="stat">OK</div><div class="muted">Mapping / Filtres</div></div>
+      </div>
+    </section>
+
+    <!-- CONTEXTE -->
+    <section>
+      <h2>Contexte & objectifs</h2>
+      <p>
+        L’objectif est d’exploiter un annuaire <strong>AD/LDAP</strong> pour centraliser la gestion des comptes dans
+        <strong>Maarch Courrier</strong>. Deux niveaux : <em>authentification</em> (le plus rapide à mettre en œuvre) puis
+        <em>synchronisation</em> (utilisateurs & entités importés/tenus à jour).
+      </p>
+      <ul>
+        <li><strong>Étape 1</strong> – Activer l’<strong>authentification LDAP</strong> (login/mot de passe vérifiés dans l’AD).</li>
+        <li><strong>Étape 2</strong> – Ajouter la <strong>synchronisation</strong> des utilisateurs/entités via tâche planifiée.</li>
+      </ul>
+      <div class="callout">
+        Bonnes pratiques : un annuaire cohérent et à jour (OUs, groupes, attributs nom/prénom/téléphone/mail).
+      </div>
+    </section>
+
+    <!-- ARCHI + CAPTURES -->
+    <section class="grid cols-2">
+      <div>
+        <h2>Architecture (vue simple)</h2>
+        <ul>
+          <li>Annuaire <b>Active Directory</b> (ou <b>OpenLDAP</b>) exposé au serveur Maarch.</li>
+          <li>Module <code>modules/ldap</code> : configuration + scripts.</li>
+          <li>Synchro par <b>CRON</b> : <code>bin/ldap/synchronization.sh</code>.</li>
+        </ul>
+        <div class="callout warn">
+          D’abord l’authentification seule (rapide). La synchro est plus sensible (organisation de l’AD, mapping, filtres).
+        </div>
+      </div>
+      <div>
+        <div class="gallery">
+  <figure>
+    <img class="shot lb" src="assets/img/ldap4.jpg" alt="Active Directory – OU Services">
+    <figcaption>OU « Services » dans l’AD.</figcaption>
+  </figure>
+
+  <figure>
+    <img class="shot lb" src="assets/img/ldap3.jpg" alt="Active Directory – OU Utilisateurs">
+    <figcaption>OU « Utilisateurs » (agents) dans l’AD.</figcaption>
+  </figure>
+</div>
+      </div>
+    </section>
+
+    <!-- AUTH LDAP -->
+    <section>
+      <h2>1) Authentification LDAP</h2>
+      <p>Fichier de configuration (copier depuis <code>modules/ldap/xml/config.xml.default</code> vers <code>custom/IDCUSTOM/modules/ldap/xml/config.xml</code>) :</p>
+<pre><button class="copy" data-for="conf1">Copier</button><code id="conf1">&lt;config&gt;
+  &lt;ldap&gt;
+    &lt;type_ldap&gt;adLDAP&lt;/type_ldap&gt;          &lt;!-- adLDAP ou OPENLDAP --&gt;
+    &lt;domain&gt;192.168.1.1&lt;/domain&gt;              &lt;!-- IP/nom du contrôleur --&gt;
+    &lt;baseDN&gt;&lt;/baseDN&gt;                          &lt;!-- (OPENLDAP seulement, ex: DC=maarch,DC=com) --&gt;
+    &lt;prefix_login&gt;MAARCH&lt;/prefix_login&gt;        &lt;!-- ex: DOMAINE --&gt;
+    &lt;suffix_login&gt;@maarch-les-bains.com&lt;/suffix_login&gt;
+    &lt;ssl&gt;false&lt;/ssl&gt;                            &lt;!-- true si LDAPS --&gt;
+    &lt;standardConnect&gt;false&lt;/standardConnect&gt;  &lt;!-- true = contourner si AD KO --&gt;
+    &lt;login_admin&gt;Administrateur&lt;/login_admin&gt;  &lt;!-- requis pour synchro --&gt;
+    &lt;pass&gt;ThePassword&lt;/pass&gt;
+  &lt;/ldap&gt;
+&lt;/config&gt;</code></pre>
+
+      <p>Activer la méthode LDAP dans <code>custom/IDCUSTOM/config/login_method.xml</code> :</p>
+<pre><button class="copy" data-for="conf2">Copier</button><code id="conf2">&lt;login_methods&gt;
+  &lt;ldap enabled="true"/&gt;
+  &lt;local enabled="true"/&gt;  &lt;!-- en secours si besoin --&gt;
+&lt;/login_methods&gt;</code></pre>
+      <div class="callout">
+        ⚙️ <b>Test rapide</b> (réseau) : <code>ldapsearch</code> ou <code>telnet ad.exemple.lan 389</code> / <code>openssl s_client -connect ad:636</code> pour LDAPS.
+      </div>
+    </section>
+
+    <!-- SYNCHRO LDAP -->
+    <section>
+      <h2>2) Synchronisation LDAP</h2>
+      <p>Ajout dans le même <code>config.xml</code> : identifiants du WebService Maarch, activation des synchros, mapping et filtres.</p>
+<pre><button class="copy" data-for="conf3">Copier</button><code id="conf3">&lt;config&gt;
+  &lt;ldap&gt;... (config AD/LDAP ci-dessus) ...&lt;/ldap&gt;
+
+  &lt;userWS&gt;superadmin&lt;/userWS&gt;
+  &lt;passwordWS&gt;superadmin&lt;/passwordWS&gt;
+
+  &lt;synchronizeUsers&gt;true&lt;/synchronizeUsers&gt;
+  &lt;synchronizeEntities&gt;true&lt;/synchronizeEntities&gt;
+
+  &lt;mapping&gt;
+    &lt;user&gt;
+      &lt;user_id&gt;samaccountname&lt;/user_id&gt;
+      &lt;firstname&gt;givenname&lt;/firstname&gt;
+      &lt;lastname&gt;sn&lt;/lastname&gt;
+      &lt;phone&gt;telephonenumber&lt;/phone&gt;
+      &lt;mail&gt;mail&lt;/mail&gt;
+      &lt;user_entity&gt;memberof&lt;/user_entity&gt;      &lt;!-- optionnel --&gt;
+      &lt;defaultEntity&gt;PJS&lt;/defaultEntity&gt;        &lt;!-- fallback --&gt;
+    &lt;/user&gt;
+    &lt;entity&gt;
+      &lt;entity_id&gt;objectguid&lt;/entity_id&gt;
+      &lt;entity_label&gt;samaccountname&lt;/entity_label&gt;
+      &lt;parent_entity_id&gt;memberof&lt;/parent_entity_id&gt;
+    &lt;/entity&gt;
+  &lt;/mapping&gt;
+
+  &lt;filter&gt;
+    &lt;dn id="OU=Utilisateurs,OU=Maarch-les-Bains,DC=maarch,DC=com" type="users"&gt;
+      &lt;user&gt;(cn=*)&lt;/user&gt;
+    &lt;/dn&gt;
+    &lt;dn id="OU=Services,OU=Maarch-les-Bains,DC=maarch,DC=com" type="entities"&gt;
+      &lt;user&gt;(cn=*)&lt;/user&gt;
+    &lt;/dn&gt;
+  &lt;/filter&gt;
+&lt;/config&gt;</code></pre>
+
+      <p>Planifier le script de synchro (<code>bin/ldap/synchronization.sh</code>) :</p>
+<pre><button class="copy" data-for="cron">Copier</button><code id="cron"># CRON (ex. toutes les 2h)
+0 */2 * * * /var/www/maarch/bin/ldap/synchronization.sh &gt;&gt; /var/log/maarch/ldap-sync.log 2&gt;&1</code></pre>
+
+      <div class="callout warn">
+        ℹ️ <b>Règles</b> : un identifiant, un nom, un prénom, un téléphone et un email par utilisateur (première valeur conservée).  
+        Utilise <code>memberof</code> pour rattacher l’utilisateur à une entité (OU/Groupe) — prévoir <code>defaultEntity</code> en secours.
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="grid cols-2">
+      <div>
+        <h2>Tests & diagnostics</h2>
+        <ul>
+          <li><b>Connec réseau</b> : ports 389/636 ouverts ? <code>ldapsearch</code> répond ?</li>
+          <li><b>Comptes</b> : le <i>login_admin</i> a les droits de lecture sur les OUs visées.</li>
+          <li><b>Mapping</b> : attributs présents (ex. <code>samaccountname</code>, <code>givenname</code>, <code>sn</code>, <code>mail</code>) ?</li>
+          <li><b>Filtres</b> : le DN cible contient bien les comptes/entités attendus.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Sécurité & bonnes pratiques</h2>
+        <ul>
+          <li>Préférer <b>LDAPS</b> (636) + certificats valides.</li>
+          <li>Secrets hors GIT (<code>.env</code> / vault) ; logs filtrés.</li>
+          <li>Limiter la synchro à des OUs dédiées pour éviter le “bruit”.</li>
+          <li>Conserver un <b>compte local</b> administrateur Maarch (secours).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span class="pill"><span class="dot"></span> Projet LDAP Maarch — Auth OK • Synchro planifiée • Mapping & filtres maîtrisés</span>
+    </footer>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lb">
+    <button class="close" aria-label="Fermer" onclick="lb.classList.remove('show')">×</button>
+    <img id="lb-img" alt="capture" />
+  </div>
+  <script>
+    // Copie rapide
+    document.querySelectorAll('.copy').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id=btn.getAttribute('data-for');
+        const el=document.getElementById(id);
+        navigator.clipboard.writeText(el.textContent).then(()=>{
+          const t=btn.textContent; btn.textContent='Copié ✓';
+          setTimeout(()=>btn.textContent=t,1200);
+        });
+      });
+    });
+
+    // Lightbox
+    const lb=document.getElementById('lb');
+    const img=document.getElementById('lb-img');
+    document.querySelectorAll('.lb').forEach(el=>{
+      el.addEventListener('click',()=>{ img.src=el.src; lb.classList.add('show'); });
+    });
+    lb.addEventListener('click',e=>{ if(e.target===lb) lb.classList.remove('show');});
+  </script>
+</body>
+</html>

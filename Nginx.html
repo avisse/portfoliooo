@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Reverse Proxy NGINX (GLPI & Rocket.Chat) | Steve Avisse</title>
+  <meta name="description" content="Conception et déploiement d’un reverse proxy NGINX en Docker pour publier GLPI et Rocket.Chat sous HTTPS avec sous-domaines, WebSocket et provisioning complet.">
+  <meta name="keywords" content="NGINX, Reverse Proxy, Docker, Docker Compose, GLPI, Rocket.Chat, WebSocket, TLS, LetsEncrypt">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (identiques au squelette) -->
+  <style>
+    :root{
+      --accent:#f2559e;
+      --accent2:#007bff;
+      --ink:#0b1420;
+    }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Reverse Proxy NGINX (Docker) pour GLPI & Rocket.Chat
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+             
+  <img src="assets/img/nginx3.png" class="img-fluid" alt="Stack Docker reverse proxy opérationnelle">
+  <img src="assets/img/remote user.jpg" class="img-fluid" alt="GLPI - champ REMOTE_USER pour proxy">
+  <img src="assets/img/reverse proxy glpi ok .jpg" class="img-fluid" alt="VHost NGINX GLPI en sous-domaine">
+  <img src="assets/img/reverse proxy glpi s ok .jpg" class="img-fluid" alt="TLS actif sur le reverse proxy">
+  <img src="assets/img/Reverses.jpg" class="img-fluid" alt="Schéma réseau glpinet et résolution Docker">
+</div>
+       </div>
+
+          <!-- Colonne droite : résumé / tags / lien repo -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>NGINX – Point d’entrée unique (HTTPS)</strong></h3>
+
+            <p class="lead-intro">
+              Mise en place d’un <span class="accent">reverse proxy NGINX</span> en <strong>Docker</strong> pour exposer
+              proprement <strong>GLPI</strong> et <strong>Rocket.Chat</strong> : sous-domaines dédiés,
+              terminaison <strong>TLS</strong>, prise en charge <strong>WebSocket</strong>, et
+              séparation nette entre frontal et backends non exposés.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">NGINX</span>
+              <span class="tag">Docker Compose</span>
+              <span class="tag">TLS/HTTPS</span>
+              <span class="tag">WebSocket</span>
+              <span class="tag">Reverse Proxy</span>
+              <span class="tag">GLPI</span>
+              <span class="tag">Rocket.Chat</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : Réseau / Sécurité / Publication</li>
+              <li><strong>Contexte</strong> : VM Linux locale (lab)</li>
+              <li><strong>Livrables</strong> : Compose, <code>.env</code>, <code>nginx.conf</code>, vhosts, scripts de test</li>
+            </ul>
+
+            <a class="btn-repo" href="#" target="_blank" rel="noopener">
+              <i class="bx bxl-github"></i> Voir le repository GitHub
+            </a>
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">
+                Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="cx">
+                <p>
+                  Besoin d’un <strong>point d’entrée unique</strong> pour les applications internes avec
+                  <strong>simplification des URLs</strong>, <strong>terminaison TLS</strong> centralisée et
+                  possibilité d’ajouter <em>authentification</em>, <em>filtrage IP</em> et <em>journalisation</em>
+                  au niveau du proxy. Choix de <strong>NGINX</strong> (image <code>nginx:alpine</code>) pour sa
+                  stabilité, ses performances et sa documentation. Le tout orchestré via <strong>Docker Compose</strong>,
+                  sur un réseau dédié partagé avec GLPI (80/tcp) et Rocket.Chat (3000/tcp).
+                </p>
+                <ul>
+                  <li>Sous-domaines recommandés : <code>glpi.example.com</code>, <code>chat.example.com</code>.</li>
+                  <li>Backends non exposés sur l’hôte, seuls les ports 80/443 du proxy sont publiés.</li>
+                  <li>Support <strong>WebSocket</strong> pour Rocket.Chat (Upgrade/Connection, HTTP/1.1).</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Architecture cible -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                Architecture cible
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+<pre><code class="language-text">               Internet
+                   │
+              [Nginx RP]  ← HTTPS 443 / HTTP 80
+             /          \
+   glpi.example.com   chat.example.com
+         │                  │
+     [GLPI]:80        [Rocket.Chat]:3000
+         │                  │
+  ──────────── Réseau Docker "glpinet" ────────────
+</code></pre>
+                <p class="soft">
+                  <em>Seul</em> le conteneur NGINX publie des ports. GLPI et Rocket.Chat restent accessibles
+                  uniquement via le réseau Docker <code>glpinet</code>.
+                </p>
+              </div>
+            </div>
+
+            <!-- Pré-requis & réseau -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                Pré-requis & réseau partagé
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+<pre><code class="language-bash"># Docker & Docker Compose installés
+docker network create glpinet  # réseau commun au proxy et aux backends
+
+# En prod : enregistrements DNS publics → IP du proxy
+# En lab : /etc/hosts (exemple)
+192.0.2.10 glpi.example.com chat.example.com
+</code></pre>
+                <p>
+                  Les services backends (GLPI et Rocket.Chat) doivent joindre le même réseau
+                  <code>glpinet</code> et être nommés <code>glpi</code> (port 80) et <code>rocketchat</code> (port 3000)
+                  pour une résolution Docker simple côté NGINX.
+                </p>
+              </div>
+            </div>
+
+            <!-- Arborescence & .env -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                Arborescence projet & variables (.env)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+<pre><code class="language-bash">reverse-proxy/
+├─ compose.yml
+├─ .env.example   # → copier en .env et adapter
+├─ nginx/
+│  ├─ nginx.conf
+│  └─ conf.d/
+│     ├─ 10-glpi-subdomain.conf
+│     ├─ 20-rocketchat-subdomain.conf
+│     └─ 90-paths-example.conf   # (optionnel, désactivé)
+├─ certs/         # (optionnel) fullchain.pem, privkey.pem
+└─ logs/
+</code></pre>
+<pre><code class="language-ini"># .env (extraits)
+GLPI_HOST=glpi.example.com
+CHAT_HOST=chat.example.com
+
+GLPI_UPSTREAM=http://glpi:80
+CHAT_UPSTREAM=http://rocketchat:3000
+
+TLS_CERT_PATH=./certs/fullchain.pem
+TLS_KEY_PATH=./certs/privkey.pem
+</code></pre>
+              </div>
+            </div>
+
+            <!-- Docker Compose -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                Docker Compose (service reverse proxy)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+<pre><code class="language-yaml">version: "3.8"
+services:
+  reverse-proxy:
+    image: nginx:alpine
+    container_name: reverse-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file: .env
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./logs:/var/log/nginx
+      # TLS local (optionnel, si tu fournis des certs)
+      - ${TLS_CERT_PATH}:/etc/ssl/certs/fullchain.pem:ro
+      - ${TLS_KEY_PATH}:/etc/ssl/private/privkey.pem:ro
+    networks:
+      - glpinet
+
+networks:
+  glpinet:
+    external: true
+</code></pre>
+                <p class="soft">
+                  Démarrage : <code>docker compose up -d</code> → le proxy publie 80/443 et charge automatiquement
+                  <code>nginx.conf</code> + tous les vhosts de <code>conf.d/</code>.
+                </p>
+              </div>
+            </div>
+
+            <!-- Confs vhosts (sous-domaines) -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                VHosts NGINX : sous-domaines (recommandé)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+<pre><code class="language-nginx"># nginx/conf.d/10-glpi-subdomain.conf
+server {
+  listen 80;
+  server_name ${GLPI_HOST};
+
+  location / {
+    proxy_pass ${GLPI_UPSTREAM};
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+  }
+
+  # ⚠️ Activer HTTPS si tu montes des certs :
+  # listen 443 ssl http2;
+  # ssl_certificate     /etc/ssl/certs/fullchain.pem;
+  # ssl_certificate_key /etc/ssl/private/privkey.pem;
+}
+</code></pre>
+
+<pre><code class="language-nginx"># nginx/conf.d/20-rocketchat-subdomain.conf
+server {
+  listen 80;
+  server_name ${CHAT_HOST};
+
+  location / {
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    proxy_read_timeout 180s;
+    proxy_send_timeout 180s;
+
+    proxy_pass ${CHAT_UPSTREAM};
+  }
+
+  # HTTPS prêt à l’emploi si certs montés (décommente les directives ssl_* comme ci-dessus)
+}
+</code></pre>
+                <p>
+                  Ce mode évite la plupart des problèmes d’assets et de redirections. Les backends
+                  “voient” les bons entêtes <code>X-Forwarded-*</code> (sessions, URL absolues…).
+                </p>
+              </div>
+            </div>
+
+            <!-- Variante par chemins -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a6', this)">
+                Variante : Routage par chemins (optionnel)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a6">
+<pre><code class="language-nginx"># nginx/conf.d/90-paths-example.conf  (désactivé par défaut)
+server {
+  listen 80;
+  server_name example.com;
+
+  location /glpi/ {
+    proxy_pass ${GLPI_UPSTREAM}/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    sub_filter_once off;
+  }
+
+  location /chat/ {
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_pass ${CHAT_UPSTREAM}/;
+  }
+}
+</code></pre>
+                <p class="soft">
+                  ⚠️ Requiert d’ajuster la <code>baseURL</code> côté applications (GLPI & <code>ROOT_URL</code> Rocket.Chat),
+                  sinon CSS/JS cassés. D’où la préférence pour les <strong>sous-domaines</strong>.
+                </p>
+              </div>
+            </div>
+
+            <!-- Nginx global -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a7', this)">
+                Configuration NGINX globale
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a7">
+<pre><code class="language-nginx"># nginx/nginx.conf
+user  nginx;
+worker_processes  auto;
+
+events { worker_connections 1024; }
+
+http {
+  include       /etc/nginx/mime.types;
+  default_type  application/octet-stream;
+
+  sendfile on;
+  keepalive_timeout 65;
+
+  # Taille d’upload adaptée aux tickets GLPI / fichiers
+  client_max_body_size 50m;
+
+  # Compression
+  gzip on;
+  gzip_types text/plain text/css application/json application/javascript application/xml;
+
+  access_log /var/log/nginx/access.log;
+  error_log  /var/log/nginx/error.log warn;
+
+  # VHosts
+  include /etc/nginx/conf.d/*.conf;
+}
+</code></pre>
+              </div>
+            </div>
+
+            <!-- Tests & validation -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a8', this)">
+                Tests & validation (checklist)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a8">
+<pre><code class="language-bash"># Résolution DNS / hosts
+dig +short glpi.example.com
+dig +short chat.example.com
+
+# Accès HTTP/HTTPS (selon config)
+curl -I http://glpi.example.com
+curl -I http://chat.example.com
+
+# WebSocket Rocket.Chat
+curl -I -H "Upgrade: websocket" -H "Connection: upgrade" http://chat.example.com
+
+# Réseau Docker
+docker network inspect glpinet | jq '.[0].Containers|keys'
+docker exec -it reverse-proxy sh -c "getent hosts glpi rocketchat"
+
+# Logs NGINX
+tail -f logs/access.log logs/error.log
+</code></pre>
+              </div>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a9', this)">
+                Problèmes rencontrés & corrections
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a9">
+                <ul>
+                  <li><strong>502 Bad Gateway</strong> : backend down, mauvais port/nom, service non joint au réseau
+                    <code>glpinet</code> → vérifier <code>docker ps</code>, <code>docker network inspect</code>,
+                    corriger <code>proxy_pass</code>.</li>
+                  <li><strong>Assets manquants en mode chemin</strong> : baseURL incorrecte → préférer les sous-domaines
+                    ou corriger <code>ROOT_URL</code> (Rocket.Chat) et l’URL de base GLPI.</li>
+                  <li><strong>Sessions/cookies</strong> : entêtes manquants → s’assurer que
+                    <code>Host</code> et <code>X-Forwarded-Proto</code> sont bien propagés.</li>
+                  <li><strong>WebSocket</strong> : 400/upgrade KO → exiger <code>proxy_http_version 1.1</code>,
+                    entêtes <code>Upgrade</code>/<code>Connection</code> “upgrade”.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Sécurité & exploitation -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a10', this)">
+                Sécurité & exploitation (runbook)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a10">
+                <ul>
+                  <li>Exposer uniquement le proxy ; ne pas mapper les ports des backends sur l’hôte.</li>
+                  <li>TLS : certs valides (Let’s Encrypt automatisable) + redirection HTTP→HTTPS.</li>
+                  <li>Limites & timeouts : <code>client_max_body_size</code>, <code>proxy_read_timeout</code> selon besoins.</li>
+                  <li>Ops rapides :
+<pre><code class="language-bash">docker compose logs -f reverse-proxy
+docker exec -it reverse-proxy nginx -t
+docker exec -it reverse-proxy nginx -s reload
+docker compose pull && docker compose up -d
+</code></pre>
+                  </li>
+                </ul>
+                <p>
+                  <a class="btn-ghost" href="#" target="_blank" rel="noopener">
+                    Ouvrir le repo (Compose, conf NGINX & docs)
+                  </a>
+                </p>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+
+        </div><!-- /row -->
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

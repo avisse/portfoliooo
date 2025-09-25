@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>MariaDB – Réplication asynchrone (HA) | Steve Avisse</title>
+  <meta name="description" content="Conception, déploiement et validation d’une réplication asynchrone MariaDB (Master→Slave) sous Docker Compose : binlog ROW, utilisateur dédié, persistance, réseau isolé, runbook et troubleshooting.">
+  <meta name="keywords" content="MariaDB, MySQL, Réplication, Binlog ROW, Master Slave, Docker, Docker Compose, Debian 12, Haute disponibilité, Read-only">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (identiques) -->
+  <style>
+    :root{ --accent:#f2559e; --accent2:#007bff; --ink:#0b1420; }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{ background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25); padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600; }
+    .btn-ghost{ display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600; border:2px solid var(--accent2); color:var(--accent2); text-decoration:none; }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              MariaDB – Réplication asynchrone (Master → Slave) sous Docker
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+             
+              <img src="assets/img/mariadb1.png" class="img-fluid" alt="Stack Docker opérationnelle"> 
+              <img src="assets/img/mariadb2.png" class="img-fluid" alt="SHOW MASTER STATUS"> 
+              <img src="assets/img/mariadb3.png" class="img-fluid" alt=""> 
+              <img src="assets/img/mariadb4.png" class="img-fluid" alt=""> 
+             
+            </div>
+          </div>
+
+          <!-- Colonne droite : résumé / tags -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Docker : MariaDB – HA par réplication</strong></h3>
+
+            <p class="lead-intro">
+              Besoin de <span class="accent">haute disponibilité</span> et continuité de service : j’ai conçu,
+              déployé et <strong>validé</strong> une réplication <strong>asynchrone</strong> MariaDB (Master→Slave)
+              avec <strong>binlog ROW</strong>, utilisateur dédié, persistance et réseau isolé — le tout
+              <strong>Dockerisé</strong> pour être <em>simple, reproductible et portable</em>.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Docker Compose</span>
+              <span class="tag">MariaDB 11</span>
+              <span class="tag">Replication</span>
+              <span class="tag">Binlog ROW</span>
+              <span class="tag">Debian 12</span>
+              <span class="tag">HA / DR</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Périmètre</strong> : 2 services (master & slave) + validation fonctionnelle</li>
+              <li><strong>Livrables</strong> : compose, .env.example, confs my.cnf, HOWTO</li>
+              <li><strong>Sécurité</strong> : user de réplication dédié, read_only sur le slave</li>
+            </ul>
+
+      
+           <a class="btn-repo" href="https://github.com/avisse/Maria-DB-haute-disponibilite.git" target="_blank" rel="noopener">
+              <i class="bx bxl-github"></i> Voir le repository GitHub
+            </a> 
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- 1) Contexte & objectif -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('s1', this)">
+                1) Contexte & objectif
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="s1">
+                <p><strong>Contexte</strong> : besoin de HA/continuité (panne du principal, maintenance, lectures intensives).</p>
+                <p><strong>Objectif pédagogique</strong> : démontrer la conception, le déploiement et la validation d’une réplication asynchrone MariaDB.</p>
+                <p><strong>Contraintes</strong> : environnement simple, reproductible, portable → <strong>Docker + Docker Compose</strong> sur Debian 12.</p>
+                <p><strong>Périmètre</strong> : 2 conteneurs (<code>mariadb_master</code>, <code>mariadb_slave</code>), binlog <strong>ROW</strong>, validation par création/lecture d’une table test, doc pas-à-pas & bonnes pratiques.</p>
+              </div>
+            </div>
+
+            <!-- 2) Architecture -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('s2', this)">
+                2) Architecture logique
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="s2">
+<pre><code class="language-text">[Docker network: dbnet]
+             ┌───────────────────────┐
+             │  mariadb_master       │
+             │  - server-id: 1       │
+   writes →  │  - log_bin ON (ROW)   │
+ binlog ---> │  - user 'repl'        │
+             └─────────┬─────────────┘
+                       │  CHANGE MASTER TO…
+                       ▼
+             ┌───────────────────────┐
+             │  mariadb_slave        │
+             │  - server-id: 2       │
+             │  - read_only ON       │
+             │  - Slave_IO/SQL YES   │
+             └───────────────────────┘
+</code></pre>
+                <ul>
+                  <li><strong>Réseau</strong> : bridge Docker dédié <code>dbnet</code> (isolation, DNS interne).</li>
+                  <li><strong>Volumes</strong> : data persistants côté master & slave.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 3) Arborescence -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('s3', this)">
+                3) Arborescence du projet & rôle des fichiers
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="s3">
+<pre><code class="language-text">mariadb-ha-replication/
+├─ docker-compose.yml              # Orchestration des 2 services
+├─ .env.example                    # Variables (mdp root, DB démo, user réplication…)
+├─ .gitignore                      # Ignore volumes/data/dumps/secrets
+├─ master/
+│  └─ my.cnf                       # conf master (binlog, ROW, server-id)
+├─ slave/
+│  └─ my.cnf                       # conf slave (read_only, server-id)
+└─ docs/
+   └─ HOWTO.md                     # Procédure détaillée & troubleshooting
+</code></pre>
+                <p><strong>Pourquoi Compose ?</strong> Démarrer/arrêter la stack en un bloc, déclarer volumes, réseau, healthchecks & dépendances.</p>
+              </div>
+            </div>
+
+            <!-- 3.1 Compose -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('s31', this)">
+                3.1 docker-compose.yml (ce que j’ai écrit et pourquoi)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="s31">
+<pre><code class="language-yaml">version: "3.9"
+
+networks:
+  dbnet:
+
+volumes:
+  master-data:
+  slave-data:
+
+services:
+  mariadb_master:
+    image: mariadb:11
+    container_name: mariadb_master
+    restart: unless-stopped
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${DEMO_DB}
+    ports:
+      - "3307:3306"              # (optionnel) accès depuis l'hôte
+    networks: [dbnet]
+    volumes:
+      - master-data:/var/lib/mysql
+      - ./master/my.cnf:/etc/mysql/conf.d/master.cnf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -uroot -p${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  mariadb_slave:
+    image: mariadb:11
+    container_name: mariadb_slave
+    restart: unless-stopped
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    networks: [dbnet]
+    depends_on:
+      mariadb_master:
+        condition: service_healthy
+    volumes:
+      - slave-data:/var/lib/mysql
+      - ./slave/my.cnf:/etc/mysql/conf.d/slave.cnf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -uroot -p${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+</code></pre>
+                <p class="soft">Points clés : image <code>mariadb:11</code>, volumes persistants, healthchecks, réseau isolé, confs injectées en read-only, <code>depends_on</code> pour séquencer.</p>
+              </div>
+            </div>
+
+            <!-- 3.2 / 3.3 my.cnf -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('s32', this)">
+                3.2 master/my.cnf & 3.3 slave/my.cnf
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="s32">
+                <p><strong>master/my.cnf</strong> :</p>
+<pre><code class="language-ini">[mysqld]
+server-id=1
+log_bin=mysql-bin
+binlog_format=ROW
+</code></pre>
+                <p>Pourquoi <strong>ROW</strong> ? Journalise les <em>lignes</em> modifiées (pas seulement la requête) → réplication plus fiable.</p>
+                <p><strong>slave/my.cnf</strong> :</p>
+<pre><code class="language-ini">[mysqld]
+server-id=2
+read_only=ON
+relay_log=relay-bin
+</code></pre>
+                <p><code>read_only=ON</code> limite les écritures accidentelles côté slave (hors root local).</p>
+              </div>
+            </div>
+
+            <!-- 3.4 .env & .gitignore -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('s33', this)">
+                3.4 .env.example & 3.5 .gitignore
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="s33">
+<pre><code class="language-ini">MYSQL_ROOT_PASSWORD=ChangeMeStrong!
+DEMO_DB=demo
+REPL_USER=repl
+REPL_PASSWORD=ChangeMeRepl!
+</code></pre>
+                <p><strong>Pourquoi .env ?</strong> Centraliser secrets/variables sans les versionner. Fournir <code>.env.example</code> pour guider.</p>
+                <p><strong>.gitignore</strong> : ignorer <code>**/data/**</code>, <code>*.sql</code>, <code>.env</code> pour ne pas exposer de données/secrets.</p>
+              </div>
+            </div>
+
+            <!-- 4) Déploiement pas à pas -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('s4', this)">
+                4) Déploiement pas à pas (ce que j’ai fait)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="s4">
+<pre><code class="language-bash"># 4.1 Lancer l'infra
+cp .env.example .env
+docker compose up -d
+docker ps
+
+# 4.2 Préparer la réplication côté master (user dédié)
+docker exec -it mariadb_master mariadb -uroot -p"$MYSQL_ROOT_PASSWORD" -e "
+  CREATE USER '${REPL_USER}'@'%' IDENTIFIED BY '${REPL_PASSWORD}';
+  GRANT REPLICATION SLAVE ON *.* TO '${REPL_USER}'@'%';
+  FLUSH PRIVILEGES;"
+
+# Verrouiller brièvement & relever FILE/POS
+docker exec -it mariadb_master mariadb -uroot -p"$MYSQL_ROOT_PASSWORD" -e "
+  FLUSH TABLES WITH READ LOCK;
+  SHOW MASTER STATUS;"
+
+# (Optionnel) déverrouiller
+docker exec -it mariadb_master mariadb -uroot -p"$MYSQL_ROOT_PASSWORD" -e "UNLOCK TABLES;"
+
+# 4.3 Attacher le slave (adapter FILE/POS relevés)
+docker exec -it mariadb_slave mariadb -uroot -p"$MYSQL_ROOT_PASSWORD" -e "
+  CHANGE MASTER TO
+    MASTER_HOST='mariadb_master',
+    MASTER_USER='${REPL_USER}',
+    MASTER_PASSWORD='${REPL_PASSWORD}',
+    MASTER_LOG_FILE='mysql-bin.000002',
+    MASTER_LOG_POS=631;
+  START SLAVE;"
+
+# 4.4 Vérifier l'état de réplication
+docker exec -it mariadb_slave mariadb -uroot -p"$MYSQL_ROOT_PASSWORD" -e "SHOW SLAVE STATUS\\G"
+# → Slave_IO_Running: Yes / Slave_SQL_Running: Yes
+
+# 4.5 Test fonctionnel (preuve)
+docker exec -it mariadb_master mariadb -uroot -p"$MYSQL_ROOT_PASSWORD" -e "
+  USE ${DEMO_DB};
+  CREATE TABLE IF NOT EXISTS test_ecf (id INT AUTO_INCREMENT PRIMARY KEY, stamp VARCHAR(64));
+  INSERT INTO test_ecf(stamp) VALUES('2025');
+  SELECT * FROM test_ecf;"
+
+docker exec -it mariadb_slave mariadb -uroot -p"$MYSQL_ROOT_PASSWORD" -e "
+  USE ${DEMO_DB};
+  SELECT * FROM test_ecf;"
+# → la ligne '2025' apparaît côté slave
+</code></pre>
+              </div>
+            </div>
+
+            <!-- 5) Pourquoi ces choix -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('s5', this)">
+                5) Pourquoi ces choix ?
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="s5">
+                <ul>
+                  <li><strong>Docker/Compose</strong> : reproductible, portable, isolement clair.</li>
+                  <li><strong>Binlog=ROW</strong> : fiabilité (triggers, fonctions non déterministes).</li>
+                  <li><strong>User ‘repl’ dédié</strong> : moindre privilège.</li>
+                  <li><strong>Volumes persistants</strong> : pas de perte au redéploiement.</li>
+                  <li><strong>Réseau dédié</strong> : isolation + DNS interne simple.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 6) Sécurité & bonnes pratiques -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('s6', this)">
+                6) Sécurité & bonnes pratiques
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="s6">
+                <ul>
+                  <li>Ne versionne pas <code>.env</code> ; fournis <code>.env.example</code>.</li>
+                  <li><code>read_only=ON</code> côté slave pour réduire le risque.</li>
+                  <li><strong>Sauvegardes</strong> : la réplication ≠ backup. Ajouter des dumps testés en restauration.</li>
+                  <li><strong>Surveillance</strong> : alerte si <em>Slave_IO/SQL_Running</em> passent à <em>No</em>.</li>
+                  <li><strong>GTID (optionnel)</strong> : facilite les bascules futures.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 7) Dépannage -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('s7', this)">
+                7) Dépannage (ce que je vérifierais)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="s7">
+                <ul>
+                  <li><strong>IO/SQL = No</strong> : vérifier host/user/mdp, FILE/POS, réseau (<code>docker exec mariadb_slave ping mariadb_master</code>), <code>SHOW SLAVE STATUS\G</code> (<em>Last_IO_Error / Last_SQL_Error</em>).</li>
+                  <li><strong>Pas de données</strong> : confirmer <code>log_bin</code> actif, <code>binlog_format=ROW</code>, générer une nouvelle écriture sur le master.</li>
+                  <li><strong>Permissions</strong> : <code>GRANT REPLICATION SLAVE</code> + <code>FLUSH PRIVILEGES;</code>.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+
+        </div><!-- /row -->
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

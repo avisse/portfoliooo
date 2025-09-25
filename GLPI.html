@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>GLPI – ITSM & Inventory | Steve Avisse</title>
+  <meta name="description" content="Déploiement de GLPI sur Debian 12 via Docker (MySQL 5.7), persistance des données, configuration initiale, plugin FusionInventory, supervision basique.">
+  <meta name="keywords" content="GLPI, Docker, MySQL, Debian 12, VirtualBox, FusionInventory, ITSM, Inventory">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (identiques Metabase) -->
+  <style>
+    :root{
+      --accent:#f2559e;
+      --accent2:#007bff;
+      --ink:#0b1420;
+    }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+
+  <main id="main">
+    <!-- ======= Portfolio Details ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              GLPI – Déploiement ITSM dockerisé (GLPI + MySQL 5.7)
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+              <!-- Remplace/ajoute tes captures -->
+              <img src="assets/img/docker-compose glpi.jpg" class="img-fluid" alt="docker compose glpi">
+              <img src="assets/img/glpi interface.jpg" class="img-fluid" alt="fichier .env glpi">
+              <img src="assets/img/glpi ticket.jpg" class="img-fluid" alt="interface glpi">
+              <img src="assets/img/nano env glpi.jpg" class="img-fluid" alt="création ticket glpi">
+            </div>
+          </div>
+
+          <!-- Colonne droite : résumé / tags / lien repo -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Docker : GLPI – ITSM & Inventaire</strong></h3>
+
+            <p class="lead-intro">
+              Mise en place d’une plateforme <span class="accent">GLPI</span> sur <strong>Debian 12</strong>
+              (VM VirtualBox) via <strong>Docker Compose</strong> : persistance MySQL, configuration initiale,
+              et intégration du plugin <strong>FusionInventory</strong> pour l’inventaire automatisé.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Docker Compose</span>
+              <span class="tag">GLPI</span>
+              <span class="tag">MySQL 5.7</span>
+              <span class="tag">FusionInventory</span>
+              <span class="tag">Debian 12</span>
+              <span class="tag">VirtualBox</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : ITSM / Gestion de parc</li>
+              <li><strong>Contexte</strong> : VM Debian 12 (local)</li>
+              <li><strong>Livrables</strong> : Stack Compose, .env, persistance, plugin, tests fonctionnels</li>
+            </ul>
+
+            <a class="btn-repo" href="https://github.com/avisse/Glpi" target="_blank" rel="noopener">
+              <i class="bx bxl-github"></i> Voir le repository GitHub
+            </a>
+          </div>
+
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">
+                Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="cx">
+                <p>
+                  Objectif : déployer <strong>GLPI</strong> pour la gestion des tickets, des actifs et des licences,
+                  de façon <strong>portable et reproductible</strong> via Docker. La cible est une VM
+                  <strong>Debian 12</strong> sous VirtualBox, avec <em>persistance</em> des données et une
+                  <strong>intégration FusionInventory</strong> pour automatiser l’inventaire matériel/logiciel.
+                </p>
+              </div>
+            </div>
+
+            <!-- Architecture & Docker Compose -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                Architecture & Docker Compose
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+                <p>
+                  Deux services : <code>glpi</code> (front/app) et <code>db</code> (MySQL 5.7) sur le même réseau
+                  avec <strong>volumes persistants</strong>. Les secrets sont externalisés via <code>.env</code>.
+                </p>
+<pre><code class="language-yaml">version: "3.8"
+services:
+  glpi:
+    image: glpi/glpi:latest
+    restart: unless-stopped
+    volumes:
+      - ./storage/glpi:/var/glpi:rw
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - "8083:80"
+
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${GLPI_DB_NAME}
+      MYSQL_USER: ${GLPI_DB_USER}
+      MYSQL_PASSWORD: ${GLPI_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: root
+    expose:
+      - "3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "${GLPI_DB_USER}", "--password=${GLPI_DB_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+</code></pre>
+                <p class="soft">
+                  Lancement : <code>docker compose up -d</code> → GLPI sur <code>http://localhost:8083</code>.
+                </p>
+              </div>
+            </div>
+
+            <!-- Arborescence & .env -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                Arborescence projet & variables (.env)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+                <p>Arborescence minimale :</p>
+<pre><code class="language-bash">$ mkdir -p ~/projet-ecf/glpi
+$ cd ~/projet-ecf/glpi
+$ tree -L 2
+.
+├── docker-compose.yml
+├── .env
+└── storage/
+    ├── glpi/
+    └── mysql/
+</code></pre>
+                <p>Fichier <code>.env</code> :</p>
+<pre><code class="language-ini">GLPI_DB_HOST=db
+GLPI_DB_PORT=3306
+GLPI_DB_NAME=glpi
+GLPI_DB_USER=glpi
+GLPI_DB_PASSWORD=glpi
+</code></pre>
+              </div>
+            </div>
+
+            <!-- Déploiement & accès -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                Déploiement & accès
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+                <p>Commandes clés :</p>
+<pre><code class="language-bash"># Démarrage
+docker compose up -d
+
+# Santé & logs
+docker ps
+docker compose logs -f db
+docker compose logs -f glpi
+
+# Accès applicatif
+# → http://localhost:8083
+# Compte initial : glpi / glpi (à changer immédiatement)
+</code></pre>
+                <p>
+                  Vérifications effectuées : conteneurs <em>db</em> et <em>glpi</em> OK, persistance des données OK
+                  après redémarrage de la stack.
+                </p>
+              </div>
+            </div>
+
+            <!-- GLPI – Configuration -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                GLPI – Configuration initiale & tests
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+                <ul>
+                  <li>Création des <strong>entités</strong>, <strong>groupes</strong>, <strong>utilisateurs</strong> et <strong>profils</strong>.</li>
+                  <li>Paramétrage des catégories de tickets, SLA, notifications.</li>
+                  <li>Tests réalisés : création/suivi de tickets, ajout de matériels, gestion de licences — <strong>OK</strong>.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- FusionInventory -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                Plugin FusionInventory (inventaire automatisé)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+                <p>
+                  <strong>FusionInventory</strong> apporte l’inventaire automatique (postes, serveurs, réseaux), la
+                  découverte réseau (SNMP, plages IP) et l’automatisation de tâches de gestion de parc.
+                </p>
+                <ol>
+                  <li>Télécharger le plugin et le déposer dans <code>/var/glpi/plugins/</code> (volume <code>storage/glpi</code> côté hôte).</li>
+                  <li>Activer depuis <em>Configuration → Plugins</em>.</li>
+                  <li>Déployer un <strong>agent FusionInventory</strong> sur un poste test et vérifier la remontée.</li>
+                </ol>
+                <p>Résultat : inventaire fonctionnel synchronisé dans GLPI — <strong>OK</strong>.</p>
+              </div>
+            </div>
+
+            <!-- Sécurité & supervision -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a6', this)">
+                Sécurité & supervision minimales
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a6">
+                <ul>
+                  <li>Secrets en <code>.env</code>, pas d’identifiants en clair dans le YAML.</li>
+                  <li>Volumes <code>storage/glpi</code> et <code>storage/mysql</code> pour la <strong>persistance</strong>.</li>
+                  <li>Journalisation : <code>docker compose logs -f</code>, contrôle des ports via <code>ss -tulnp</code>.</li>
+                  <li>Exposition externe : reverse proxy + authentification (à prévoir si publication).</li>
+                  <li>Projet connexe : pare-feu <strong>pfSense</strong> pour filtrer/contrôler les flux.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Résultats & enseignements -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a7', this)">
+                Résultats & enseignements
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a7">
+                <ul>
+                  <li>Stack <strong>reproductible</strong> GLPI + MySQL, prête à être intégrée dans une infra plus large.</li>
+                  <li><strong>Inventaire automatisé</strong> via FusionInventory et jeux de tests validés.</li>
+                  <li>Base pour ajouter supervision, sauvegardes planifiées et durcissement réseau.</li>
+                </ul>
+                <p>
+                  <a class="btn-ghost" href="https://github.com/avisse/Glpi" target="_blank" rel="noopener">
+                    Ouvrir le repo (Compose, .env & docs)
+                  </a>
+                </p>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+
+        </div><!-- /row -->
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

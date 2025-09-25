@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>POC ETL – Apache Hop + MariaDB + Docker</title>
+  <style>
+    :root{
+      --bg:#0f1220;
+      --panel:#151935;
+      --muted:#8fa1b3;
+      --text:#e8ecf1;
+      --brand:#6ee7b7;   /* vert menthe */
+      --brand-2:#60a5fa; /* bleu clair  */
+      --accent:#f59e0b;  /* ambre       */
+      --border:rgba(255,255,255,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+      --code:#111827; /* ⇠ plus clair qu'avant */
+      --overlay:rgba(0,0,0,.75); /* ⇠ lightbox adoucie */
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f6f7fb;
+        --panel:#ffffff;
+        --text:#101424;
+        --muted:#455266;
+        --border:rgba(16,20,36,.08);
+        --shadow:0 10px 24px rgba(16,20,36,.08);
+        --code:#f3f4f6;
+        --overlay:rgba(0,0,0,.5);
+      }
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial,"Noto Sans"}
+    a{color:var(--brand-2);text-decoration:none}
+    a:hover{opacity:.9}
+    .wrapper{max-width:1100px;margin:auto;padding:32px 20px 64px}
+    header.hero{
+      background:linear-gradient(140deg, rgba(110,231,183,.12), rgba(96,165,250,.12));
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      border-radius:var(--radius);
+      padding:28px 28px 20px;
+      margin-bottom:28px;
+    }
+    .hero h1{margin:0 0 6px;font-size:28px;letter-spacing:.2px}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .badge{padding:6px 10px;border-radius:999px;border:1px solid var(--border);color:var(--muted);background:rgba(255,255,255,.02)}
+
+    section{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin:18px 0}
+    section h2{margin:0 0 12px;font-size:20px}
+    .grid{display:grid;gap:16px}
+    @media (min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr}}
+
+    .cards{display:grid;gap:12px}
+    @media (min-width:900px){.cards{grid-template-columns:repeat(4,1fr)}}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent);border:1px solid var(--border);border-radius:14px;padding:14px}
+    .stat{font-size:22px;font-weight:700}
+    .muted{color:var(--muted)}
+    .callout{border-left:4px solid var(--brand);background:linear-gradient(90deg, rgba(110,231,183,.10), transparent);border-radius:10px;padding:12px 14px;margin:10px 0}
+    .callout.warn{border-left-color:var(--accent);background:linear-gradient(90deg, rgba(245,158,11,.12), transparent)}
+    code,.code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;background:var(--code);border:1px solid var(--border);padding:2px 6px;border-radius:8px}
+    pre{background:var(--code);border:1px solid var(--border);padding:14px;border-radius:12px;overflow:auto}
+    pre>code{background:transparent;border:none;padding:0}
+
+    .gallery{display:grid;gap:10px}
+    @media (min-width:900px){.gallery{grid-template-columns:repeat(3,1fr)}}
+    figure{margin:0}
+    .shot{width:100%;border-radius:12px;border:1px solid var(--border);box-shadow:0 10px 20px rgba(0,0,0,.25);cursor:pointer;display:block}
+    figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+
+    .lightbox{position:fixed;inset:0;background:var(--overlay);display:none;align-items:center;justify-content:center;padding:24px;z-index:9999}
+    .lightbox img{max-width:95vw;max-height:90vh;border-radius:10px}
+    .lightbox.show{display:flex}
+    .close{position:absolute;top:12px;right:16px;background:#fff;border:0;border-radius:999px;width:34px;height:34px;font-weight:700;cursor:pointer}
+
+    footer{color:var(--muted);text-align:center;margin-top:28px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border);border-radius:999px}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--brand)}
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- HERO -->
+    <header class="hero">
+      <h1>ETL – POC avec Apache Hop, MariaDB et Docker</h1>
+      <div class="muted">Extraction CSV → Chargement SQL, validation et présentation du flux de données.</div>
+      <div class="badges">
+        <span class="badge">Apache Hop Web</span>
+        <span class="badge">MariaDB + Adminer</span>
+        <span class="badge">Docker Compose</span>
+        <span class="badge">CSV → Staging → Cible</span>
+      </div>
+    </header>
+
+    <!-- KPIs -->
+    <section>
+      <div class="cards">
+        <div class="card"><div class="stat">2</div><div class="muted">Pipelines Hop</div></div>
+        <div class="card"><div class="stat">1</div><div class="muted">Base MariaDB (etl_demo)</div></div>
+        <div class="card"><div class="stat">10</div><div class="muted">Lignes de démonstration</div></div>
+        <div class="card"><div class="stat">100%</div><div class="muted">Reproductible en Docker</div></div>
+      </div>
+    </section>
+
+    <!-- CONTEXTE -->
+    <section>
+      <h2>Contexte & objectif</h2>
+      <p>
+        Objectif : livrer un <strong>POC ETL</strong> simple et reproductible pour démontrer le principe d’un
+        flux <em>Extract → Transform → Load</em> avec des outils <strong>open-source</strong> et une
+        <strong>chaîne “prête à rejouer”</strong> sous Docker.
+      </p>
+      <ul>
+        <li>Déployer rapidement un environnement <strong>Apache Hop Web</strong>, <strong>MariaDB</strong> et <strong>Adminer</strong>.</li>
+        <li>Créer et exécuter une pipeline de base <em>CSV → table SQL</em>.</li>
+        <li>Montrer la bonne pratique <em>staging → table finale</em> (upsert léger).</li>
+        <li>Documenter les difficultés rencontrées et les correctifs appliqués.</li>
+      </ul>
+      <div class="callout">
+        Pourquoi Hop ? Interface graphique légère, exécution web, et parfaite pour illustrer l’ETL sans surcoût.
+      </div>
+    </section>
+
+    <!-- ARCHITECTURE -->
+    <section class="grid cols-2">
+      <div>
+        <h2>Architecture</h2>
+        <p>Trois services Docker orchestrés par <code>docker-compose</code> :</p>
+        <ul>
+          <li><strong>hopweb</strong> – Apache Hop Web (UI ETL) – <span class="muted">:8086</span></li>
+          <li><strong>mariadb</strong> – base de données – <span class="muted">:3307</span> exposé côté hôte</li>
+          <li><strong>adminer</strong> – SQL mini-console web – <span class="muted">:8081</span></li>
+        </ul>
+        <pre><code># Extrait simplifié (ports / variables / volume init.sql)
+services:
+  mariadb:
+    image: mariadb:10.11
+    ports: ["3307:3306"]
+    environment:
+      - MARIADB_DATABASE=etl_demo
+      - MARIADB_USER=etl_user
+      - MARIADB_PASSWORD=etl_pwd
+      - MARIADB_ROOT_PASSWORD=root_pwd
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  adminer:
+    image: adminer
+    ports: ["8081:8080"]
+
+  hopweb:
+    image: apache/hop-web
+    ports: ["8086:8080"]</code></pre>
+        <div class="callout">Le script <code>init.sql</code> prépare le schéma et les tables <code>agents</code> et <code>agents_staging</code>.</div>
+      </div>
+      <div>
+        <figure>
+          <img class="shot lb" src="assets/img/istalation  hop-project.png" alt="Installation/pull des images Docker" />
+          <figcaption>Téléchargement et démarrage de la stack.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- DONNÉES -->
+    <section class="grid cols-2">
+      <div>
+        <h2>Données & schéma</h2>
+        <p>Un fichier <code>CSV</code> simple (<code>data/agents.csv</code>) alimente deux tables :</p>
+        <ul>
+          <li><code>agents_staging</code> – zone tampon de chargement.</li>
+          <li><code>agents</code> – table métier (cible).</li>
+        </ul>
+        <div class="callout">Colonnes : Matricule, Nom, Prenom, Service, Email, Salaire, Actif, DateEmbauche.</div>
+      </div>
+      <div>
+        <figure>
+          <img class="shot lb" src="assets/img/structure%20de%20ta%20table%20agents%20avec%20les%20nouvelle%20ligne%20charg%C3%A9.png" alt="Structure de la table agents" />
+          <figcaption>Structure et données de <code>agents</code> dans Adminer.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- RÉALISATION -->
+    <section>
+      <h2>Réalisation pas-à-pas</h2>
+      <ol>
+        <li><strong>Démarrage de l’environnement</strong>
+          <div class="muted">Dans le dossier du projet : <code>docker compose up -d</code></div>
+          <figure>
+            <img class="shot lb" src="assets/img/docker%20ok%20.png" alt="Stack Docker OK" />
+            <figcaption>Containers en route (ports exposés).</figcaption>
+          </figure>
+        </li>
+
+        <li><strong>Connexion BD dans Hop</strong>
+          <div class="muted">Type : <code>MariaDB</code> – Host : <code>host.docker.internal</code> – Port : <code>3307</code> – DB : <code>etl_demo</code> – User : <code>etl_user</code>.</div>
+          <div class="grid cols-2">
+            <figure>
+              <img class="shot lb" src="assets/img/param%C3%A9trage%20etl%20vers%20base.png" alt="Paramétrage connexion Hop" />
+              <figcaption>Paramétrage de la connexion MariaDB.</figcaption>
+            </figure>
+            <figure>
+              <img class="shot lb" src="assets/img/connection%20base%20ok%20succes.png" alt="Test connexion OK" />
+              <figcaption>Test de connexion : <em>success</em>.</figcaption>
+            </figure>
+          </div>
+        </li>
+
+        <li><strong>Pipeline 1 : CSV → agents</strong>
+          <div class="grid cols-2">
+            <figure>
+              <img class="shot lb" src="assets/img/csv%20file%20input.png" alt="CSV file input" />
+              <figcaption>Transform “CSV file input” → <code>/files/data/agents.csv</code>.</figcaption>
+            </figure>
+            <figure>
+              <img class="shot lb" src="assets/img/param%C3%A9trage%20table%20output.png" alt="Table output" />
+              <figcaption>Transform “Table output” vers <code>agents</code>.</figcaption>
+            </figure>
+          </div>
+          <figure>
+            <img class="shot lb" src="assets/img/run%20du%20scenario.png" alt="Run / Logging" />
+            <figcaption>Exécution : 10 lignes lues/écrites, aucune erreur.</figcaption>
+          </figure>
+        </li>
+
+        <li><strong>Pipeline 2 : CSV → agents_staging</strong>
+          <div class="muted">Même logique, cible <code>agents_staging</code> (prépare un futur upsert).</div>
+          <figure>
+            <img class="shot lb" src="assets/img/csv_to_staging_agents.hpl.png" alt="Pipeline csv_to_staging_agents" />
+            <figcaption>Pipeline dédiée “csv_to_staging_agents”.</figcaption>
+          </figure>
+        </li>
+
+        <li><strong>Vérification SQL dans Adminer</strong>
+          <div class="grid cols-2">
+            <figure>
+              <img class="shot lb" src="assets/img/adminer%20.png" alt="Adminer" />
+              <figcaption>Accès Adminer sur <code>http://localhost:8081</code>.</figcaption>
+            </figure>
+            <figure>
+              <img class="shot lb" src="assets/img/ligne%20charge%20donc%20etl%20ok%20.png" alt="Données chargées" />
+              <figcaption>Les 10 lignes d’exemple bien présentes.</figcaption>
+            </figure>
+          </div>
+        </li>
+
+        <li><strong>(Bonus) Évolution du schéma via Hop</strong>
+          <div class="muted">“Simple SQL editor” pour ajuster le schéma à chaud.</div>
+          <figure>
+            <img class="shot lb" src="assets/img/SQL%20editor%20de%20Table%20output..png" alt="SQL editor Hop" />
+            <figcaption>ALTER TABLE (ajustements typage/colonnes).</figcaption>
+          </figure>
+          <div class="callout warn">
+            Si une colonne existe déjà, Hop renvoie “Duplicate column name”.  
+            ✔️ Solution : ajouter <code>IF EXISTS / IF NOT EXISTS</code> ou ignorer si déjà appliqué.
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- DIFFICULTÉS -->
+    <section class="grid cols-2">
+      <div>
+        <h2>Difficultés & correctifs</h2>
+        <ul>
+          <li><strong>Driver MariaDB</strong> : en Hop Web officiel, le driver est inclus → choisir “MariaDB” (pas “MySQL pur”).</li>
+          <li><strong>Hostname côté Hop</strong> : utiliser <code>host.docker.internal</code> (accès au host) et le port <code>3307</code>.</li>
+          <li><strong>Credentials Adminer</strong> : Serveur = <code>mariadb</code>, BD = <code>etl_demo</code>, utilisateur = <code>etl_user</code>.</li>
+          <li><strong>git push (SSH)</strong> : “Permission denied (publickey)” → ajouter sa clé à GitHub ou passer le remote en HTTPS.</li>
+        </ul>
+      </div>
+      <div>
+        <figure>
+          <img class="shot lb" src="assets/img/interface.png" alt="UI Hop" />
+          <figcaption>Interface Hop Web utilisée tout au long du POC.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- REJOUER -->
+    <section>
+      <h2>Comment rejouer le POC</h2>
+      <ol>
+        <li>Cloner le dépôt et se placer dans le dossier.</li>
+        <li>Lancer la stack : <code>docker compose up -d</code></li>
+        <li>Ouvrir Hop Web : <code>http://localhost:8086/ui</code></li>
+        <li>Ouvrir Adminer : <code>http://localhost:8081</code>  
+          <div class="muted">Système : MySQL • Serveur : <code>mariadb</code> • Utilisateur : <code>etl_user</code> • BD : <code>etl_demo</code></div>
+        </li>
+        <li>Exécuter les pipelines et vérifier les lignes dans <code>agents</code>.</li>
+      </ol>
+      <div class="callout">Le dataset d’exemple est monté pour Hop : <code>/files/data/agents.csv</code>.</div>
+    </section>
+
+    <!-- GALLERY -->
+    <section>
+      <h2>Captures</h2>
+      <div class="gallery">
+        <figure><img class="shot lb" src="assets/img/creat%20hop.png" alt="Créer un projet Hop"><figcaption>Création projet Hop</figcaption></figure>
+        <figure><img class="shot lb" src="assets/img/istalation  hop-project.png" alt="Installation images Docker"><figcaption>Images Docker en cours</figcaption></figure>
+        <figure><img class="shot lb" src="assets/img/docker%20ok%20.png" alt="Docker OK"><figcaption>Stack opérationnelle</figcaption></figure>
+        <figure><img class="shot lb" src="assets/img/param%C3%A9trage%20etl%20vers%20base.png" alt="Paramétrage connexion"><figcaption>Connexion BD</figcaption></figure>
+        <figure><img class="shot lb" src="assets/img/csv%20file%20input.png" alt="CSV input"><figcaption>CSV file input</figcaption></figure>
+        <figure><img class="shot lb" src="assets/img/param%C3%A9trage%20table%20output.png" alt="Table output"><figcaption>Table output</figcaption></figure>
+        <figure><img class="shot lb" src="assets/img/run%20du%20scenario.png" alt="Run logging"><figcaption>Lancement / Logging</figcaption></figure>
+        <figure><img class="shot lb" src="assets/img/csv_to_staging_agents.hpl.png" alt="Vers staging"><figcaption>Pipeline staging</figcaption></figure>
+        <figure><img class="shot lb" src="assets/img/adminer%20.png" alt="Adminer"><figcaption>Adminer</figcaption></figure>
+        <figure><img class="shot lb" src="assets/img/ligne%20charge%20donc%20etl%20ok%20.png" alt="Sélect agents"><figcaption>Données chargées</figcaption></figure>
+        <figure><img class="shot lb" src="assets/img/SQL%20editor%20de%20Table%20output..png" alt="SQL editor"><figcaption>SQL editor</figcaption></figure>
+      </div>
+    </section>
+
+    <footer>
+      <span class="pill"><span class="dot"></span> POC terminé – prêt à rejouer en quelques minutes</span>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lb">
+    <button class="close" aria-label="Fermer" onclick="lb.classList.remove('show')">×</button>
+    <img id="lb-img" alt="capture" />
+  </div>
+  <script>
+    const lb=document.getElementById('lb');
+    const img=document.getElementById('lb-img');
+    document.querySelectorAll('.lb').forEach(el=>{
+      el.addEventListener('click',()=>{ img.src=el.src; lb.classList.add('show'); });
+    });
+    lb.addEventListener('click',e=>{ if(e.target===lb) lb.classList.remove('show');});
+  </script>
+</body>
+</html>

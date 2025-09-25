@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Steve Avisse</title>
-  <meta content="" name="descriptison">
-  <meta content="" name="keywords">
+  <title>Domatel Mobile – Télégestion à domicile | Steve Avisse</title>
+  <meta name="description" content="Projet de télégéstion mobile pour le CMS : audit, déploiement Domatel, QR code, planification, formation, sécurité RGPD, et résultats chiffrés.">
+  <meta name="keywords" content="Domatel, Télégestion, Aide à domicile, Planning, QR Code, Signature, Paie, RGPD, Conduite du changement">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -26,274 +26,285 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux (lisibilité + accent couleurs) -->
   <style>
-        .faq-item {
-            border-bottom: 1px solid #ddd;
-            padding: 10px;
-        }
+    :root{
+      --accent:#f2559e;   /* rose doux */
+      --accent2:#007bff;  /* bleu charte */
+      --ink:#0b1420;
+    }
+    .lead-intro{
+      font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px;
+    }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{
+      background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600;
+    }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
 
-        .question {
-            cursor: pointer;
-            font-weight: bold;
-            margin-bottom: 10px;
-            position: relative;
-        }
+    /* blocs code lisibles */
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
 
-        .answer {
-            max-height: 0;
-            overflow: hidden;
-            margin-bottom: 20px;
-            transition: max-height 0.3s ease-in-out;
-        }
+    /* accordéons */
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
 
-        .arrow-icon {
-            position: absolute;
-            top: 0;
-            right: 0;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .answer-visible .arrow-icon {
-            transform: rotate(180deg);
-        }
-    </style>
-
-  <!-- =======================================================
-  * Template Name: MyResume - v2.1.0
-  * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    /* arrondi léger sur les images du carrousel */
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
 </head>
 
 <body>
 
   <main id="main">
-
     <!-- ======= Portfolio Details ======= -->
     <section id="portfolio-details" class="portfolio-details">
       <div class="container" data-aos="fade-up">
 
         <div class="row">
 
+          <!-- Colonne gauche : carrousel -->
           <div class="col-lg-8">
-            <h2 class="portfolio-title">Domatel Mobile - Révolution de la Télégestion pour les Soins à Domicile</h2>
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Domatel Mobile – Télégestion & planification des soins à domicile
+            </h2>
+
             <div class="owl-carousel portfolio-details-carousel">
-              <img src="assets/img/domatel.jpg" class="img-fluid" alt="">
+            
+                <img src="assets/img/domatel.jpg" class="img-fluid" alt="">
               <img src="assets/img/domatel2.jpg" class="img-fluid" alt="">
               <img src="assets/img/domatel3.jpg" class="img-fluid" alt="">
               <img src="assets/img/domatel4.jpg" class="img-fluid" alt="">
             </div>
-          </div>
+          </div>        
 
+          <!-- Colonne droite : résumé / tags / lien -->
           <div class="col-lg-4 portfolio-info">
-            <h3 style="text-align: center;">Optimisation Opérationnelle, Simplification Administrative, et Communication Renforcée pour les Intervenants du Centre Médical Santé (CMS) de la Mairie de Montrouge. </h3>
-            <ul>
-              <li><strong>Categorie</strong>:Domatel Mobile</li>
-              <li><strong>Pour: </strong>: Mairie de Montrouge </li>
-              <li><strong>Projet URL</strong>: <a href="#">https://ogust.com/marketplace_fiche/domatel/</a></li>
+            <h3 style="text-align:center"><strong>Télégestion CMS – Mairie de Montrouge</strong></h3>
+
+            <p class="lead-intro">
+              Mise en place d’une solution de <span class="accent">télégestion mobile</span> pour
+              le Centre Médical Santé : <strong>plannings à jour</strong>, <strong>pointage QR</strong>,
+              <strong>signature électronique</strong>, et <strong>exports paie fiabilisés</strong>.
+              Objectif : <em>gagner du temps administratif et réduire les litiges paie</em>.
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Domatel Mobile</span>
+              <span class="tag">QR Code / Pointage</span>
+              <span class="tag">Signature électronique</span>
+              <span class="tag">Alertes SMS</span>
+              <span class="tag">Exports Paie</span>
+              <span class="tag">RGPD</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : Application / Télégestion</li>
+              <li><strong>Contexte</strong> : CMS – Mairie de Montrouge</li>
+              <li><strong>Livrables</strong> : Paramétrage, QR/encodeurs, formations, kit d’exploitation, KPI</li>
             </ul>
-<!-- Introduction -->
-     <h2><strong>Introduction au Projet Domatel Mobile :</strong></h2>
 
-    <p>Le projet <strong>Domatel Mobile</strong>, initié au sein de la mairie de Montrouge, représente une avancée significative dans la gestion des interventions à domicile pour les infirmières du Centre médical santé (CMS). <strong>Domatel Mobile</strong> est une solution de télégestion mobile dédiée aux structures de services, d'aide, et de soins à domicile. L'objectif principal était d'optimiser l'organisation du service en permettant un suivi en temps réel des interventions, une simplification des tâches administratives, et une communication efficace entre les intervenants et les responsables.</p>
-
-             </div>
-
-          <div class="col-lg-13 portfolio-info">
-<!-- Cart@DS Section -->
-<h2 ><strong>Impacts de Domatel Mobile sur les Agents :</strong></h2>
-
-    <p>La mise en place de <strong>Domatel Mobile</strong> a apporté des avantages significatifs aux agents sociaux et infirmiers. Ces avantages comprennent la possibilité d'avoir des plannings à jour, un accès instantané aux informations sur les bénéficiaires, la validation des prestations via signature électronique, et un pointage précis des heures d'intervention grâce à un flash-code. Pour les responsables de secteur, cela a facilité la récupération et l'intégration des heures réellement effectuées, tout en permettant l'envoi d'alertes SMS en temps opportun.</p>
+            <a class="btn-ghost" href="https://ogust.com/marketplace_fiche/domatel/" target="_blank" rel="noopener">
+              En savoir plus sur Domatel
+            </a>
           </div>
-</div>
 
-<div class="col-lg-13 portfolio-info"><h2 style="color: #007bff; font-weight: bold;">Les Grandes Étapes de Mon Projet :</h2>
-  </div>
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
 
-<!-- ======= etapes suivantes ======= -->
+            <!-- Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">
+                Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="cx">
+                <p>
+                  Côté terrain : besoins de <strong>plannings fiables</strong>, traçabilité des passages,
+                  et échanges rapides avec les responsables. Côté back-office : <strong>fiabiliser les heures</strong>
+                  envoyées en paie et <strong>réduire le temps de consolidation</strong>.
+                </p>
+                <ul>
+                  <li>Suivi en temps réel des interventions (arrivée/départ).</li>
+                  <li>Signature électronique du bénéficiaire + notes de visite.</li>
+                  <li>Alertes SMS pour imprévus (retard, absence, changement).</li>
+                  <li>Exports paie : contrôle & rapprochement simplifiés.</li>
+                </ul>
+              </div>
+            </div>
 
-<!-- Étape 1 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('answer1', this)">
-        1. Identification des Besoins :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="answer1">
-        <ul>
-            <li>Analyse approfondie des besoins et des utilisateurs finaux :</li>
-            <ul>
-                <li>Exploration détaillée des exigences du service informatique et des utilisateurs.</li>
-                <li>Entretiens approfondis pour comprendre les besoins spécifiques.</li>
-                <li>Examen critique des processus existants pour cibler les domaines d'amélioration.</li>
-            </ul>
-            <li>Évaluation minutieuse des lacunes dans les processus actuels :</li>
-            <ul>
-                <li>Analyse critique pour identifier les points faibles.</li>
-                <li>Identification des frictions et des opportunités de renforcement.</li>
-            </ul>
-        </ul>
-    </div>
-</div>
+            <!-- Architecture & flux -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                Architecture fonctionnelle & flux d’information
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+                <p>
+                  Vue d’ensemble des briques déployées et des échanges principaux :
+                </p>
+<pre><code>Agents (app mobile) ──► Pointage QR & Signature
+           │                     │
+           ▼                     ▼
+      Domatel (SaaS)  ◄───►  Responsables (web)
+           │
+           ├─ Exports heures vers Paie (CSV/EDI)
+           └─ Alertes SMS / Notifications
+</code></pre>
+                <ul>
+                  <li><strong>App mobile</strong> (Android/iOS) : planning, pointage, notes, signatures.</li>
+                  <li><strong>Portail web</strong> : création groupes, affectations, règles de contrôle.</li>
+                  <li><strong>Encodeurs/QR</strong> : placés chez les bénéficiaires pour horodatage fiable.</li>
+                  <li><strong>Connecteurs</strong> : export mensuel vers la paie + rapports d’activité.</li>
+                </ul>
+              </div>
+            </div>
 
-<!-- Étape 2 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('answer2', this)">
-        2. Choix de la Solution :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="answer2">
-        <ul>
-            <li>Sélection rigoureuse d'une solution adaptée :</li>
-            <ul>
-                <li>Examen approfondi des options disponibles sur le marché.</li>
-                <li>Comparaison des fonctionnalités pour répondre aux besoins spécifiques du projet.</li>
-                <li>Prise en compte des retours d'expérience d'autres projets similaires.</li>
-            </ul>
-            <li>Validation de la solution retenue :</li>
-            <ul>
-                <li>Mise en place de démonstrations et de tests pour évaluer la solution.</li>
-                <li>Consultation des parties prenantes pour recueillir des feedbacks.</li>
-            </ul>
-        </ul>
-    </div>
-</div>
+            <!-- Déploiement & paramétrage -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                Déploiement & paramétrage réalisés
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+                <ul>
+                  <li><strong>Audit & cadrage</strong> : cartographie des tournées, règles d’absence, circuits de validation.</li>
+                  <li><strong>Paramétrage</strong> : groupes/sectors, droits par profil, modèles de missions, modèles SMS.</li>
+                  <li><strong>Matériel</strong> : livraison & pose des encodeurs/QR chez les bénéficiaires cibles.</li>
+                  <li><strong>Intégration</strong> : plan d’export vers la paie + contrôle des incohérences (heures manquantes, doublons).</li>
+                  <li><strong>Pilotage</strong> : comité hebdo, check-list de bascule, support de proximité.</li>
+                </ul>
+              </div>
+            </div>
 
-<!-- Étape 3 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('answer3', this)">
-        3. Acquisition de Matériel :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="answer3">
-        <ul>
-            <li>Identification des équipements nécessaires :</li>
-            <ul>
-                <li>Évaluation des besoins en termes d'encodeurs et d'autres équipements nécessaires.</li>
-                <li>Sélection des fournisseurs en fonction des exigences spécifiques du projet.</li>
-            </ul>
-            <li>Commande du matériel :</li>
-            <ul>
-                <li>Passation des commandes en fonction des spécifications techniques définies.</li>
-                <li>Assurance de la conformité du matériel aux normes et exigences du projet.</li>
-            </ul>
-        </ul>
-    </div>
-</div>
+            <!-- Formation & accompagnement -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                Formation & accompagnement des équipes
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+                <ul>
+                  <li><strong>Sessions agents</strong> (2h) : app mobile, pointage QR, reporting d’anomalies.</li>
+                  <li><strong>Sessions responsables</strong> (2×2h) : planning, contrôle, exports paie, alertes.</li>
+                  <li><strong>Kit d’exploitation</strong> : pas-à-pas, FAQ, scripts de vérification mensuelle.</li>
+                  <li><strong>Suivi adoption</strong> : hotline dédiée les 4 premières semaines.</li>
+                </ul>
+              </div>
+            </div>
 
-<!-- Étape 4 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('answer4', this)">
-        4. Configuration de l'Environnement Sécurisé :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="answer4">
-        <ul>
-            <li>Mise en place d'un environnement sécurisé :</li>
-            <ul>
-                <li>Définition des paramètres de sécurité nécessaires pour l'accès au système.</li>
-                <li>Configuration des restrictions d'accès pour garantir la confidentialité des données.</li>
-            </ul>
-            <li>Installation des équipements :</li>
-            <ul>
-                <li>Placement des encodeurs et des autres équipements conformément aux directives.</li>
-                <li>Vérification de la fonctionnalité de l'environnement sécurisé.</li>
-            </ul>
-        </ul>
-    </div>
-</div>
+            <!-- Sécurité / conformité -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                Sécurité & conformité (RGPD)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+                <ul>
+                  <li>Principe du <em>moindre privilège</em> : profils & rôles par métier.</li>
+                  <li>Journalisation des accès et traçabilité des actions sensibles.</li>
+                  <li>Gestion du consentement et minimisation des données collectées.</li>
+                  <li>Procédure de réversibilité & export des données sur demande.</li>
+                </ul>
+                <p class="soft">Note : les sauvegardes et la haute dispo sont opérées par l’éditeur (SaaS).</p>
+              </div>
+            </div>
 
-<!-- Étape 5 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('answer5', this)">
-        5. Formation des Agents :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="answer5">
-        <ul>
-            <li>Sessions de formation approfondies :</li>
-            <ul>
-                <li>Formation sur l'utilisation de l'application Domatel Mobile.</li>
-                <li>Encadrement sur l'encodage des cartes et la gestion des plannings.</li>
-                <li>Formation sur la communication via le chat intégré.</li>
-            </ul>
-            <li>Administration et Gestion :</li>
-            <ul>
-                <li>Formations spécifiques pour les administrateurs sur la gestion des groupes.</li>
-                <li>Distribution des plannings et attribution des droits dans l'application.</li>
-            </ul>
-        </ul>
-    </div>
-</div>
+            <!-- Résultats & enseignements -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                Résultats & KPI (mesures modérées, période stabilisée)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th>Indicateur</th>
+                        <th>Avant</th>
+                        <th>Après</th>
+                        <th>Gain</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Temps admin hebdo (consolidation heures)</td>
+                        <td>~6 h</td>
+                        <td>~3 h</td>
+                        <td><strong>−50 %</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Taux d'heures rejetées en paie</td>
+                        <td>—</td>
+                        <td>~12 dossiers/mois</td>
+                        <td><strong>réduction significative</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Interventions non pointées</td>
+                        <td>~18 %</td>
+                        <td>~10 %</td>
+                        <td><strong>−44 %</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Délai de clôture mensuelle</td>
+                        <td>J+5</td>
+                        <td>J+3</td>
+                        <td><strong>−2 jours</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Litiges paie</td>
+                        <td>~25 / mois</td>
+                        <td>~14 / mois</td>
+                        <td><strong>−44 %</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Adoption agents (2 semaines)</td>
+                        <td>—</td>
+                        <td>~90 %</td>
+                        <td><strong>montée en charge rapide</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-<!-- Étape 6 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('answer6', this)">
-        6. Déploiement Progressif :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="answer6">
-        <ul>
-            <li>Mise en œuvre progressive :</li>
-            <ul>
-                <li>Déploiement étape par étape pour ajuster en fonction des retours et des besoins réels.</li>
-                <li>Assurance d'une intégration harmonieuse au quotidien des équipes.</li>
-            </ul>
-        </ul>
-    </div>
-</div>
+                <h5 class="mt-3">Enseignements clés</h5>
+                <ul>
+                  <li>L’impact vient surtout de la <strong>fiabilité du pointage</strong> (QR + signature) et du <strong>contrôle en amont</strong>.</li>
+                  <li>La conduite du changement (coaching terrain + hotline) accélère l’<strong>adoption</strong>.</li>
+                  <li>Des <strong>exports paie propres</strong> = moins de retours et un climat social plus serein.</li>
+                </ul>
 
-<!-- Étape 7 -->
-<div class="faq-item">
-    <div class="question" onclick="toggleAnswer('answer7', this)">
-        7. Évaluation et Réajustement :
-        <span class="arrow-icon">▼</span>
-    </div>
-    <div class="answer" id="answer7">
-        <ul>
-            <li>Évaluation continue du projet :</li>
-            <ul>
-                <li>Surveillance régulière de la performance de Domatel Mobile.</li>
-                <li>Récolte des retours des utilisateurs pour identifier les améliorations potentielles.</li>
-            </ul>
-            <li>Réajustement en fonction des résultats :</li>
-            <ul>
-                <li>Adaptation du système en réponse aux besoins émergents.</li>
-                <li>Améliorations continues pour assurer une utilisation optimale.</li>
-            </ul>
-        </ul>
-    </div>
-</div>
+                <p class="mt-3">
+                  <a class="btn-ghost" href="https://ogust.com/marketplace_fiche/domatel/" target="_blank" rel="noopener">
+                    Découvrir la solution Domatel
+                  </a>
+                </p>
+              </div>
+            </div>
 
-
-
-
-<!-- ======= etapes suivantes ======= -->
-
-
-        
-
-      </div>
+          </div><!-- /col-12 -->
+        </div><!-- /row -->
+      </div><!-- /container -->
     </section><!-- End Portfolio Details -->
-
   </main><!-- End #main -->
 
   <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
-   <script>
-        function toggleAnswer(answerId, question) {
-            var answer = document.getElementById(answerId);
-            answer.classList.toggle("answer-visible");
-            question.classList.toggle("answer-visible");
-            if (answer.style.maxHeight) {
-                answer.style.maxHeight = null;
-            } else {
-                answer.style.maxHeight = answer.scrollHeight + "px";
-            }
-        }
-    </script>
   <script src="assets/vendor/jquery/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
@@ -309,6 +320,18 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
 </body>
-
 </html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>LAMP automatisé (Bash + Ansible) | Steve Avisse</title>
+  <meta name="description" content="Déploiement d’un serveur LAMP sur Debian 12 (VirtualBox), automatisé par script Bash puis Ansible. Reproductibilité, services actifs, base prête pour héberger des applis web (ex. TestLink).">
+  <meta name="keywords" content="LAMP, Linux, Apache, MariaDB, PHP, Debian 12, VirtualBox, Bash, Ansible, IaC, DevOps">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Raleway:400,500,700|Poppins:400,500,600" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Styles locaux -->
+  <style>
+    :root{ --accent:#f2559e; --accent2:#007bff; --ink:#0b1420; }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{ background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600; }
+    .btn-ghost{ display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none; }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    pre code{ font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.92rem; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+  </style>
+</head>
+
+<body>
+  <main id="main">
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <!-- Colonne gauche : carrousel -->
+          <div class="col-lg-8">
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              LAMP – Déploiement & automatisation (Bash ➜ Ansible)
+            </h2>
+
+            <div class="owl-carousel portfolio-details-carousel">
+              <!-- Mets tes fichiers dans assets/img/ et garde ces noms ou adapte -->
+              <img src="assets/img/Création d’un script Bash d’automatisation.jpg" class="img-fluid" alt="Création du script Bash d’automatisation">
+              <img src="assets/img/Vérification qu’Apache fonctionne.jpg" class="img-fluid" alt="Vérification qu’Apache fonctionne">
+              <img src="assets/img/Créer la base de données.jpg" class="img-fluid" alt="Création de la base et de l’utilisateur MariaDB">
+              <img src="assets/img/Créer le fichier d’inventaire  Ansible.jpg" class="img-fluid" alt="Fichier d’inventaire Ansible et ping">
+              <img src="assets/img/playbook Ansible execution.jpg" class="img-fluid" alt="Exécution du playbook Ansible (partie 1)">
+              <img src="assets/img/playbook Ansible execution2 .jpg" class="img-fluid" alt="Exécution du playbook Ansible (partie 2)">
+            </div>
+          </div>
+
+          <!-- Colonne droite : résumé / tags / lien repo -->
+          <div class="col-lg-4 portfolio-info">
+            <h3 style="text-align:center"><strong>Serveur LAMP prêt à l’emploi</strong></h3>
+
+            <p class="lead-intro">
+              Mise en place d’un <span class="accent">serveur LAMP</span> sur <strong>Debian 12</strong> (VM VirtualBox),
+              d’abord automatisé par <strong>script Bash</strong>, puis industrialisé avec <strong>Ansible</strong>
+              (Infrastructure as Code). Environnement reproductible, services actifs, stack prête à héberger des applis
+              (ex. <em>TestLink</em>).
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">Debian 12</span>
+              <span class="tag">Apache</span>
+              <span class="tag">MariaDB</span>
+              <span class="tag">PHP</span>
+              <span class="tag">Bash</span>
+              <span class="tag">Ansible</span>
+              <span class="tag">IaC</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Catégorie</strong> : SysAdmin / DevOps</li>
+              <li><strong>Contexte</strong> : VM VirtualBox locale</li>
+              <li><strong>Livrables</strong> : Script Bash, Playbook Ansible, base MariaDB, vérifs</li>
+            </ul>
+
+            <a class="btn-repo" href="https://github.com/avisse/LAMP-Linux-Apache-MariaDB-PHP-.git" target="_blank" rel="noopener">
+              <i class="bx bxl-github"></i> Voir le repository GitHub
+            </a>
+          </div>
+
+          <!-- Accordéons détaillés (pleine largeur) -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
+
+            <!-- Contexte & objectifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('cx', this)">
+                Contexte & objectifs
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="cx">
+                <p>
+                  Déployer un <strong>serveur LAMP</strong> sur <strong>Debian 12</strong>, l’<strong>automatiser</strong> au maximum
+                  et garantir la <strong>reproductibilité</strong> de l’environnement pour héberger des applis web (ex. TestLink).
+                </p>
+                <ul>
+                  <li>VM Debian 12 (VirtualBox)</li>
+                  <li>Vérification réseau : <code>ping -c 2 google.com</code></li>
+                  <li>Utilisation de <em>sudo</em> pour les installations</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Script Bash -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('bash', this)">
+                Automatisation initiale — Script Bash
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="bash">
+                <p>Script <code>install_lamp.sh</code> : met à jour le système, installe Apache/MariaDB/PHP et active les services.</p>
+<pre><code class="language-bash">#!/bin/bash
+echo "Mise à jour du système..."
+apt update && apt upgrade -y
+
+echo "Installation des paquets LAMP..."
+apt install -y apache2 mariadb-server php php-mysql libapache2-mod-php \
+php-xml php-mbstring unzip wget
+
+echo "Activation et démarrage des services..."
+systemctl enable apache2
+systemctl enable mariadb
+systemctl start apache2
+systemctl start mariadb
+</code></pre>
+                <p class="soft">
+                  Exécution : <code>chmod +x install_lamp.sh && sudo ./install_lamp.sh</code>
+                </p>
+              </div>
+            </div>
+
+            <!-- Vérifs -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('checks', this)">
+                Vérifications manuelles
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="checks">
+                <ul>
+                  <li>Apache actif : <code>systemctl status apache2</code></li>
+                  <li>Test PHP :
+<pre><code class="language-bash">echo "&lt;?php phpinfo(); ?&gt;" | sudo tee /var/www/html/info.php
+# Naviguer : http://[IP_VM]/info.php</code></pre>
+                  </li>
+                  <li>MariaDB actif : <code>systemctl status mariadb</code></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Base de données -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('db', this)">
+                Base MariaDB prête pour les applications
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="db">
+<pre><code class="language-sql">CREATE DATABASE testlink;
+CREATE USER 'testlink_user'@'localhost' IDENTIFIED BY 'monmotdepasse';
+GRANT ALL PRIVILEGES ON testlink.* TO 'testlink_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+</code></pre>
+                <p>La stack est prête à héberger des applis (TestLink, CMS, etc.).</p>
+              </div>
+            </div>
+
+            <!-- Ansible -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('ans', this)">
+                Industrialisation — Ansible (IaC)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="ans">
+                <p>Inventaire minimal : <code>/etc/ansible/hosts</code> → <code>localhost</code>. Test : <code>ansible all -m ping</code> (pong).</p>
+                <p>Playbook <code>lamp.yml</code> :</p>
+<pre><code class="language-yaml">- name: Déploiement d’un serveur LAMP
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Mise à jour de l’index des paquets
+      apt: update_cache=yes
+
+    - name: Installation des paquets LAMP
+      apt:
+        name:
+          - apache2
+          - mariadb-server
+          - php
+          - php-mysql
+          - libapache2-mod-php
+          - php-xml
+          - php-mbstring
+          - unzip
+          - wget
+        state: present
+
+    - name: Activation et démarrage d’Apache
+      service: { name: apache2, state: started, enabled: yes }
+
+    - name: Activation et démarrage de MariaDB
+      service: { name: mariadb, state: started, enabled: yes }
+
+    - name: Création d’un fichier info.php pour tester PHP
+      copy:
+        dest: /var/www/html/info.php
+        content: "&lt;?php phpinfo(); ?&gt;"
+</code></pre>
+                <p class="soft">Exécution : <code>ansible-playbook lamp.yml --ask-become-pass</code></p>
+              </div>
+            </div>
+
+            <!-- Vérifs finales -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('final', this)">
+                Vérifications finales & disponibilité
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="final">
+                <ul>
+                  <li>Apache accessible : <code>http://127.0.0.1/info.php</code></li>
+                  <li>PHP interprété correctement (phpinfo)</li>
+                  <li>MariaDB fonctionnel</li>
+                  <li>Services redémarrent automatiquement après reboot</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Résultats & enseignements -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('out', this)">
+                Plus-values & enseignements
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="out">
+                <ul>
+                  <li><strong>Automatisation</strong> : fin des installations manuelles, exécution fiable.</li>
+                  <li><strong>Reproductibilité</strong> : même environnement à chaque run (script ou playbook).</li>
+                  <li><strong>Fiabilité</strong> : services activés et vérifiés.</li>
+                  <li><strong>Extensibilité</strong> : base pour CMS, TestLink, etc.</li>
+                  <li><strong>Approche DevOps</strong> : passage Bash ➜ Ansible (IaC).</li>
+                </ul>
+                <p>
+                  <a class="btn-ghost" href="https://github.com/avisse/LAMP-Linux-Apache-MariaDB-PHP-.git" target="_blank" rel="noopener">
+                    Ouvrir le repo (script & playbook)
+                  </a>
+                </p>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+        </div><!-- /row -->
+      </div><!-- /container -->
+    </section><!-- End Portfolio Details -->
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="assets/vendor/counterup/counterup.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/venobox/venobox.min.js"></script>
+  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer=document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if(answer.style.maxHeight){answer.style.maxHeight=null;}
+      else{answer.style.maxHeight=answer.scrollHeight+"px";}
+    }
+  </script>
+</body>
+</html>

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Steve Avisse</title>
-  <meta content="" name="descriptison">
-  <meta content="" name="keywords">
+  <title>MOA — Intégration Cash Out (Betclic) | Steve Avisse</title>
+  <meta name="description" content="Dossier MOA complet : cadrage, règles d’éligibilité, KPI, parcours UX, RACI, UAT et mise en service de la fonctionnalité Cash Out.">
+  <meta name="keywords" content="MOA, Cash Out, produit, cadrage, KPI, UX, UAT, gouvernance, conformité ANJ, Betclic">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -27,62 +27,349 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: MyResume - v2.1.0
-  * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <!-- Styles locaux (squelette commun) -->
+  <style>
+    :root{ --accent:#f2559e; --accent2:#0a66ff; --ink:#0b1420; }
+    .lead-intro{ font-size:1.05rem; line-height:1.6; color:#4a5568; margin:6px 0 18px; }
+    .accent{color:var(--accent); font-weight:700;}
+    .tech-tags{margin:8px 0 18px; display:flex; flex-wrap:wrap; gap:8px;}
+    .tag{ background:rgba(242,85,158,.08); color:#b71862; border:1px solid rgba(242,85,158,.25);
+      padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600; }
+    .btn-ghost{
+      display:inline-block; padding:10px 14px; border-radius:10px; font-weight:600;
+      border:2px solid var(--accent2); color:var(--accent2); text-decoration:none;
+    }
+    .btn-ghost:hover{ background:var(--accent2); color:#fff; }
+    pre{ background:#0f172a; color:#e2e8f0; padding:14px; border-radius:12px; overflow:auto; }
+    .soft{ color:#94a3b8; }
+    .faq-item{ border-bottom:1px solid #e9ecef; padding:14px 0; }
+    .question{ cursor:pointer; font-weight:700; padding-right:24px; position:relative; color:#1f2937;}
+    .answer{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    .arrow-icon{ position:absolute; right:0; top:0; transition:transform .3s ease; color:var(--accent2);}
+    .answer-visible .arrow-icon{ transform:rotate(180deg); }
+    .portfolio-details-carousel img{ border-radius:14px; }
+    table.klean{ width:100%; border-collapse:separate; border-spacing:0; }
+    .klean th,.klean td{ padding:10px 12px; border-bottom:1px solid #eef2f7; vertical-align:top; }
+    .klean th{ color:#1f2937; font-weight:700; }
+    .muted{ color:#6b7280; }
+  </style>
 </head>
 
 <body>
 
   <main id="main">
-
     <!-- ======= Portfolio Details ======= -->
     <section id="portfolio-details" class="portfolio-details">
       <div class="container" data-aos="fade-up">
 
         <div class="row">
 
+          <!-- Colonne gauche : carrousel -->
           <div class="col-lg-8">
-            <h2 class="portfolio-title">Betclic Cash Out</h2>
+            <h2 class="portfolio-title" style="text-align:center; color: var(--accent2);">
+              Dossier MOA — Intégration de la fonctionnalité <span class="accent">Cash Out</span>
+            </h2>
+
             <div class="owl-carousel portfolio-details-carousel">
-             <iframe width="700" height="400" src="https://www.youtube.com/embed/EFmoPQLoFhk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              <img src="assets/img/betclic3.png" class="img-fluid" alt="">
+              <!-- ⚠️ Remplace par tes captures, conserve la structure -->
+            <img src="assets/img/betclic3.png" class="img-fluid" alt="">
               <img src="assets/img/betclic2.png" class="img-fluid" alt="">
             </div>
           </div>
 
+          <!-- Colonne droite : résumé / tags / bouton -->
           <div class="col-lg-4 portfolio-info">
-            <h3>Betclic Cash Out</h3>
-            <ul>
-              <li><strong>Categorie</strong>: Fonctionnalitée Cash Out</li>
-              <li><strong>Pour: </strong>:Betclic </li>
-              <li><strong>Projet URL</strong>: <a href="#">https://m.betclic.fr/content/spo_co</a></li>
+            <h3 style="text-align:center"><strong>Mission MOA — de l’idée au Go/No-Go</strong></h3>
+
+            <p class="lead-intro">
+              But : <strong>réduire la frustration</strong> et <strong>sécuriser des gains</strong> en intégrant un
+              <em>Cash Out</em> fiable et compréhensible. Mon rôle : <strong>cadrage</strong>, <strong>règles métier</strong>,
+              <strong>priorisation</strong>, <strong>recette</strong> et <strong>mise en service</strong> (canary).
+            </p>
+
+            <div class="tech-tags">
+              <span class="tag">MOA</span><span class="tag">Produit</span><span class="tag">UX</span>
+              <span class="tag">KPI</span><span class="tag">API</span><span class="tag">Conformité ANJ</span>
+              <span class="tag">Runbook</span><span class="tag">UAT</span>
+            </div>
+
+            <ul style="margin-bottom:14px">
+              <li><strong>Portée</strong> : Cash Out total & partiel, app & web</li>
+              <li><strong>Contraintes</strong> : latence live, wording responsable</li>
+              <li><strong>Parties prenantes</strong> : Produit, Trading, Juridique, Support, Tech</li>
             </ul>
-            <p><strong>Le Cash Out, comment ça marche ? </strong></p> 
 
-            <p>Disponible depuis longtemps sur les sites de pari étrangers, cette fonctionnalité a débarqué sur le marché français au début de l'année 2017</p> </div>
-
-          <div class="col-lg-13 portfolio-info">
-            <p>Concrètement, le cash-out, terme que l'on peut traduire par "encaisser" est une option qui vous permet d'assurer un pari en cours. Lorsque vous activez cette fonction, vous récupérez immédiatement une partie de votre gain potentiel, sans attendre la fin du match en question.</p>
-            <p>Le montant du cash-out est calculé automatiquement par le bookmaker et évolue en fonction de la tournure de la rencontre.Deux types de scénarios peuvent vous inciter à déclencher un cash-out :</p>
-            <li><b>Minimiser vos pertes :</b> Votre pari est en mauvaise posture à la mi-temps ? Lancer un cash-out de secours vous donne la possibilité de sauver une partie de votre mise initiale, au lieu de la perdre intégralement.</li>
-            <li><b>Sécuriser vos gains :</b>votre pari est sur le point d'être gagnant à 20 minutes de la fin du match mais vous avez un doute sur l'issue finale. Activer le cash-out vous fait encaisser des gains, avec un bénéfice inférieur à celui prévu lors de l'enregistrement de la mise. Mais au moins, vous avez écarté le risque de tout perdre à cause d'un retournement de situation surprise dans les dernières minutes.</li>
-
-            <p><strong>Cash Out total ou partiel : </strong></p>
-            <p>Un cash-out total signifie que votre pari est intégralement suspendu alors qu'un partiel vous donne la possibilité de choisir le montant à sécuriser. </p>
-            <p>Dans ce dernier cas, vous récupérez immédiatement le montant du cashout partiel et l'autre partie de votre mise reste en vigueur jusqu'à la fin du match. En cas de pari gagnant, votre bénéfice sera calculé en fonction de la cote initiale et du montant de la mise restée en jeu.</p>
-            <p>Chez Betclic, il est possible de sélectionner un montant spécifique au centime près. Ce système plus flexible vous permet d'affiner votre prise de risque mais les nœuds au cerveau ne sont pas loin : combien je récupère ? 20%, 30%, 50% de la mise ?</p>
-            
+            <a class="btn-ghost" href="#" target="_blank" rel="noopener">
+              Télécharger le dossier (PDF)
+            </a>
           </div>
 
-        </div>
+          <!-- ======= Accordéons détaillés (pleine largeur) ======= -->
+          <div class="col-lg-12 portfolio-info" style="margin-top:24px">
 
-      </div>
+            <!-- 0) Résumé exécutif -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('x0', this)">
+                0) Résumé exécutif (8 lignes)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="x0">
+                <p>
+                  Besoin : mesurer et améliorer l’expérience réelle de Cash Out (montant fiable, réponse rapide, messages clairs).
+                  Approche : intégration d’un <strong>moteur Cash Out via API</strong>, cadré et piloté par la MOA.
+                  Mon rôle : <strong>cadrage</strong>, <strong>règles</strong>, <strong>KPI</strong>, <strong>UAT</strong>, <strong>go/no-go</strong>.
+                  Périmètre pilote : total & partiel, app & web. KPI : <em>adoption</em>, <em>latence p95</em> ≤ 2,5 s, <em>taux d’expiration</em> maîtrisé.
+                  Déroulé : cadrage → maquettes → intégration → UAT → canary → généralisation.
+                  Résultat : fonctionnalité compréhensible, <strong>alertes actionnables</strong>, bascule sécurisée.
+                </p>
+              </div>
+            </div>
+
+            <!-- 1) Contexte & finalité -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a1', this)">
+                1) Contexte & finalité
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a1">
+                <p>
+                  Pourquoi : limiter la frustration, permettre la sécurisation de gains/limitation de pertes, tout en maîtrisant l’exposition au risque.
+                  Ce qui existe : moteur Cash Out <em>tiers</em> exposé via API. Ce que fait la MOA : cadrer le besoin, fixer les règles métier, piloter l’intégration,
+                  valider l’expérience et les KPI, orchestrer la mise en service et l’accompagnement.
+                </p>
+              </div>
+            </div>
+
+            <!-- 2) Parties prenantes -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a2', this)">
+                2) Parties prenantes (rôles)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a2">
+<table class="klean">
+  <tr><th>Acteur</th><th>Responsabilités clés</th></tr>
+  <tr><td>Produit/Marketing</td><td>Proposition de valeur, éligibilité, visibilité, KPI business</td></tr>
+  <tr><td>Risque/Trading</td><td>Exposition, indisponibilités (suspension/VAR), <em>kill switch</em></td></tr>
+  <tr><td>Juridique/Conformité</td><td>T&C, Jeu Responsable, wording conforme ANJ</td></tr>
+  <tr><td>Support/Opérations</td><td>Scripts agents, messages d’erreur, escalades</td></tr>
+  <tr><td>MOA (DINSI)</td><td>Cadrage, priorisation, gouvernance, recette, go/no-go</td></tr>
+  <tr><td>Tech/Éditeur</td><td>Implémentation API, SLO/SLA, observabilité</td></tr>
+</table>
+              </div>
+            </div>
+
+            <!-- 3) Périmètre, hypothèses, contraintes -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a3', this)">
+                3) Périmètre (In/Out), hypothèses & contraintes
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a3">
+                <ul>
+                  <li><strong>In</strong> : Cash Out total & partiel, temps réel, acceptation, logs.</li>
+                  <li><strong>Out</strong> (phase 1) : cas exotiques, anti-fraude avancée, A/B test UX (phase 2).</li>
+                  <li><strong>Hypothèses</strong> : moteur fiable, API stable, cotes à jour.</li>
+                  <li><strong>Contraintes</strong> : ANJ, latence live, wording responsable.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 4) Exigences métier & règles d’éligibilité -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a4', this)">
+                4) Exigences métier (stories) & règles d’éligibilité
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a4">
+                <p class="muted"><strong>User stories prêtes à valider</strong></p>
+                <ul>
+                  <li><strong>US1</strong> : voir le montant proposé (éligibles), avec horodatage/validité et états “offre expirée/indispo”.</li>
+                  <li><strong>US2</strong> : encaissement <em>partiel</em> via slider (10–90%) + récap (encaisser / reste en jeu).</li>
+                  <li><strong>US3</strong> : messages clairs si l’offre change/expire ou si le marché est suspendu.</li>
+                </ul>
+                <p class="muted"><strong>Règles d’éligibilité</strong></p>
+                <ul>
+                  <li>Types de paris : simples/combinés/live (liste blanche).</li>
+                  <li>Indisponibilité : marché suspendu, VAR, fin de match (N min), haute volatilité.</li>
+                  <li>Bornes : min/max montant, min/max % partiel (ex. 10–90%), règles d’arrondi.</li>
+                  <li>Garde-fous : kill switch par sport/marché, fenêtres de maintenance.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 5) KPI -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a5', this)">
+                5) Indicateurs & critères de succès (KPI MOA)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a5">
+                <ul>
+                  <li><strong>Adoption</strong> : % vues d’offre / éligibles ; taux d’utilisation (quote→accept).</li>
+                  <li><strong>Expérience</strong> : p95 “demande→réponse” ≤ 2,5 s ; taux d’expiration maîtrisé.</li>
+                  <li><strong>Business</strong> : gains sécurisés, baisse litiges.</li>
+                  <li><strong>Support</strong> : - tickets “incompréhension”, temps de traitement.</li>
+                  <li><strong>Conformité</strong> : T&C, audit trail OK.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 6) Parcours cibles UX -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a6', this)">
+                6) Parcours cibles (macro UX)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a6">
+                <ol>
+                  <li><strong>Découverte</strong> : badge “Cash Out disponible”.</li>
+                  <li><strong>Détail</strong> : montant proposé + info “temps réel”.</li>
+                  <li><strong>Partiel</strong> : slider 10–90% + récap clair.</li>
+                  <li><strong>Confirmation</strong> : OK / Offre modifiée / Offre expirée / Indispo.</li>
+                  <li><strong>Résultat</strong> : encaissement immédiat, tracking analytics, historique mis à jour.</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- 7) Gouvernance & RACI -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a7', this)">
+                7) Gouvernance & RACI (résumé)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a7">
+<table class="klean">
+  <tr><th>Flux</th><th>R</th><th>A</th><th>C</th><th>I</th></tr>
+  <tr><td>Cadrage & priorisation</td><td>MOA</td><td>MOA</td><td>Produit, Trading</td><td>Juridique, Support</td></tr>
+  <tr><td>Spécifications</td><td>MOA</td><td>Produit</td><td>Tech, Juridique</td><td>Support</td></tr>
+  <tr><td>Intégration API</td><td>Tech/Éditeur</td><td>Tech</td><td>MOA</td><td>Produit</td></tr>
+  <tr><td>UAT & Go/No-Go</td><td>MOA</td><td>MOA</td><td>Produit, Support</td><td>All</td></tr>
+</table>
+              </div>
+            </div>
+
+            <!-- 8) Planning macro -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a8', this)">
+                8) Planning macro (jalons)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a8">
+<pre>S1 : cadrage + règles d’éligibilité + wording
+S2 : maquettes UX + specs fonctionnelles + plan UAT
+S3 : intégration API + UAT (nominal + erreurs)
+S4 : canary 5–10% + bilan + généralisation</pre>
+              </div>
+            </div>
+
+            <!-- 9) UAT -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('a9', this)">
+                9) UAT (recette fonctionnelle) — cas à jouer
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="a9">
+                <ul>
+                  <li><strong>Nominal</strong> : offre visible → acceptation OK (total/partiel), montants conformes, historiques à jour.</li>
+                  <li><strong>Offre modifiée</strong> : variation → message + re-confirmation.</li>
+                  <li><strong>Offre expirée</strong> : message + relance possible.</li>
+                  <li><strong>Indisponible</strong> : suspension/VAR → message et blocage temporaire.</li>
+                  <li><strong>Protection</strong> : anti double encaissement.</li>
+                  <li><strong>Accessibilité</strong> : libellés non techniques, compréhensibles.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 10) Conduite du changement -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('b0', this)">
+                10) Conduite du changement & communication
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="b0">
+                <ul>
+                  <li><strong>Interne</strong> : fiche “comment ça marche”, scripts agents, top 5 erreurs, FAQ.</li>
+                  <li><strong>Clients</strong> : bannière/push “Nouveau : Cash Out partiel”, page d’aide, T&C à jour.</li>
+                  <li><strong>Run</strong> : qui déclenche le kill switch, chaine d’escalade, délais cibles.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 11) Conformité -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('b1', this)">
+                11) Conformité & jeu responsable
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="b1">
+                <ul>
+                  <li>T&C mis à jour (définition, limites, indispos).</li>
+                  <li>Traçabilité complète (qui/quand/quoi + version des règles).</li>
+                  <li>RGPD : pas de données perso dans messages/rapports.</li>
+                  <li>Wording responsable, liens d’aide visibles.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 12) Livrables MOA -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('b2', this)">
+                12) Livrables MOA (montrables au jury)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="b2">
+                <ul>
+                  <li>Note de cadrage & KPI.</li>
+                  <li>Spécifications fonctionnelles (règles/messages/parcours).</li>
+                  <li>Maquettes (3–5 écrans clés et états).</li>
+                  <li>Plan UAT + PV de recette.</li>
+                  <li>Plan de mise en service (canary, kill switch, com).</li>
+                  <li>Guide support (scripts + FAQ) & bilan pilote.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 13) Risques & parades -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('b3', this)">
+                13) Risques & parades (vision MOA)
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="b3">
+<table class="klean">
+  <tr><th>Risque</th><th>Impact</th><th>Parade MOA</th></tr>
+  <tr><td>Incompréhension (montant/partiel)</td><td>Frustration, tickets</td><td>Maquettes pédagogiques, wording clair, page d’aide</td></tr>
+  <tr><td>Trop d’offres expirées</td><td>Mauvaise perception</td><td>Bouton “rafraîchir”, KPI “expiration”, seuils revus</td></tr>
+  <tr><td>Litiges post-match</td><td>Insatisfaction</td><td>Traçabilité complète, T&C à jour, scripts support</td></tr>
+  <tr><td>Alertes bruyantes</td><td>Fatigue équipes</td><td>Seuils pertinents, canary, revue hebdo KPI</td></tr>
+  <tr><td>Non-conformité ANJ</td><td>Risque réglementaire</td><td>Validation juridique en amont, kill switch opérationnel</td></tr>
+</table>
+              </div>
+            </div>
+
+            <!-- 14) Passage à l’échelle -->
+            <div class="faq-item">
+              <div class="question" onclick="toggleAnswer('b4', this)">
+                14) Et pour passer à l’échelle ?
+                <span class="arrow-icon">▼</span>
+              </div>
+              <div class="answer" id="b4">
+                <ul>
+                  <li>Templates par type d’app (public, SSO, API).</li>
+                  <li>API d’automatisation (moniteurs, tagging, dashboards).</li>
+                  <li>Nommage & tags standard (service, criticité, équipe).</li>
+                  <li>Intégration ITSM (auto-ticket, SLA, post-mortem type).</li>
+                  <li>Formations flash pour produit/exploit.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div><!-- /col-12 -->
+
+        </div><!-- /row -->
+      </div><!-- /container -->
     </section><!-- End Portfolio Details -->
-
   </main><!-- End #main -->
 
   <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
@@ -91,19 +378,25 @@
   <!-- Vendor JS Files -->
   <script src="assets/vendor/jquery/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
-  <script src="assets/vendor/counterup/counterup.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/venobox/venobox.min.js"></script>
   <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
+  <!-- Accordéons -->
+  <script>
+    function toggleAnswer(answerId, question){
+      var answer = document.getElementById(answerId);
+      answer.classList.toggle("answer-visible");
+      question.classList.toggle("answer-visible");
+      if (answer.style.maxHeight){
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      }
+    }
+  </script>
 </body>
-
 </html>
